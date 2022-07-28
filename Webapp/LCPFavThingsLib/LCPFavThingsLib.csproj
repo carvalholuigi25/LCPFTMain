@@ -16,6 +16,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Config\myconnstrings.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Config\myconnstrings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	  <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
@@ -65,12 +75,6 @@
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </EmbeddedResource>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Update="Config\myconnstrings.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
 	</ItemGroup>
 
 </Project>

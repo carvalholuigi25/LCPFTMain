@@ -24,17 +24,17 @@ namespace LCPFavThings
 
         public static dynamic GetMyConnStringFromLib()
         {
-            var myfileconn = @"{
-			  'connStrings': {
-				'SQLServerDB': 'Server=(localdb)\\mssqllocaldb;Database=LCPFavThingsDB;Trusted_Connection=True;MultipleActiveResultSets=true',
-				'SQLiteDB': 'C:\\Users\\Luis\\Documents\\Visual Studio 2022\\Projects\\LCPFTMain\\LCPFavThingsWApi\\Data\\SQLite\\lcpfavthingsdb.db',
-				'SQLiteDBAndroid': '//sdcard//Android//data//com.lcp.lcpfavthings//files//lcpfavthingsdb.db',
-				'SQLiteDBAndroidEmu': '//data//data//com.lcp.lcpfavthings//files//lcpfavthingsdb.db',
-				'MySQLDB': 'server=localhost;port=3306;database=lcpfavthingsdbmysql;user=root;password=1234'
-			  }
-			}";
+            //var myfileconn = @"{
+			//  'connStrings': {
+			//	'SQLServerDB': 'Server=(localdb)\\mssqllocaldb;Database=LCPFavThingsDB;Trusted_Connection=True;MultipleActiveResultSets=true',
+			//	'SQLiteDB': 'C:\\Users\\Luis\\Documents\\Visual Studio 2022\\Projects\\LCPFTMain\\Webapp\\LCPFavThingsWApi\\Data\\SQLite\\lcpfavthingsdb.db',
+			//	'SQLiteDBAndroid': '//sdcard//Android//data//com.lcp.lcpfavthings//files//lcpfavthingsdb.db',
+			//	'SQLiteDBAndroidEmu': '//data//data//com.lcp.lcpfavthings//files//lcpfavthingsdb.db',
+			//	'MySQLDB': 'server=localhost;port=3306;database=lcpfavthingsdbmysql;user=root;password=1234'
+			//  }
+			//}";
 
-            //var myfileconn = File.ReadAllText(@"C:\Users\Luis\Documents\Visual Studio 2022\Projects\LCPFTMain\LCPFavThingsLib\Config\myconnstrings.json");
+            var myfileconn = File.ReadAllText(@"C:\Users\Luis\Documents\Visual Studio 2022\Projects\LCPFTMain\Webapp\LCPFavThingsLib\Config\myconnstrings.json");
             if (string.IsNullOrEmpty(myfileconn)) return null;
             var contconn = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(myfileconn);
             if (contconn == null || contconn.Count == 0) return null;

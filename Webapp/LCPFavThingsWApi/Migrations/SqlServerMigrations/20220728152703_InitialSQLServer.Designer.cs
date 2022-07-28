@@ -3,23 +3,26 @@ using System;
 using LCPFavThingsWApi.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace LCPFavThingsWApi.Migrations.MySqlMigrations
+namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
 {
-    [DbContext(typeof(DBMySQLContext))]
-    [Migration("20220715140419_InitialMySQL")]
-    partial class InitialMySQL
+    [DbContext(typeof(DBContext))]
+    [Migration("20220728152703_InitialSQLServer")]
+    partial class InitialSQLServer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.6")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("LCPFavThingsWApi.Models.Games", b =>
                 {
@@ -27,6 +30,8 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("GameId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("GameId"), 1L, 1);
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -114,6 +119,8 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                         .HasColumnType("int")
                         .HasColumnName("MovieId");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("MovieId"), 1L, 1);
+
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -190,6 +197,8 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("TVSerieId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("TVSerieId"), 1L, 1);
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -287,12 +296,15 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                         .HasColumnType("int")
                         .HasColumnName("UserAuthId");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UserAuthId"), 1L, 1);
+
                     b.Property<string>("Avatar")
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasMaxLength(1024)
                         .IsUnicode(false)
                         .HasColumnType("varchar(1024)");
@@ -307,6 +319,7 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                         .HasColumnName("UserId");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
@@ -320,7 +333,7 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                         {
                             UserAuthId = 1,
                             Avatar = "guest.jpg",
-                            Password = "$2a$11$NQT3BB2/69mnmUxfT.4aZuMI74crBeZ2umQjNF04PFcLjhFbTGvZ2",
+                            Password = "$2a$11$QTbXWSA3b3DsuHDkFV8Be.wPQTWpZ5P6eOfozEGve6KXpGdPeqjFm",
                             RoleT = 1,
                             UserId = 1,
                             Username = "guest"
@@ -329,7 +342,7 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                         {
                             UserAuthId = 2,
                             Avatar = "theflash.jpg",
-                            Password = "$2a$11$zoHFQVRiB19vhoOLGhjr0uYIlDWMqQ6KC6ubZGedKvlE7HWWgwGFu",
+                            Password = "$2a$11$PXiD5qQbUAlYe7UAZEDFDudQ4HWHW3U7N63narEEKBUGSscCK3V2a",
                             RoleT = 3,
                             UserId = 2,
                             Username = "admin"
@@ -342,6 +355,8 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("UserId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UserId"), 1L, 1);
 
                     b.Property<string>("About")
                         .HasMaxLength(255)
@@ -386,7 +401,7 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                         .HasColumnType("varchar(1024)");
 
                     b.Property<string>("Pin")
-                        .HasColumnType("longtext")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("Pin");
 
                     b.Property<int?>("RoleT")
@@ -411,13 +426,13 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                             About = "Guest is cool guy!",
                             Avatar = "guest.jpg",
                             Cover = "c_guest.jpg",
-                            DateAccountCreated = new DateTime(2022, 7, 15, 14, 4, 17, 950, DateTimeKind.Utc).AddTicks(5956),
+                            DateAccountCreated = new DateTime(2022, 7, 28, 15, 27, 2, 383, DateTimeKind.Utc).AddTicks(5870),
                             DateBirthday = new DateTime(1995, 5, 2, 23, 0, 0, 0, DateTimeKind.Utc),
                             Email = "guest@localhost.loc",
                             FirstName = "Guest",
                             LastName = "Convidado",
-                            PasswordT = "$2a$11$khr3A1FEbGauZ5sa2X9UZ./NFa5s1LqJGzJG7zcIKWGuo8naaTu7S",
-                            Pin = "$2a$11$NCuTOZrWcHdxzc6kSbNPFuAGxZPylaWtxxVDXzfkUmkl/bfOxcjdC",
+                            PasswordT = "$2a$11$wqHUz9o5MebuE36U8.oEluvEJATmHO9iC8E1nrEwoiNjllFqR3iti",
+                            Pin = "$2a$11$jyG/Zze9o./zDbVPrqKQYuvMxo.lZLro6waPLnuRA32KERTGOQbVO",
                             RoleT = 1,
                             Username = "guest"
                         },
@@ -427,13 +442,13 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                             About = "Admin is cool guy!",
                             Avatar = "theflash.jpg",
                             Cover = "theflash.jpg",
-                            DateAccountCreated = new DateTime(2022, 7, 15, 14, 4, 18, 380, DateTimeKind.Utc).AddTicks(9839),
+                            DateAccountCreated = new DateTime(2022, 7, 28, 15, 27, 2, 723, DateTimeKind.Utc).AddTicks(1764),
                             DateBirthday = new DateTime(1995, 6, 3, 23, 0, 0, 0, DateTimeKind.Utc),
                             Email = "admin@localhost.loc",
                             FirstName = "Admin",
                             LastName = "Admin",
-                            PasswordT = "$2a$11$yLVZYsLiPK6bOBCiJ79f2.sQBjHdBwKQ/xvjLMrL.S.cqCijLK0tG",
-                            Pin = "$2a$11$OsR/yyc03zjzMB7lfZJJfusVWXNctadRNwBCJXDqhAhy3IdmEG6LG",
+                            PasswordT = "$2a$11$S9iRChZN7yXAbe/WJfm23e8i0XaToxxghsRkqEYr21Mih18TCv7lC",
+                            Pin = "$2a$11$V2Ivb6ough2OvrdPFrzdduTFmXvc5XgpmAQCjtNXDMqL/uoWSGiXC",
                             RoleT = 3,
                             Username = "admin"
                         });
@@ -445,6 +460,8 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("TokenId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("TokenId"), 1L, 1);
 
                     b.Property<string>("AccessToken")
                         .HasMaxLength(1024)
@@ -481,10 +498,12 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                     b.HasKey("TokenId");
 
                     b.HasIndex("UserAuthId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserAuthId] IS NOT NULL");
 
                     b.HasIndex("UserId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("UserToken", (string)null);
 

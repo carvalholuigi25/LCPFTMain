@@ -3,93 +3,86 @@ using System;
 using LCPFavThingsWApi.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
+namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
 {
-    [DbContext(typeof(DBContext))]
-    [Migration("20220715140522_InitialSQLServer")]
-    partial class InitialSQLServer
+    [DbContext(typeof(DBLiteContext))]
+    [Migration("20220728152632_InitialSQLite")]
+    partial class InitialSQLite
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.6")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.6");
 
             modelBuilder.Entity("LCPFavThingsWApi.Models.Games", b =>
                 {
                     b.Property<int?>("GameId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("GameId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("GameId"), 1L, 1);
 
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Company")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Cover")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("DateRelease")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("DescT")
                         .IsRequired()
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1024)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Genre")
                         .IsRequired()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LangT")
                         .IsRequired()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Publisher")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<decimal?>("Rating")
                         .IsRequired()
-                        .HasColumnType("decimal(2,1)");
+                        .HasColumnType("decimal(2, 1)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("GameId");
 
@@ -116,34 +109,32 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                 {
                     b.Property<int?>("MovieId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("MovieId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("MovieId"), 1L, 1);
 
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Company")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Cover")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("DescT")
                         .IsRequired()
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1024)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("Duration")
                         .IsRequired()
@@ -153,23 +144,23 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LangT")
                         .IsRequired()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("TEXT");
 
                     b.Property<decimal?>("Rating")
                         .IsRequired()
-                        .HasColumnType("decimal(2,1)");
+                        .HasColumnType("decimal(2, 1)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("MovieId");
 
@@ -195,34 +186,32 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                 {
                     b.Property<int?>("TVSerieId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("TVSerieId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("TVSerieId"), 1L, 1);
 
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Company")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Cover")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("DescT")
                         .IsRequired()
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1024)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("Duration")
                         .IsRequired()
@@ -232,23 +221,23 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LangT")
                         .IsRequired()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("TEXT");
 
                     b.Property<decimal?>("Rating")
                         .IsRequired()
-                        .HasColumnType("decimal(2,1)");
+                        .HasColumnType("decimal(2, 1)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("TotalSeasons")
                         .IsRequired()
@@ -293,34 +282,34 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                 {
                     b.Property<int?>("UserAuthId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("UserAuthId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UserAuthId"), 1L, 1);
 
                     b.Property<string>("Avatar")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1024)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("RoleT")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("UserId")
-                        .HasColumnType("int")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("UserId");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("UserAuthId");
 
@@ -331,7 +320,7 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                         {
                             UserAuthId = 1,
                             Avatar = "guest.jpg",
-                            Password = "$2a$11$0aA9ySSNAmZ7Mks/qQvW9uAYf/mdZ3TWjS317G4/a1xLC6WMSA4zy",
+                            Password = "$2a$11$f8/QWH16pIqgOeB/sZv6PehfbgKRsW8Et5DXcPq4idxtYIZyo3elO",
                             RoleT = 1,
                             UserId = 1,
                             Username = "guest"
@@ -340,7 +329,7 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                         {
                             UserAuthId = 2,
                             Avatar = "theflash.jpg",
-                            Password = "$2a$11$rAQwDa6j2GBAE9AYoz3L8O6aBC.bS1pl0IfeAPOswCiyq8JuMNu1a",
+                            Password = "$2a$11$YMQU4aXakZSOTn88vS9xcOT6FfpwepYc4W0DAEm/moy6vbhhjJUs2",
                             RoleT = 3,
                             UserId = 2,
                             Username = "admin"
@@ -351,25 +340,23 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                 {
                     b.Property<int?>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("UserId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UserId"), 1L, 1);
 
                     b.Property<string>("About")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Avatar")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Cover")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("DateAccountCreated")
                         .HasColumnType("datetime");
@@ -380,38 +367,38 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                     b.Property<string>("Email")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PasswordT")
                         .IsRequired()
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1024)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Pin")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("Pin");
 
                     b.Property<int?>("RoleT")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("UserId");
 
@@ -424,13 +411,13 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                             About = "Guest is cool guy!",
                             Avatar = "guest.jpg",
                             Cover = "c_guest.jpg",
-                            DateAccountCreated = new DateTime(2022, 7, 15, 14, 5, 21, 182, DateTimeKind.Utc).AddTicks(9421),
+                            DateAccountCreated = new DateTime(2022, 7, 28, 15, 26, 31, 819, DateTimeKind.Utc).AddTicks(6390),
                             DateBirthday = new DateTime(1995, 5, 2, 23, 0, 0, 0, DateTimeKind.Utc),
                             Email = "guest@localhost.loc",
                             FirstName = "Guest",
                             LastName = "Convidado",
-                            PasswordT = "$2a$11$6E3l8GE8PNxncWzNsuACS.I16pe0gjv1KUzC1Uv956Fv1/svZAYQe",
-                            Pin = "$2a$11$zLaZITylbA/Rf7lqXGc93uFYYOYIERlG2uCuEY9xuYxQ1J8UxCzaq",
+                            PasswordT = "$2a$11$i/aasMC2BSml.SijaaiBsuskN0zjY2mjen2SHXfsDHEQ000Okq6.6",
+                            Pin = "$2a$11$bRkSKv7UJxZ/8OvwrvUzqeat9gqEvphTdmUwIgPWOVG6B/dLtN8YW",
                             RoleT = 1,
                             Username = "guest"
                         },
@@ -440,13 +427,13 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                             About = "Admin is cool guy!",
                             Avatar = "theflash.jpg",
                             Cover = "theflash.jpg",
-                            DateAccountCreated = new DateTime(2022, 7, 15, 14, 5, 21, 522, DateTimeKind.Utc).AddTicks(2225),
+                            DateAccountCreated = new DateTime(2022, 7, 28, 15, 26, 32, 163, DateTimeKind.Utc).AddTicks(3112),
                             DateBirthday = new DateTime(1995, 6, 3, 23, 0, 0, 0, DateTimeKind.Utc),
                             Email = "admin@localhost.loc",
                             FirstName = "Admin",
                             LastName = "Admin",
-                            PasswordT = "$2a$11$sDeXlCVkC7KOmngASmZeAuZknY70vXROtfRyMVr/GSBLrD679aR62",
-                            Pin = "$2a$11$.ahnRNzP4KV6x9FACtWM3uV4950OWBryQ4LAdeW..4Xou89sq.J5K",
+                            PasswordT = "$2a$11$NkxFJOutEzuAHzgC1GsLXeQ0kgbFRGJkL1gs15wfYWWyJ7ypMVDWu",
+                            Pin = "$2a$11$ZB68NVXwDGIPMVrcVzF0GOyOdTNWn0AGK0.0EmPTZa0dUk1rMLGR.",
                             RoleT = 3,
                             Username = "admin"
                         });
@@ -456,52 +443,48 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                 {
                     b.Property<int?>("TokenId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("TokenId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("TokenId"), 1L, 1);
 
                     b.Property<string>("AccessToken")
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1024)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("Authenticated")
-                        .HasColumnType("int")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("Authenticated");
 
                     b.Property<string>("Created")
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1024)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Expiration")
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1024)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Message")
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1024)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("UserAuthId")
-                        .HasColumnType("int")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("UserAuthId");
 
                     b.Property<int?>("UserId")
-                        .HasColumnType("int")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("UserId");
 
                     b.HasKey("TokenId");
 
                     b.HasIndex("UserAuthId")
-                        .IsUnique()
-                        .HasFilter("[UserAuthId] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("UserToken", (string)null);
 

@@ -8,81 +8,83 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
+namespace LCPFavThingsWApi.Migrations.MySqlMigrations
 {
-    [DbContext(typeof(DBLiteContext))]
-    [Migration("20220715140452_InitialSQLite")]
-    partial class InitialSQLite
+    [DbContext(typeof(DBMySQLContext))]
+    [Migration("20220728152600_InitialMySQL")]
+    partial class InitialMySQL
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.6");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("LCPFavThingsWApi.Models.Games", b =>
                 {
                     b.Property<int?>("GameId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("GameId");
 
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Company")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Cover")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("DateRelease")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("DescT")
                         .IsRequired()
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(1024)");
 
                     b.Property<string>("Genre")
                         .IsRequired()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("LangT")
                         .IsRequired()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Publisher")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<decimal?>("Rating")
                         .IsRequired()
-                        .HasColumnType("decimal(2, 1)");
+                        .HasColumnType("decimal(2,1)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("GameId");
 
@@ -109,32 +111,32 @@ namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
                 {
                     b.Property<int?>("MovieId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("MovieId");
 
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Company")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Cover")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("DescT")
                         .IsRequired()
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(1024)");
 
                     b.Property<int?>("Duration")
                         .IsRequired()
@@ -144,23 +146,23 @@ namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("LangT")
                         .IsRequired()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<decimal?>("Rating")
                         .IsRequired()
-                        .HasColumnType("decimal(2, 1)");
+                        .HasColumnType("decimal(2,1)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("MovieId");
 
@@ -186,32 +188,32 @@ namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
                 {
                     b.Property<int?>("TVSerieId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("TVSerieId");
 
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Company")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Cover")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("DescT")
                         .IsRequired()
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(1024)");
 
                     b.Property<int?>("Duration")
                         .IsRequired()
@@ -221,23 +223,23 @@ namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("LangT")
                         .IsRequired()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<decimal?>("Rating")
                         .IsRequired()
-                        .HasColumnType("decimal(2, 1)");
+                        .HasColumnType("decimal(2,1)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<int?>("TotalSeasons")
                         .IsRequired()
@@ -282,32 +284,34 @@ namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
                 {
                     b.Property<int?>("UserAuthId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("UserAuthId");
 
                     b.Property<string>("Avatar")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(1024)");
 
                     b.Property<int?>("RoleT")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int?>("UserId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("UserId");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("UserAuthId");
 
@@ -318,7 +322,7 @@ namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
                         {
                             UserAuthId = 1,
                             Avatar = "guest.jpg",
-                            Password = "$2a$11$dkPo2BI.GIDetapgEINeweKTB0nNHsv/ukY6Lg9Fj5u07GbHUwR3i",
+                            Password = "$2a$11$QJG1aPpzkaEastZAvHUfmORZqieN1pGaYszj3jB69ITgFXN0dmQ.6",
                             RoleT = 1,
                             UserId = 1,
                             Username = "guest"
@@ -327,7 +331,7 @@ namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
                         {
                             UserAuthId = 2,
                             Avatar = "theflash.jpg",
-                            Password = "$2a$11$YY55RTdGgCzGipnj6r/ZkuFU5o5Ctr/zzS/BkkEk84uO.N9duNQm2",
+                            Password = "$2a$11$u/ox4fEf5cAXEeCqLGn8GOwqMb1hLCHlDtyVYcDrWLOAuWFrJ/VF2",
                             RoleT = 3,
                             UserId = 2,
                             Username = "admin"
@@ -338,23 +342,23 @@ namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
                 {
                     b.Property<int?>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("UserId");
 
                     b.Property<string>("About")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Avatar")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Cover")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DateAccountCreated")
                         .HasColumnType("datetime");
@@ -365,38 +369,38 @@ namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
                     b.Property<string>("Email")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("FirstName")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("LastName")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("PasswordT")
                         .IsRequired()
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(1024)");
 
                     b.Property<string>("Pin")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("longtext")
                         .HasColumnName("Pin");
 
                     b.Property<int?>("RoleT")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("UserId");
 
@@ -409,13 +413,13 @@ namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
                             About = "Guest is cool guy!",
                             Avatar = "guest.jpg",
                             Cover = "c_guest.jpg",
-                            DateAccountCreated = new DateTime(2022, 7, 15, 14, 4, 51, 667, DateTimeKind.Utc).AddTicks(1951),
+                            DateAccountCreated = new DateTime(2022, 7, 28, 15, 25, 59, 207, DateTimeKind.Utc).AddTicks(4961),
                             DateBirthday = new DateTime(1995, 5, 2, 23, 0, 0, 0, DateTimeKind.Utc),
                             Email = "guest@localhost.loc",
                             FirstName = "Guest",
                             LastName = "Convidado",
-                            PasswordT = "$2a$11$SP9zZWnbyN2dQPSXt9dX..YMUdCyRiC23bQfc3DP6h1ylWKsa/n1C",
-                            Pin = "$2a$11$QAipDm.ZCBVlHKqcee9LX.wbb7jDt9lQhQTjaUqcwvSo.kCMNmFB.",
+                            PasswordT = "$2a$11$D..FGHRCBcWTcD44L3lZ9eVaAljiaiuCU3BwP0V0bEnpX79ZsfzKS",
+                            Pin = "$2a$11$uk9wFG0emI95gcL3bOsequvdvotc7zHlCC0G04TTHkn3MPeZgf8Bm",
                             RoleT = 1,
                             Username = "guest"
                         },
@@ -425,13 +429,13 @@ namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
                             About = "Admin is cool guy!",
                             Avatar = "theflash.jpg",
                             Cover = "theflash.jpg",
-                            DateAccountCreated = new DateTime(2022, 7, 15, 14, 4, 52, 52, DateTimeKind.Utc).AddTicks(465),
+                            DateAccountCreated = new DateTime(2022, 7, 28, 15, 25, 59, 552, DateTimeKind.Utc).AddTicks(6301),
                             DateBirthday = new DateTime(1995, 6, 3, 23, 0, 0, 0, DateTimeKind.Utc),
                             Email = "admin@localhost.loc",
                             FirstName = "Admin",
                             LastName = "Admin",
-                            PasswordT = "$2a$11$59HwDO1U65B760j2cjd5vuWxuotYPvbl6vVZwFbeOTG/rBK.9BTP2",
-                            Pin = "$2a$11$ZECoh9Q54N/LBAMdPasp1Ok0InNZiAMqpg6Ra7m0X5QbhTXxW7ibS",
+                            PasswordT = "$2a$11$cQ/oILnEoVRPk4E.1GhhTOcPSptA1twSNVnnradr/yfFa/K17gACy",
+                            Pin = "$2a$11$gyVuHiRCLTekemRdEC6UoegE6W4Gkpo4DTtt19VmJbVpEvwPVo332",
                             RoleT = 3,
                             Username = "admin"
                         });
@@ -441,39 +445,39 @@ namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
                 {
                     b.Property<int?>("TokenId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("TokenId");
 
                     b.Property<string>("AccessToken")
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(1024)");
 
                     b.Property<int?>("Authenticated")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("Authenticated");
 
                     b.Property<string>("Created")
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(1024)");
 
                     b.Property<string>("Expiration")
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(1024)");
 
                     b.Property<string>("Message")
                         .HasMaxLength(1024)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(1024)");
 
                     b.Property<int?>("UserAuthId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("UserAuthId");
 
                     b.Property<int?>("UserId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("UserId");
 
                     b.HasKey("TokenId");

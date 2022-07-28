@@ -80,8 +80,8 @@ namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
                 {
                     UserAuthId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Username = table.Column<string>(type: "TEXT", unicode: false, maxLength: 255, nullable: true),
-                    Password = table.Column<string>(type: "TEXT", unicode: false, maxLength: 1024, nullable: true),
+                    Username = table.Column<string>(type: "TEXT", unicode: false, maxLength: 255, nullable: false),
+                    Password = table.Column<string>(type: "TEXT", unicode: false, maxLength: 1024, nullable: false),
                     RoleT = table.Column<int>(type: "INTEGER", unicode: false, maxLength: 255, nullable: true),
                     Avatar = table.Column<string>(type: "TEXT", unicode: false, maxLength: 255, nullable: true),
                     UserId = table.Column<int>(type: "INTEGER", nullable: true)
@@ -167,22 +167,22 @@ namespace LCPFavThingsWApi.Migrations.SqlLiteMigrations
             migrationBuilder.InsertData(
                 table: "UserAuth",
                 columns: new[] { "UserAuthId", "Avatar", "Password", "RoleT", "UserId", "Username" },
-                values: new object[] { 1, "guest.jpg", "$2a$11$dkPo2BI.GIDetapgEINeweKTB0nNHsv/ukY6Lg9Fj5u07GbHUwR3i", 1, 1, "guest" });
+                values: new object[] { 1, "guest.jpg", "$2a$11$f8/QWH16pIqgOeB/sZv6PehfbgKRsW8Et5DXcPq4idxtYIZyo3elO", 1, 1, "guest" });
 
             migrationBuilder.InsertData(
                 table: "UserAuth",
                 columns: new[] { "UserAuthId", "Avatar", "Password", "RoleT", "UserId", "Username" },
-                values: new object[] { 2, "theflash.jpg", "$2a$11$YY55RTdGgCzGipnj6r/ZkuFU5o5Ctr/zzS/BkkEk84uO.N9duNQm2", 3, 2, "admin" });
+                values: new object[] { 2, "theflash.jpg", "$2a$11$YMQU4aXakZSOTn88vS9xcOT6FfpwepYc4W0DAEm/moy6vbhhjJUs2", 3, 2, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "About", "Avatar", "Cover", "DateAccountCreated", "DateBirthday", "Email", "FirstName", "LastName", "PasswordT", "Pin", "RoleT", "Username" },
-                values: new object[] { 1, "Guest is cool guy!", "guest.jpg", "c_guest.jpg", new DateTime(2022, 7, 15, 14, 4, 51, 667, DateTimeKind.Utc).AddTicks(1951), new DateTime(1995, 5, 2, 23, 0, 0, 0, DateTimeKind.Utc), "guest@localhost.loc", "Guest", "Convidado", "$2a$11$SP9zZWnbyN2dQPSXt9dX..YMUdCyRiC23bQfc3DP6h1ylWKsa/n1C", "$2a$11$QAipDm.ZCBVlHKqcee9LX.wbb7jDt9lQhQTjaUqcwvSo.kCMNmFB.", 1, "guest" });
+                values: new object[] { 1, "Guest is cool guy!", "guest.jpg", "c_guest.jpg", new DateTime(2022, 7, 28, 15, 26, 31, 819, DateTimeKind.Utc).AddTicks(6390), new DateTime(1995, 5, 2, 23, 0, 0, 0, DateTimeKind.Utc), "guest@localhost.loc", "Guest", "Convidado", "$2a$11$i/aasMC2BSml.SijaaiBsuskN0zjY2mjen2SHXfsDHEQ000Okq6.6", "$2a$11$bRkSKv7UJxZ/8OvwrvUzqeat9gqEvphTdmUwIgPWOVG6B/dLtN8YW", 1, "guest" });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "About", "Avatar", "Cover", "DateAccountCreated", "DateBirthday", "Email", "FirstName", "LastName", "PasswordT", "Pin", "RoleT", "Username" },
-                values: new object[] { 2, "Admin is cool guy!", "theflash.jpg", "theflash.jpg", new DateTime(2022, 7, 15, 14, 4, 52, 52, DateTimeKind.Utc).AddTicks(465), new DateTime(1995, 6, 3, 23, 0, 0, 0, DateTimeKind.Utc), "admin@localhost.loc", "Admin", "Admin", "$2a$11$59HwDO1U65B760j2cjd5vuWxuotYPvbl6vVZwFbeOTG/rBK.9BTP2", "$2a$11$ZECoh9Q54N/LBAMdPasp1Ok0InNZiAMqpg6Ra7m0X5QbhTXxW7ibS", 3, "admin" });
+                values: new object[] { 2, "Admin is cool guy!", "theflash.jpg", "theflash.jpg", new DateTime(2022, 7, 28, 15, 26, 32, 163, DateTimeKind.Utc).AddTicks(3112), new DateTime(1995, 6, 3, 23, 0, 0, 0, DateTimeKind.Utc), "admin@localhost.loc", "Admin", "Admin", "$2a$11$NkxFJOutEzuAHzgC1GsLXeQ0kgbFRGJkL1gs15wfYWWyJ7ypMVDWu", "$2a$11$ZB68NVXwDGIPMVrcVzF0GOyOdTNWn0AGK0.0EmPTZa0dUk1rMLGR.", 3, "admin" });
 
             migrationBuilder.InsertData(
                 table: "UserToken",

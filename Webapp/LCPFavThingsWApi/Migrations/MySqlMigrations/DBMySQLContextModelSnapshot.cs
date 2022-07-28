@@ -291,6 +291,7 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasMaxLength(1024)
                         .IsUnicode(false)
                         .HasColumnType("varchar(1024)");
@@ -305,6 +306,7 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                         .HasColumnName("UserId");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
@@ -318,7 +320,7 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                         {
                             UserAuthId = 1,
                             Avatar = "guest.jpg",
-                            Password = "$2a$11$NQT3BB2/69mnmUxfT.4aZuMI74crBeZ2umQjNF04PFcLjhFbTGvZ2",
+                            Password = "$2a$11$QJG1aPpzkaEastZAvHUfmORZqieN1pGaYszj3jB69ITgFXN0dmQ.6",
                             RoleT = 1,
                             UserId = 1,
                             Username = "guest"
@@ -327,7 +329,7 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                         {
                             UserAuthId = 2,
                             Avatar = "theflash.jpg",
-                            Password = "$2a$11$zoHFQVRiB19vhoOLGhjr0uYIlDWMqQ6KC6ubZGedKvlE7HWWgwGFu",
+                            Password = "$2a$11$u/ox4fEf5cAXEeCqLGn8GOwqMb1hLCHlDtyVYcDrWLOAuWFrJ/VF2",
                             RoleT = 3,
                             UserId = 2,
                             Username = "admin"
@@ -409,13 +411,13 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                             About = "Guest is cool guy!",
                             Avatar = "guest.jpg",
                             Cover = "c_guest.jpg",
-                            DateAccountCreated = new DateTime(2022, 7, 15, 14, 4, 17, 950, DateTimeKind.Utc).AddTicks(5956),
+                            DateAccountCreated = new DateTime(2022, 7, 28, 15, 25, 59, 207, DateTimeKind.Utc).AddTicks(4961),
                             DateBirthday = new DateTime(1995, 5, 2, 23, 0, 0, 0, DateTimeKind.Utc),
                             Email = "guest@localhost.loc",
                             FirstName = "Guest",
                             LastName = "Convidado",
-                            PasswordT = "$2a$11$khr3A1FEbGauZ5sa2X9UZ./NFa5s1LqJGzJG7zcIKWGuo8naaTu7S",
-                            Pin = "$2a$11$NCuTOZrWcHdxzc6kSbNPFuAGxZPylaWtxxVDXzfkUmkl/bfOxcjdC",
+                            PasswordT = "$2a$11$D..FGHRCBcWTcD44L3lZ9eVaAljiaiuCU3BwP0V0bEnpX79ZsfzKS",
+                            Pin = "$2a$11$uk9wFG0emI95gcL3bOsequvdvotc7zHlCC0G04TTHkn3MPeZgf8Bm",
                             RoleT = 1,
                             Username = "guest"
                         },
@@ -425,13 +427,13 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                             About = "Admin is cool guy!",
                             Avatar = "theflash.jpg",
                             Cover = "theflash.jpg",
-                            DateAccountCreated = new DateTime(2022, 7, 15, 14, 4, 18, 380, DateTimeKind.Utc).AddTicks(9839),
+                            DateAccountCreated = new DateTime(2022, 7, 28, 15, 25, 59, 552, DateTimeKind.Utc).AddTicks(6301),
                             DateBirthday = new DateTime(1995, 6, 3, 23, 0, 0, 0, DateTimeKind.Utc),
                             Email = "admin@localhost.loc",
                             FirstName = "Admin",
                             LastName = "Admin",
-                            PasswordT = "$2a$11$yLVZYsLiPK6bOBCiJ79f2.sQBjHdBwKQ/xvjLMrL.S.cqCijLK0tG",
-                            Pin = "$2a$11$OsR/yyc03zjzMB7lfZJJfusVWXNctadRNwBCJXDqhAhy3IdmEG6LG",
+                            PasswordT = "$2a$11$cQ/oILnEoVRPk4E.1GhhTOcPSptA1twSNVnnradr/yfFa/K17gACy",
+                            Pin = "$2a$11$gyVuHiRCLTekemRdEC6UoegE6W4Gkpo4DTtt19VmJbVpEvwPVo332",
                             RoleT = 3,
                             Username = "admin"
                         });

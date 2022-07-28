@@ -8,6 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Localizer\**" />
+    <Compile Remove="MyExtensions\**" />
+    <Content Remove="Localizer\**" />
+    <Content Remove="MyExtensions\**" />
+    <EmbeddedResource Remove="Localizer\**" />
+    <EmbeddedResource Remove="MyExtensions\**" />
+    <None Remove="Localizer\**" />
+    <None Remove="MyExtensions\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\Images\ff8.jpg" />
     <None Remove="Assets\Images\ftwd.jpg" />
     <None Remove="Assets\Images\gtaiv.jpg" />

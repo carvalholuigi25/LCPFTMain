@@ -110,9 +110,9 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                 {
                     UserAuthId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Username = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true)
+                    Username = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Password = table.Column<string>(type: "varchar(1024)", unicode: false, maxLength: 1024, nullable: true)
+                    Password = table.Column<string>(type: "varchar(1024)", unicode: false, maxLength: 1024, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RoleT = table.Column<int>(type: "int", unicode: false, maxLength: 255, nullable: true),
                     Avatar = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true)
@@ -217,8 +217,8 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                 columns: new[] { "UserAuthId", "Avatar", "Password", "RoleT", "UserId", "Username" },
                 values: new object[,]
                 {
-                    { 1, "guest.jpg", "$2a$11$NQT3BB2/69mnmUxfT.4aZuMI74crBeZ2umQjNF04PFcLjhFbTGvZ2", 1, 1, "guest" },
-                    { 2, "theflash.jpg", "$2a$11$zoHFQVRiB19vhoOLGhjr0uYIlDWMqQ6KC6ubZGedKvlE7HWWgwGFu", 3, 2, "admin" }
+                    { 1, "guest.jpg", "$2a$11$QJG1aPpzkaEastZAvHUfmORZqieN1pGaYszj3jB69ITgFXN0dmQ.6", 1, 1, "guest" },
+                    { 2, "theflash.jpg", "$2a$11$u/ox4fEf5cAXEeCqLGn8GOwqMb1hLCHlDtyVYcDrWLOAuWFrJ/VF2", 3, 2, "admin" }
                 });
 
             migrationBuilder.InsertData(
@@ -226,8 +226,8 @@ namespace LCPFavThingsWApi.Migrations.MySqlMigrations
                 columns: new[] { "UserId", "About", "Avatar", "Cover", "DateAccountCreated", "DateBirthday", "Email", "FirstName", "LastName", "PasswordT", "Pin", "RoleT", "Username" },
                 values: new object[,]
                 {
-                    { 1, "Guest is cool guy!", "guest.jpg", "c_guest.jpg", new DateTime(2022, 7, 15, 14, 4, 17, 950, DateTimeKind.Utc).AddTicks(5956), new DateTime(1995, 5, 2, 23, 0, 0, 0, DateTimeKind.Utc), "guest@localhost.loc", "Guest", "Convidado", "$2a$11$khr3A1FEbGauZ5sa2X9UZ./NFa5s1LqJGzJG7zcIKWGuo8naaTu7S", "$2a$11$NCuTOZrWcHdxzc6kSbNPFuAGxZPylaWtxxVDXzfkUmkl/bfOxcjdC", 1, "guest" },
-                    { 2, "Admin is cool guy!", "theflash.jpg", "theflash.jpg", new DateTime(2022, 7, 15, 14, 4, 18, 380, DateTimeKind.Utc).AddTicks(9839), new DateTime(1995, 6, 3, 23, 0, 0, 0, DateTimeKind.Utc), "admin@localhost.loc", "Admin", "Admin", "$2a$11$yLVZYsLiPK6bOBCiJ79f2.sQBjHdBwKQ/xvjLMrL.S.cqCijLK0tG", "$2a$11$OsR/yyc03zjzMB7lfZJJfusVWXNctadRNwBCJXDqhAhy3IdmEG6LG", 3, "admin" }
+                    { 1, "Guest is cool guy!", "guest.jpg", "c_guest.jpg", new DateTime(2022, 7, 28, 15, 25, 59, 207, DateTimeKind.Utc).AddTicks(4961), new DateTime(1995, 5, 2, 23, 0, 0, 0, DateTimeKind.Utc), "guest@localhost.loc", "Guest", "Convidado", "$2a$11$D..FGHRCBcWTcD44L3lZ9eVaAljiaiuCU3BwP0V0bEnpX79ZsfzKS", "$2a$11$uk9wFG0emI95gcL3bOsequvdvotc7zHlCC0G04TTHkn3MPeZgf8Bm", 1, "guest" },
+                    { 2, "Admin is cool guy!", "theflash.jpg", "theflash.jpg", new DateTime(2022, 7, 28, 15, 25, 59, 552, DateTimeKind.Utc).AddTicks(6301), new DateTime(1995, 6, 3, 23, 0, 0, 0, DateTimeKind.Utc), "admin@localhost.loc", "Admin", "Admin", "$2a$11$cQ/oILnEoVRPk4E.1GhhTOcPSptA1twSNVnnradr/yfFa/K17gACy", "$2a$11$gyVuHiRCLTekemRdEC6UoegE6W4Gkpo4DTtt19VmJbVpEvwPVo332", 3, "admin" }
                 });
 
             migrationBuilder.InsertData(
