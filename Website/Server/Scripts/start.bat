@@ -1,6 +1,7 @@
 @echo off
 setlocal enableextensions
-set "srvpth=%LCPFTWebsite%\Webapp\Server"
+@REM set "srvpth=%LCPFTWebsite%\Server"
+set "srvpth=C:\Users\%username%\Documents\Visual Studio 2022\Projects\LCPFTMain\Website\Server"
 
 cls
 
