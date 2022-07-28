@@ -1,0 +1,105 @@
+﻿@page "/users/add"
+
+@using LCPFavThings.Data.SQL
+@using LCPFavThings.Data.SQLite
+
+@inject NavigationManager navman
+
+<h3>
+    <span class="bi bi-person-circle me-2"></span>
+    @localizer["lnkusers"]
+</h3>
+
+<form class="frmusers mt-3">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="username" class="control-label">Username</label>
+                <input type="text" class="form-control" @bind="@users.Username" />
+            </div>
+            <div class="form-group">
+                <label for="password" class="control-label">Password</label>
+                <input type="password" class="form-control" @bind="@users.PasswordT" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@CreateUsers" value="Save" />
+                <input type="button" class="btn btn-secondary" @onclick="Back" value="Back" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@code {
+    [Inject] public IJSRuntime JS { get; set; }
+    [Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+    [Inject] public ILocalDBDataService lcdb { get; set; }
+    [Inject] public IAllDataService allcdb { get; set; }
+    [Inject] public ILSHelper LSH { get; set; }
+
+    public string valdbm { get; set; }
+    private HubConnection hubConnection;
+
+    lib.Models.Users users = new lib.Models.Users();
+
+    protected override async Task OnInitializedAsync()
+    {
+        valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
+
+        await MyExtensions.LoadMyCultureInfo(JS);
+
+        try 
+        {
+            if (valdbm == "server_realtime")
+            {
+                hubConnection = new HubConnectionBuilder()
+                    .WithUrl(navman.ToAbsoluteUri(HTTPHelper.GetMyBaseAddress() + "/broadcastHub"))
+                    .Build();
+
+                await hubConnection.StartAsync();
+            }
+        } catch(Exception e) {
+            await JS.InvokeVoidAsync("alert", $"Message: {e.Message} \r\n URL: {HTTPHelper.GetMyBaseAddress()} \r\n DB Mode Type: {valdbm}");
+        }
+
+        StateHasChanged();
+    }
+
+    protected async Task CreateUsers()
+    {
+        if (valdbm == "server_realtime")
+        {
+            await allcdb.Insert<lib.Models.Users>("users", users);
+            if (IsConnected) await SendMessage();
+        }
+        else if (valdbm == "server")
+        {
+            await allcdb.Insert<lib.Models.Users>("users", users);
+        }
+        else
+        {
+            await lcdb.Create<lib.Models.Users>(users);
+        }
+
+        navman.NavigateTo("users");
+    }
+
+    Task SendMessage() => hubConnection.SendAsync("SendMessage");
+
+    public bool IsConnected =>
+        hubConnection.State == HubConnectionState.Connected;
+
+    public void Dispose()
+    {
+        _ = hubConnection.DisposeAsync();
+    }
+
+    private void Back()
+    {
+        navman.NavigateTo("/users");
+        StateHasChanged();
+    }
+}

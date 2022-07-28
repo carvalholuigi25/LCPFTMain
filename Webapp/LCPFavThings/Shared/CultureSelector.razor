@@ -1,0 +1,10 @@
+﻿<select class="form-control" @bind-value="@Culture" @onchange="ChangeCulture" @bind-value:event="oninput" style="width:auto; margin-left:10px;">
+    @foreach (var culture in MyCultures)
+    {
+        <option value="@culture">@culture.DisplayName</option>
+    }
+</select>
+
+@code {
+
+}

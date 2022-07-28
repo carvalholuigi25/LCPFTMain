@@ -1,0 +1,42 @@
+﻿@page "/"
+@inject IToastService toastService
+
+<h1>
+    <span class="bi bi-house me-2"></span>
+    @localizer["title"]    
+</h1>
+
+<p>@localizer["welcome"]</p>
+
+@code {
+    [Inject] public IJSRuntime JS { get; set; }
+    [Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await MyExtensions.LoadMyCultureInfo(JS);
+        await LoadAndHideNotification(true);
+        StateHasChanged();
+    }
+
+    private async Task LoadAndHideNotification(bool isNotificationEnabled = false) 
+    {
+        if (isNotificationEnabled)
+        {
+            try
+            {
+                toastService.ShowInfo("Loaded");
+            }
+            catch (Exception e)
+            {
+                toastService.ShowError("Error" + Environment.NewLine + e.Message);
+            }
+
+            await Task.Delay(1000 * 5);
+            toastService.ClearAll();
+        }
+        else {
+            await JS.InvokeVoidAsync("console.log", "Notifications are currently disabled by admin of this web app!");
+        }
+    }
+}

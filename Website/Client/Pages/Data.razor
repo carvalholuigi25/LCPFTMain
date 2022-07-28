@@ -1,0 +1,134 @@
+﻿@* source: https://docs.microsoft.com/en-us/aspnet/core/blazor/tutorials/signalr-blazor?view=aspnetcore-6.0&tabs=visual-studio&pivots=webassembly *@
+@page "/data"
+
+@using LCPFavThingsWebsite.Client.Components.Forms
+@using LCPFavThingsWebsite.Client.Components.Tables
+@using LCPFavThingsWebsite.Shared.Models
+@using Microsoft.AspNetCore.SignalR.Client
+@using Newtonsoft.Json
+
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+<PageTitle>Data</PageTitle>
+
+@if(tblName != null) {
+    <button type="button" class="btn btn-primary" @onclick="@(() => Goto($"/data/create/{tblName.ToLower()}"))">Create @tblName</button>
+}
+
+<select @bind-value="tblName" @bind-value:event="oninput" @onchange="Send" class="form-control mt-3">
+    <option value="games" selected>Games</option>
+    <option value="movies">Movies</option>
+    <option value="tvseries">TV Series</option>
+    <option value="users">Users</option>
+</select>
+
+<div class="d-inline-block ms-auto me-auto text-center mt-3 mb-3">
+    <button class="btn btn-primary w-auto" @onclick="Send" disabled="@(!IsConnected)">Find</button>
+    <button class="btn btn-secondary ms-1 w-auto" @onclick="Reset">Clear</button>
+</div>
+
+@if(data != null) 
+{
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="table-tab" data-bs-toggle="tab" data-bs-target="#table-tab-pane" type="button" role="tab" aria-controls="table-tab-pane" aria-selected="true">
+                Table
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="json-tab" data-bs-toggle="tab" data-bs-target="#json-tab-pane" type="button" role="tab" aria-controls="json-tab-pane" aria-selected="false">
+                JSON
+            </button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
+            <MainTables tblName="@tblName" />
+        </div>
+        <div class="tab-pane fade" id="json-tab-pane" role="tabpanel" aria-labelledby="json-tab" tabindex="0">
+            <pre class="mt-3 mb-3" style="white-space: pre-wrap;">@JsonConvert.SerializeObject(data, Formatting.Indented)</pre>
+        </div>
+    </div>
+}
+else 
+{
+    <p class="mt-3">Loading...</p>
+}
+
+@code {
+    private HubConnection? hubConnection;
+    private dynamic? data;
+    private string? tblName;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try 
+        {
+            tblName = !string.IsNullOrEmpty(tblName) ? tblName : "games";
+
+            hubConnection = new HubConnectionBuilder()
+                .WithUrl(NavigationManager.ToAbsoluteUri("/broadcasthub"))
+                .Build();
+
+            hubConnection.On("ReceiveMessage", async () =>
+            {
+                await LoadData();
+            });
+
+            await hubConnection.StartAsync();
+            await LoadData();
+        } catch (Exception e) {
+            await JS.InvokeVoidAsync("alert", e.Message);
+        }
+    }
+
+    protected async Task LoadData()
+    {
+        data = tblName switch {
+            "games" => await Http.GetFromJsonAsync<List<Games>>("/api/games"),
+            "movies" => await Http.GetFromJsonAsync<List<Movies>>("/api/movies"),
+            "tvseries" => await Http.GetFromJsonAsync<List<TVSeries>>("/api/tvseries"),
+            "users" => await Http.GetFromJsonAsync<List<Users>>("/api/users"),
+            _ => null
+        };
+
+        StateHasChanged();
+    }
+
+    private async Task Send()
+    {
+        try {
+            if (hubConnection is not null)
+            {
+                await LoadData();
+                await hubConnection.SendAsync("SendMessage");
+            }
+        } catch (Exception e) {
+            await JS.InvokeVoidAsync("alert", e.Message);
+        }
+    }
+
+    private async Task Reset() 
+    {
+        tblName = "games";
+        await LoadData();
+    }
+
+    public bool IsConnected =>
+        hubConnection?.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+
+    private void Goto(string url) {
+        NavigationManager.NavigateTo(url);
+    }
+}

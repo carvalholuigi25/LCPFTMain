@@ -1,0 +1,47 @@
+﻿<div class="maintranslateblk d-block mt-3 w-100 h-auto">
+    <select class="seltlweb form-control" @bind-value="@seltlwebv" @onchange="ChangeWebsiteTranslator" @bind-value:event="oninput">
+        <option value="google" selected>Google</option>
+        <option value="microsoft">Microsoft</option>
+    </select>
+
+    <div class="d-inline-block ms-0 me-0 text-left mt-3">
+        <a href="@url" class="btn btn-primary ms-2">Open in your browser</a>
+        <button class="btn btn-primary btnloadembed" @onclick="LoadContent">Load content of website</button>
+    </div>
+
+    @if(isEmbedLoad)
+    {
+        <p class="mt-3">Note: If you have trouble to access this website, please click the button "Open in your browser" above.</p>
+        <iframe src="@url" class="w-100 h-auto mt-3" style="height: 100vh !important;"></iframe>
+    }
+</div>
+
+@code {
+    public string seltlwebv { get; set; } = "google";
+    public string url { get; set; } = "https://translate.google.com";
+    public bool isEmbedLoad { get; set; } = false;
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+
+    private void ChangeWebsiteTranslator(ChangeEventArgs e)
+    {
+        seltlwebv = e.Value.ToString();
+
+        if(seltlwebv.Contains("google", StringComparison.OrdinalIgnoreCase))
+        {
+            url = "https://translate.google.com";
+        }
+        else
+        {
+            url = "https://www.bing.com/translator/?mkt=pt-br";
+        }
+    }
+
+    void LoadContent()
+    {
+        isEmbedLoad = !isEmbedLoad;
+    }
+}

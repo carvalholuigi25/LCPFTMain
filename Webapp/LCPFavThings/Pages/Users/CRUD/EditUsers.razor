@@ -1,0 +1,133 @@
+﻿@page "/users/edit/{UserId:int}"
+
+@using LCPFavThings.Data.SQL
+@using LCPFavThings.Data.SQLite
+
+@inject NavigationManager navman
+
+<h3>
+    <span class="bi bi-person-circle me-2"></span>
+    @localizer["lnkusers"]
+</h3>
+
+<form class="frmeditusers mt-3">
+    <div class="row">
+        <div class="col-12">
+            <input type="hidden" class="hidden" readonly @bind="@users.UserId" />
+            <div class="form-group">
+                <label for="username" class="control-label">Username</label>
+                <input type="text" class="form-control" @bind="@users.Username" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="firstname" class="control-label">First Name</label>
+                <input type="text" class="form-control" @bind="@users.FirstName" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="lastname" class="control-label">Last Name</label>
+                <input type="text" class="form-control" @bind="@users.LastName" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="email" class="control-label">Email</label>
+                <input type="email" class="form-control" @bind="@users.Email" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="role" class="control-label">Role</label>
+                <input type="text" class="form-control" @bind="@users.RoleT" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <input type="button" class="btn btn-primary" @onclick="@UpdateUsers" value="Update" />
+            <input type="button" class="btn btn-secondary" @onclick="@Back" value="Cancel" />
+        </div>
+    </div>
+</form>
+
+@code {
+    [Parameter]
+    public int UserId { get; set; }
+
+    [Inject] public IJSRuntime JS { get; set; }
+    [Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+    [Inject] public ILocalDBDataService lcdb { get; set; }
+    [Inject] public IAllDataService allcdb { get; set; }
+    [Inject] public ILSHelper LSH { get; set; }
+
+    private HubConnection hubConnection;
+    public string valdbm { get; set; }
+
+    LCPFavThings.Models.Users users = new LCPFavThings.Models.Users();
+    List<LCPFavThings.Models.Users> userslist = new List<LCPFavThings.Models.Users>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
+        await MyExtensions.LoadMyCultureInfo(JS);
+
+        try 
+        {
+            if (valdbm == "server_realtime")
+            {
+                userslist = await allcdb.ReadById<LCPFavThings.Models.Users>("users", x => x.UserId == UserId);
+
+                hubConnection = new HubConnectionBuilder()
+                .WithUrl(navman.ToAbsoluteUri(HTTPHelper.GetMyBaseAddress() + "/broadcastHub"))
+                .Build();
+
+                await hubConnection.StartAsync();
+            }
+            else if (valdbm == "server")
+            {
+                userslist = await allcdb.ReadById<LCPFavThings.Models.Users>("users", x => x.UserId == UserId);
+            }
+            else
+            {
+                userslist = await lcdb.ReadById<LCPFavThings.Models.Users>(x => x.UserId == UserId);
+            }
+
+            users = (LCPFavThings.Models.Users)userslist.FirstOrDefault();
+        }
+        catch (Exception e)
+        {
+            await JS.InvokeVoidAsync("alert", $"Message: {e.Message} \r\n URL: {HTTPHelper.GetMyBaseAddress()} \r\n DB Mode Type: {valdbm}");
+        }
+
+        StateHasChanged();
+    }
+
+    protected async Task UpdateUsers()
+    {
+        if (valdbm == "server_realtime")
+        {
+            await allcdb.Update<LCPFavThings.Models.Users>("users", UserId, users);
+            if (IsConnected) await SendMessage();
+        }
+        else if (valdbm == "server")
+        {
+            await allcdb.Update<LCPFavThings.Models.Users>("users", UserId, users);
+        }
+        else
+        {
+            await lcdb.Update<LCPFavThings.Models.Users>(users);
+        }
+
+        navman.NavigateTo("users");
+    }
+
+    Task SendMessage() => hubConnection.SendAsync("SendMessage");
+
+    public bool IsConnected =>
+        hubConnection.State == HubConnectionState.Connected;
+
+    public void Dispose()
+    {
+        _ = hubConnection.DisposeAsync();
+    }
+
+    private void Back()
+    {
+        navman.NavigateTo("/users");
+        StateHasChanged();
+    }
+}

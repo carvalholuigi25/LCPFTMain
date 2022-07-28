@@ -1,0 +1,25 @@
+﻿@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+<select class="form-control selssl mt-3" id="selssl" @bind-value="@valssl" @onchange="ChangeSSLMode" @bind-value:event="oninput">
+	<option value="" disabled>Select the ssl mode</option>
+	<option value="true">True</option>
+	<option value="false">False</option>
+</select>
+
+@code {
+	[Inject] public ILSHelper LSH { get; set; }
+
+	public static string valssl { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		valssl = await localStorage.GetItemAsync<string>("isSSL");
+		StateHasChanged();
+	}
+
+	private async void ChangeSSLMode(ChangeEventArgs e)
+	{
+		valssl = e.Value.ToString();
+		await localStorage.SetItemAsync<string>("isSSL", valssl);
+	}
+}

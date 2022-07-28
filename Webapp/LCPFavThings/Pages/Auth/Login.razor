@@ -1,0 +1,193 @@
+﻿@page "/login"
+
+@using LCPFavThings.Data.SQL
+@using LCPFavThings.Data.SQLite
+@using LCPFavThings.Helpers
+@using Newtonsoft.Json
+@using bc = BCrypt.Net.BCrypt
+
+<h3>
+    <span class="bi bi-door-open ms-1"></span>
+    @localizer["lnklogin"]
+</h3>
+
+<Microsoft.AspNetCore.Components.Forms.EditForm Model="@usersauth" OnValidSubmit="DoLogin">
+    <Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator />
+    <Microsoft.AspNetCore.Components.Forms.ValidationSummary />
+
+    <div class="form-group mt-3">
+        <label for="username">Username</label>
+        <InputText type="text" class="username form-control" id="username" @bind-Value="usersauth.Username" />
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="passwordt">Password</label>
+        <InputText type="password" class="password form-control" id="password" @bind-Value="usersauth.Password" />
+    </div>
+
+    <div class="form-group mt-3 d-inline-block ms-auto me-auto">
+        <button type="submit" class="btn btn-primary btnlogin" id="btnlogin">Enter</button>
+        <button type="button" class="btn btn-secondary btnresetlogin ms-1" id="btnresetlogin" @onclick="Clear">Clear</button>
+    </div>
+</Microsoft.AspNetCore.Components.Forms.EditForm>
+
+<div class="d-block mt-3 ms-auto me-auto text-center infogroup">
+    <i class="bi bi-info-circle" style="font-size: 3rem"></i>
+    <p class="mt-3">New here or you dont have account here? Please create your account below here.</p>
+    <button class="btn btn-primary mt-3" @onclick="GoToReg">Register</button>
+</div>
+
+@code {
+    [Inject] public IJSRuntime JS { get; set; }
+    [Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+    [Inject] public ILSHelper ls { get; set; }
+    [Inject] public IAllDataService alldatasrv { get; set; }
+    [Inject] public ILocalDBDataService locdbdatasrv { get; set; }
+    [Inject] public NavigationManager navman { get; set; }
+
+    private string valdbm { get; set; } = "server";
+
+    lib.Models.UserAuth usersauth = new lib.Models.UserAuth();
+    List<lib.Models.UserAuth> usersauthlist = new List<lib.Models.UserAuth>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await MyExtensions.LoadMyCultureInfo(JS);
+
+        valdbm = !string.IsNullOrEmpty(await ls.Get("dbmode")) ? await ls.Get("dbmode") : "server";
+
+        StateHasChanged();
+    }
+
+    private async Task<string> GetCurPasswordDB(string valdbm = "local")
+    {
+        if(valdbm == "local") {
+            return (await locdbdatasrv.Read<lib.Models.Users>()).ToList().Where(x => x.Username == usersauth.Username).FirstOrDefault().PasswordT;
+        } else {
+            return (await alldatasrv.Get<lib.Models.Users>("users")).ToList().Where(x => x.Username == usersauth.Username).FirstOrDefault().PasswordT;
+        }
+    }
+
+    private async Task DoLogin()
+    {
+        try
+        {
+            if (usersauth != null)
+            {
+                var userslistv = new List<lib.Models.UserAuth>();
+
+                if (valdbm == "local")
+                {
+                    var myuserslistact = (await locdbdatasrv.Read<lib.Models.Users>()).ToList().Where(x => x.Username == usersauth.Username).FirstOrDefault();
+                    if (myuserslistact == null) { await ShowError(); return; }
+
+                    var myauthdet = new lib.Models.UserAuth()
+                    {
+                        Username = myuserslistact.Username,
+                        Password = myuserslistact.PasswordT,
+                        Avatar = myuserslistact.Avatar,
+                        RoleT = myuserslistact.RoleT,
+                        UserId = myuserslistact.UserId,
+                        TokenInfo = myuserslistact.TokenInfo
+                    };
+
+                    userslistv = await locdbdatasrv.CreateAndGet<lib.Models.UserAuth>(myauthdet);
+                }
+                else
+                {
+                    userslistv = await alldatasrv.InsertAndGet<lib.Models.UserAuth>("auth", usersauth);
+                }
+
+                if (userslistv != null)
+                {
+                    var lstdata = userslistv.Where(x => x.Username == usersauth.Username).FirstOrDefault();
+
+                    if (lstdata != null)
+                    {
+                        if (lstdata.TokenInfo == null)
+                        {
+                            lstdata.TokenInfo = MyExtensions.GenerateToken(lstdata.Username, lstdata.UserId).TokenInfo;
+                        }
+
+                        if (string.IsNullOrEmpty(lstdata.Password))
+                        {
+                            lstdata.Password = bc.HashPassword(usersauth.Password);
+                        }
+
+                        var jspdata = JsonConvert.SerializeObject(lstdata);
+
+                        if (!string.IsNullOrEmpty(jspdata))
+                        {
+                            var isUserExists = bc.Verify(usersauth.Password, await GetCurPasswordDB(valdbm));
+
+                            if (isUserExists)
+                            {
+                                await ls.Save("authinfo", jspdata);
+
+                                if (!string.IsNullOrEmpty(await ls.Get("authinfo")))
+                                {
+                                    await JS.InvokeVoidAsync("alert", $"Succesfully logged as {usersauth.Username}!");
+                                    navman.NavigateTo("/", true);
+                                }
+                            }
+                            else
+                            {
+                                await ShowError();
+                            }
+                        }
+                        else
+                        {
+                            await ShowError();
+                        }
+                    }
+                    else
+                    {
+                        await ShowError();
+                    }
+                }
+                else
+                {
+                    await ShowError();
+                }
+            }
+            else
+            {
+                Clear();
+                await JS.InvokeVoidAsync("alert", @"Error: Please write your credientals of actual user into fields. Thank you!");
+            }
+        } 
+        catch (Exception e) 
+        {
+            Clear();
+            await JS.InvokeVoidAsync("alert", "" + e.Message);
+        }
+    }
+
+    private async Task ShowError() 
+    {
+        if (!string.IsNullOrEmpty(await ls.Get("authinfo")))
+        {
+            await ls.Delete("authinfo");
+        }
+
+        await JS.InvokeVoidAsync("alert", $@"
+        Error: Occurred error when trying to log with this account {usersauth.Username}.
+        Reasons:
+        The account does not exist.
+        The password of account is invalid.
+        The account has already been registered by somebody else.");
+
+        Clear();
+        navman.NavigateTo("/login", true);
+    }
+
+    private void Clear()
+    {
+        usersauth = new lib.Models.UserAuth();
+    }
+
+    private void GoToReg() 
+    {
+        navman.NavigateTo("register");
+    }
+}

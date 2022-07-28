@@ -1,0 +1,18 @@
+﻿@page "/data/create/movies"
+@using LCPFavThingsWebsite.Shared.Models
+@using LCPFavThingsWebsite.Client.Components.Forms
+@inject NavigationManager NavigationManager
+
+<h3>Movies</h3>
+
+<DynamicForm mymodel="nmovies" apiname="movies" type="create" id="-1" />
+<button type="button" class="btn btn-primary mt-3 mb-3 d-block" @onclick="@(() => Goto("/data"))">Back</button>
+
+@code {
+    LCPFavThingsWebsite.Shared.Models.Movies nmovies { get; set; } = new LCPFavThingsWebsite.Shared.Models.Movies();
+
+    private void Goto(string url)
+    {
+        NavigationManager.NavigateTo(url, true);
+    }
+}

@@ -1,0 +1,102 @@
+﻿@using LCPFavThingsWebsite.Shared.Models
+@using Newtonsoft.Json
+@using bc = BCrypt.Net.BCrypt
+
+@inject HttpClient httpcl
+@inject NavigationManager navman
+
+@page "/"
+@page "/home"
+
+<PageTitle>Index</PageTitle>
+
+<div class="container-fluid p-0 ms-auto me-auto">
+    <div class="row p-0 ms-auto me-auto">
+        <div class="col-12 col-md-6 order-2 order-sm-2 order-md-1 order-lg-1 order-xl-1 order-xxl-1 p-0">
+            <img src="images/mimg.jpg" class="img-fluid imgmain" alt="Main image" style="object-position: center; object-fit: cover;" />
+        </div>
+        <div class="col-12 col-md-6 order-1 order-sm-1 order-md-2 order-lg-2 order-xl-2 order-xxl-2 pt-0 pb-0 ps-3 pe-3">
+            <div class="d-flex flex-column justify-content-center align-items-stretch ms-auto me-auto text-center min-vh-100">
+                <h1>Welcome!</h1>
+
+                <EditForm Model="userauth" OnValidSubmit="Submit" class="frmlog mt-3 w-50 ms-auto me-auto">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control username" id="username" placeholder="Write your username here" @bind-value="userauth.Username" />
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control password" id="password" placeholder="Write your password here" @bind-value="userauth.Password" />
+                    </div>
+
+                    <div class="form-group mt-3 ms-auto me-auto text-center">
+                        <input type="submit" class="btn btn-primary" value="Login" />
+                        <input type="reset" class="btn btn-secondary" value="Reset" />
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+@code {
+    #nullable disable
+
+    [Inject] IJSRuntime js { get; set; } = null!;
+
+    public UserAuth userauth { get; set; } = new UserAuth();
+    private Users userslist = new Users() { };
+
+    private async Task<Users> GetUsersList() {
+        return (await httpcl.GetFromJsonAsync<List<Users>>("api/users")).ToList().Where(x => x.Username == userauth.Username).FirstOrDefault();
+    }
+
+    private async Task<bool> VerifyIfLog(string password, string hpassword) {
+        return await Task.FromResult(bc.Verify(password, hpassword));
+    }
+
+    private async Task Submit() {
+        try {
+            userslist = await GetUsersList();
+
+            if (userauth != null && userslist != null)
+            {
+                UserAuth myobj = new UserAuth()
+                {
+                    UserAuthId = userslist.UserId,
+                    Username = userauth.Username,
+                    Password = null,
+                    Avatar = userslist.Avatar,
+                    RoleT = userslist.RoleT,
+                    UserId = userslist.UserId,
+                    TokenInfo = userslist.TokenInfo
+                };
+
+                if (await VerifyIfLog(userauth.Password, userslist.PasswordT))
+                {
+                    await js.InvokeAsync<string>("localStorage.setItem", "authlog", JsonConvert.SerializeObject(myobj));
+                    await js.InvokeVoidAsync("alert", "Logged in!");
+                }
+                else
+                {
+                    userauth = new UserAuth();
+                    await js.InvokeVoidAsync("alert", "Account not found or account details are invalid!");
+                }
+
+                StateHasChanged();
+                navman.NavigateTo("/", true);
+            } 
+            else 
+            {
+                await js.InvokeVoidAsync("alert", "Account not found or account details are invalid!");
+            }
+        } catch (Exception e) {
+            await js.InvokeVoidAsync("alert", JsonConvert.SerializeObject(e.Message, Formatting.Indented));
+        }
+    }
+}

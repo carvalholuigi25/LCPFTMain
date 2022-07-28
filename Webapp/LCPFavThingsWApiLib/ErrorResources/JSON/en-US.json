@@ -1,0 +1,20 @@
+{
+  "EMCategory": "Please write something in the field Category",
+  "EMCompany": "Please write something in the field Company",
+  "EMCover": "Please write or upload something in the field Cover",
+  "EMDateRelease": "Please write something in the field Date Release",
+  "EMDesc": "Please write something in the field Description",
+  "EMDuration": "Please write something in the field Duration",
+  "EMDurationVal": "This field only accepts positive numbers!",
+  "EMGenre": "Please write something in the field Genre",
+  "EMLanguage": "Please write something in the field Language",
+  "EMPassword": "Please write something in the field Password",
+  "EMPublisher": "Please write something in the field Publisher",
+  "EMQryCMD": "Please write something in the field Query Command",
+  "EMRating": "Please write something in the field Rating",
+  "EMRatingVal": "The value should be less than or equal to 10.0",
+  "EMTitle": "Please write something in the field Title",
+  "EMTotalSeasons": "Please write something in the field Total Seasons",
+  "EMTotalSeasonsVal": "The value should be less than or equal to 50",
+  "EMUsername": "Please write something in the field Username"
+}

@@ -1,0 +1,20 @@
+{
+  "EMCategory": "Per favore, scrivi qualcosa nel campo Categoria",
+  "EMCompany": "Per favore, scrivi qualcosa nel campo Azienda",
+  "EMCover": "Scrivi o carica qualcosa nel campo Cover",
+  "EMDateRelease": "Per favore, scrivi qualcosa nel campo Data di rilascio",
+  "EMDesc": "Per favore, scrivi qualcosa nel campo Descrizione",
+  "EMDuration": "Per favore, scrivi qualcosa nel campo Durata",
+  "EMDurationVal": "Questo campo accetta solo numeri positivi!",
+  "EMGenere": "Per favore, scrivi qualcosa nel campo Genere",
+  "EMLanguage": "Per favore, scrivi qualcosa nel campo Lingua",
+  "EMPassword": "Per favore, scrivi qualcosa nel campo Password",
+  "EMPublisher": "Per favore, scrivi qualcosa nel campo Editore",
+  "EMQryCMD": "Per favore, scrivi qualcosa nel campo Query Command",
+  "EMRating": "Per favore, scrivi qualcosa nel campo Rating",
+  "EMRatingVal": "Il valore deve essere minore o uguale a 10.0",
+  "EMTitle": "Per favore, scrivi qualcosa nel campo Titolo",
+  "EMTotalSeasons": "Per favore, scrivi qualcosa nel campo Total Seasons",
+  "EMTotalSeasonsVal": "Il valore deve essere minore o uguale a 50",
+  "EMUsername": "Per favore, scrivi qualcosa nel campo Username"
+}

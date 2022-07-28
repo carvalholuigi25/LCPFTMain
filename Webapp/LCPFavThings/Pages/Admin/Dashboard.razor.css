@@ -1,0 +1,30 @@
+﻿pre {
+    display: block;
+    white-space: pre-wrap;
+    word-break: break-all;
+    word-wrap: break-word;
+    overflow: auto;
+    background: black;
+    color: lawngreen;
+    padding: 15px;
+}
+
+pre::before, pre::before {
+    display: block;
+    content: "Query Result";
+    padding: 15px;
+    margin: 0px auto 15px auto;
+    border: 1px solid;
+}
+
+.btn:disabled:hover, button:disabled:hover, a:disabled:hover, *:disabled:hover {
+    cursor: not-allowed !important;
+}
+
+.ws-pre-wrap {
+    white-space: pre-wrap !important;
+}
+
+.ws-pre-line {
+    white-space: pre-line !important;
+}

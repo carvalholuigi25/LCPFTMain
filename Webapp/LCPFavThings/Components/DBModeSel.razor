@@ -1,0 +1,25 @@
+﻿<select class="form-control seldbmode mt-3" id="seldbmode" @bind-value="@valdbm" @onchange="ChangeDBMode" @bind-value:event="oninput">
+	<option value="" disabled>Select the db mode</option>
+	<option value="server" selected>Server</option>
+	<option value="server_realtime">Server Realtime</option>
+	<option value="local">Local</option>
+</select>
+
+@code {
+	[Inject]
+	public ILSHelper LSH { get; set; }
+
+	public static string valdbm { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		valdbm = await LSH.Get("dbmode");
+		StateHasChanged();
+	}
+
+	private async void ChangeDBMode(ChangeEventArgs e)
+	{
+		valdbm = e.Value.ToString();
+		await LSH.Save("dbmode", valdbm);
+	}
+}

@@ -1,0 +1,156 @@
+﻿@page "/tvseries/delete/{TVSerieId:int}"
+
+@using LCPFavThings.Data.SQL
+@using LCPFavThings.Data.SQLite
+
+@inject NavigationManager navman
+
+<h3>
+    <span class="bi bi-tv me-2"></span>
+    @localizer["lnktvseries"]
+</h3>
+
+<p>Are you sure you want to delete this TV Serie with Id: @TVSerieId?</p>
+
+<div class="col-md-12 mt-3">
+    <table class="table">
+        <tr>
+            <td>Id</td>
+            <td>@tvseries.TVSerieId</td>
+        </tr>
+        <tr>
+            <td>Title</td>
+            <td>@tvseries.Title</td>
+        </tr>
+        <tr>
+            <td>Desc</td>
+            <td>@tvseries.DescT</td>
+        </tr>
+        <tr>
+            <td>Genre</td>
+            <td>@tvseries.Genre</td>
+        </tr>
+        <tr>
+            <td>Category</td>
+            <td>@tvseries.Category</td>
+        </tr>
+        <tr>
+            <td>Cover</td>
+            <td>@tvseries.Cover</td>
+        </tr>
+        <tr>
+            <td>Company</td>
+            <td>@tvseries.Company</td>
+        </tr>
+        <tr>
+            <td>Language</td>
+            <td>@tvseries.LangT</td>
+        </tr>
+        <tr>
+            <td>Duration</td>
+            <td>@tvseries.Duration</td>
+        </tr>
+        <tr>
+            <td>Total Seasons</td>
+            <td>@tvseries.TotalSeasons</td>
+        </tr>
+        <tr>
+            <td>Rating</td>
+            <td>@tvseries.Rating</td>
+        </tr>
+    </table>
+    <div class="form-group">
+        <input type="button" value="Delete" @onclick="@Delete" class="btn btn-primary" />
+        <input type="button" value="Cancel" @onclick="@Back" class="btn btn-secondary" />
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public int TVSerieId { get; set; }
+
+    [Inject] public IJSRuntime JS { get; set; }
+    [Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+    [Inject] public ILocalDBDataService lcdb { get; set; }
+    [Inject] public IAllDataService allcdb { get; set; }
+    [Inject] public ILSHelper LSH { get; set; }
+
+    private HubConnection hubConnection;
+    public string valdbm { get; set; }
+
+    List<LCPFavThings.Models.TVSeries> tvserieslist = new List<LCPFavThings.Models.TVSeries>();
+    LCPFavThings.Models.TVSeries tvseries = new LCPFavThings.Models.TVSeries();
+
+    protected override async Task OnInitializedAsync()
+    {
+        valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
+
+        await MyExtensions.LoadMyCultureInfo(JS);
+
+        try 
+        {
+            if(valdbm == "server_realtime")
+            {
+                tvserieslist = await allcdb.ReadById<LCPFavThings.Models.TVSeries>("tvseries", x => x.TVSerieId == TVSerieId);
+
+                hubConnection = new HubConnectionBuilder()
+                    .WithUrl(navman.ToAbsoluteUri(HTTPHelper.GetMyBaseAddress() + "/broadcastHub"))
+                    .Build();
+
+                await hubConnection.StartAsync();
+            }
+            else if(valdbm == "server")
+            {
+                tvserieslist = await allcdb.ReadById<LCPFavThings.Models.TVSeries>("tvseries", x => x.TVSerieId == TVSerieId);
+            }
+            else
+            {
+                tvserieslist = await lcdb.ReadById<LCPFavThings.Models.TVSeries>(x => x.TVSerieId == TVSerieId);
+            }
+
+            tvseries = (LCPFavThings.Models.TVSeries)tvserieslist.FirstOrDefault();
+        }
+        catch (Exception e)
+        {
+            await JS.InvokeVoidAsync("alert", $"Message: {e.Message} \r\n URL: {HTTPHelper.GetMyBaseAddress()} \r\n DB Mode Type: {valdbm}");
+        }
+
+        StateHasChanged();
+    }
+
+    protected async Task Delete()
+    {
+        if (valdbm == "server")
+        {
+            await allcdb.Delete<LCPFavThings.Models.TVSeries>("tvseries", TVSerieId);
+        }
+        else if(valdbm == "server_realtime")
+        {
+            await allcdb.Delete<LCPFavThings.Models.TVSeries>("tvseries", TVSerieId);
+            if (IsConnected) await SendMessage();
+        }
+        else
+        {
+            await lcdb.Delete<LCPFavThings.Models.TVSeries>(tvseries);
+        }
+
+        navman.NavigateTo("tvseries");
+    }
+
+    Task SendMessage() => hubConnection.SendAsync("SendMessage");
+
+    public bool IsConnected =>
+        hubConnection.State == HubConnectionState.Connected;
+
+    public void Dispose()
+    {
+        _ = hubConnection.DisposeAsync();
+    }
+
+    private void Back()
+    {
+        navman.NavigateTo("/tvseries");
+        StateHasChanged();
+    }
+}

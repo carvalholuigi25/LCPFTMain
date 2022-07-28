@@ -1,0 +1,115 @@
+﻿@inject NavigationManager navman
+
+@if (mydata.Count() == 0)
+{
+	<p>No games data!</p>
+}
+else
+{
+	<div class="row">
+		@if(mydataid != null)
+		{
+			@foreach (var mdata in mydata)
+			{
+				@if(mdata.GameId == mydataid)
+				{
+					<div class="col-12 col-md-12">
+						<div class="card carddet">
+							<div class="cardcol1">
+								<div class="card-img-container">
+									<img src="@imgpth/@mdata.Cover" class="card-img-top cover mt-3" alt="@mdata.Title" title="@mdata.Title" loading="lazy" />
+								</div>
+							</div>
+							<div class="cardcol2">
+								<div class="card-body">
+									<h3 class="mt-3">@mdata.Title</h3>
+
+									<p class="mt-3">Id: @mdata.GameId</p>
+									<p class="mt-3">Description: </p>
+									<div class="card card-body mt-3">@mdata.DescT</div>
+									<p class="mt-3">Genre: @mdata.Genre</p>
+									<p class="mt-3">Category: @mdata.Category</p>
+									<p class="mt-3">Company: @mdata.Company</p>
+									<p class="mt-3">Publisher: @mdata.Publisher</p>
+									<p class="mt-3">Language: @mdata.LangT</p>
+									<p class="mt-3">Date Release: @mdata.DateRelease</p>
+									<p class="mt-3">Rating: </p>
+									
+									<div class="d-block mt-3">
+										<Rating Color="Color.Primary" SelectedValue="@ConvertDecToInt(mdata.Rating)" MaxValue="10" />
+									</div>
+
+									<button class="btn btn-primary mt-3 ms-auto me-auto d-block" @onclick="Back">Back</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				}
+			}
+		} 
+		else
+		{
+			@foreach (var mdata in mydata)
+			{
+				<div class="col-12 col-md-4 mt-3 mb-3">
+					<div class="card">
+						<div class="card-img-container">
+							<img src="@imgpth/@mdata.Cover" class="card-img-top" alt="@mdata.Title" title="@mdata.Title" loading="lazy" />
+						</div>
+						<div class="card-body">
+							<h3>@mdata.Title</h3>
+							
+							<div class="d-flex flex-row justify-content-between align-items-center text-center mt-3">
+								<a href="/games/edit/@mdata.GameId" class="btn btn-primary" title="Edit">
+									<i class="bi bi-pencil"></i>
+									Edit
+								</a>
+								<a href="/games/delete/@mdata.GameId" class="btn btn-danger" title="Delete">
+									<i class="bi bi-trash"></i>
+									Delete
+								</a>
+							</div>
+
+							<button class="btn btn-primary mt-3" @onclick="(() => Go(mdata.GameId))">Read more</button>
+						</div>
+					</div>
+				</div>
+			}
+		}
+
+	</div>
+	<div class="clearfix"></div>
+}
+
+@code {
+	[Parameter]
+	public List<lib.Models.Games> mydata { get; set; }
+
+	[Parameter]
+	public int? mydataid { get; set; }
+
+	public string imgpth { get; set; } = "/images";
+
+	protected override Task OnInitializedAsync()
+	{
+		//imgpth = DeviceInfo.DeviceType == DeviceType.Virtual ? "/assets/images" : "/images";
+		return base.OnInitializedAsync();
+	}
+
+	private void Go(int? gid)
+	{
+		navman.NavigateTo($"/games/details/{gid}");
+		StateHasChanged();
+	}
+
+	private void Back()
+	{
+		navman.NavigateTo("/games");
+		StateHasChanged();
+	}
+
+	private int ConvertDecToInt(decimal? val)
+	{
+		return Convert.ToInt32(val);
+	}
+}

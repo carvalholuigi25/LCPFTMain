@@ -1,0 +1,19 @@
+﻿@page "/upload"
+
+<h3>
+    <span class="bi bi-upload me-2"></span>
+    @localizer["lnkupload"]
+</h3>
+
+<UploadFiles />
+
+@code {
+    [Inject] public IJSRuntime JS { get; set; }
+    [Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await MyExtensions.LoadMyCultureInfo(JS);
+        StateHasChanged();
+    }
+}

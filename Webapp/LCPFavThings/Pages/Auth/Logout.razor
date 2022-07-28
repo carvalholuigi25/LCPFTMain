@@ -1,0 +1,56 @@
+﻿@page "/logout"
+@inject NavigationManager navman
+
+<h3>
+    <span class="bi bi-door-closed ms-1"></span>
+    @localizer["lnklogout"]
+</h3>
+
+@if (!string.IsNullOrEmpty(authinfo))
+{
+    <div class="blkwarning blkwarninglogout d-block mt-3 ms-auto me-auto text-center" id="blkwarninglogout">
+        <i class="bi bi-exclamation-circle" style="font-size: 3rem"></i>
+        <p class="mt-3">Do you want to logout your session?</p>
+        <div class="d-inline-block mt-3">
+            <button type="button" class="btn btn-primary ms-1 mt-3" @onclick="DoLogout">Yes</button>
+            <button type="button" class="btn btn-secondary mt-3" @onclick="DoReturnHome">No</button>
+        </div>
+    </div>
+}
+else
+{
+    <div class="blkerror blkerrorlogout d-block mt-3 ms-auto me-auto text-center" id="blkerrorlogout">
+        <i class="bi bi-exclamation-circle" style="font-size: 3rem"></i>
+        <p class="mt-3">Error: Login authentication info has not found, please click the button below to return to login.</p>
+        <a href="/login" type="button" class="btn btn-primary mt-3">Return</a>
+    </div>
+}
+
+@code {
+    [Inject] public IJSRuntime JS { get; set; }
+    [Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+    [Inject] public ILSHelper ls { get; set; }
+
+    private string authinfo { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await MyExtensions.LoadMyCultureInfo(JS);
+        authinfo = await ls.Get("authinfo");
+        StateHasChanged();
+    }
+
+    private async Task DoLogout()
+    {
+        if(!string.IsNullOrEmpty(authinfo))
+        {
+            await ls.Delete("authinfo");
+            navman.NavigateTo("/", true);
+        }
+    }
+
+    private void DoReturnHome()
+    {
+        navman.NavigateTo("/", true);
+    }
+}

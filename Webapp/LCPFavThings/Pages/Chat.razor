@@ -1,0 +1,97 @@
+﻿@page "/chat"
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager NavigationManager
+@implements IAsyncDisposable
+
+<h3>
+    <span class="bi bi-chat ms-1" aria-hidden="true"></span>
+    @localizer["lnkchat"]
+</h3>
+
+<div class="form-group">
+    <label>
+        User:
+        <input @bind="userInput" class="form-control" />
+    </label>
+</div>
+
+<div class="form-group">
+    <label>
+        Message:
+        <input @bind="messageInput" size="50" class="form-control" />
+    </label>
+</div>
+
+<button @onclick="Send" class="btn btn-primary mt-3" disabled="@(!IsConnected)">Send</button>
+<button @onclick="Clear" class="btn btn-secondary ms-3 mt-3" disabled="@(!IsConnected)">Clear</button>
+
+<ul id="messagesList" class="messagesList mt-3">
+    @foreach (var message in messages)
+    {
+        <li>@message</li>
+    }
+</ul>
+
+@code {
+    [Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+    [Inject] public IJSRuntime JS { get; set; }
+
+    //source: https://docs.microsoft.com/en-us/aspnet/core/blazor/tutorials/signalr-blazor?view=aspnetcore-6.0&tabs=visual-studio&pivots=webassembly
+    #nullable enable
+    private HubConnection? hubConnection;
+    private List<string> messages = new List<string>();
+    private string? userInput;
+    private string? messageInput;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try 
+        {
+            hubConnection = new HubConnectionBuilder()
+                .WithUrl(NavigationManager.ToAbsoluteUri(HTTPHelper.GetMyBaseAddress() + "/chatHub"))
+                .Build();
+
+            hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+            {
+                var encodedMsg = $"{user}: {message}";
+                messages.Add(encodedMsg);
+                StateHasChanged();
+            });
+
+            await hubConnection.StartAsync();
+        }
+		catch (Exception e)
+		{
+            await JS.InvokeVoidAsync("alert", $"Message: {e.Message} \r\n URL: {HTTPHelper.GetMyBaseAddress()}");
+		}
+    }
+
+    private async Task Send()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.SendAsync("SendMessage", userInput, messageInput);
+        }
+    }
+
+    private void Clear()
+    {
+        if (messages.Count() > 0)
+        {
+            userInput = "";
+            messageInput = "";
+            messages.Clear();
+        }
+    }
+
+    public bool IsConnected =>
+        hubConnection?.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+}

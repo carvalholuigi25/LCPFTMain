@@ -1,0 +1,257 @@
+﻿@page "/admin/dashboard"
+
+@using LCPFavThings.Data.SQL
+@using LCPFavThings.Data.SQLite
+@using LCPFavThingsLib.Enums
+@using System.Diagnostics
+@using System.Text.RegularExpressions
+
+<h3>
+	<span class="bi bi-kanban ms-2"></span>
+	@localizer["lnkadmindash"]
+</h3>
+
+@if(authinfo == null) {
+	<div class="accessblk d-block mt-3 ms-auto me-auto text-center">
+		<i class="bi bi-exclamation-warning" style="font-size: 3.5rem"></i>
+		<h1 class="mt-3">Error</h1>
+		<p class="mt-3">You need to be authenticated as admin to see this page, please go back to home page!</p>
+		<a href="/" class="btn btn-primary mt-3">Back to home</a>
+	</div>
+} else {
+	if (authinfo.RoleT != lib.Models.UsersRoles.admin)
+	{
+		<div class="accessblk d-block mt-3 ms-auto me-auto text-center">
+			<i class="bi bi-exclamation-warning" style="font-size: 3.5rem"></i>
+			<h1 class="mt-3">Error</h1>
+			<p class="mt-3">Only admin can access this page, please go back to home page!</p>
+			<a href="/" class="btn btn-primary mt-3">Back to home</a>
+		</div>	
+	} 
+	else
+	{
+		<div class="d-block mt-3 qryblk">
+			<p>Query Command Executor</p>
+
+			<EditForm Model="@qryDataModel" OnValidSubmit="@HandleValidSubmit" class="mt-3">
+				<DataAnnotationsValidator />
+				<Microsoft.AspNetCore.Components.Forms.ValidationSummary />
+
+				<InputTextArea id="qryCommand" class="qryCommand form-control" 
+				Value="@qryDataModel.QryCommand" ValueChanged="TxtCMDChanged" 
+				ValueExpression="() => qryDataModel.QryCommand" 
+				placeholder="SELECT * FROM Games;"></InputTextArea>
+
+				@if (qryDataModel.SGBDService != null)
+				{
+					<select id="qrySGBDService" class="qrySGBDService form-control" 
+					@bind-value="@qryDataModel.SGBDService" @bind-value:event="oninput" @onchange="SGBDServiceChanged">
+						@foreach (var vale in Enum.GetValues(typeof(MyEnums.SGBDServiceEnum)))
+						{
+							<option value="@vale">@vale</option>
+						}
+					</select>
+				}
+
+				<div class="d-block mt-3">
+					<button type="submit" class="btn btn-primary btnsendqry" id="btnsendqry">Execute</button>
+					<button type="button" class="btn btn-secondary btnresetqry ms-2" id="btnresetqry" @onclick="Clear">Reset</button>
+					<button type="button" class="btn btn-danger btnresetaidata ms-2" id="btnresetaidata" @onclick="ResetAIData">Reset Auto Increment</button>
+				</div>
+			</EditForm>
+
+			@if (result != null)
+			{
+				<div class="d-block mt-3">
+					<p>Result: </p>
+					<pre class="mt-3">
+						<span class="d-block ws-pre-wrap">@result</span> 
+						<span class="d-block ws-pre-line mt-1">@msg</span>
+					</pre>
+				</div>
+			}
+		</div>
+	}
+}
+
+@code {
+	[Inject] public IJSRuntime JS { get; set; }
+	[Inject] public ILSHelper LSH { get; set; }
+	[Inject] public IAllDataService ALLDBDS { get; set; }
+	[Inject] public ILocalDBDataService LDBDS { get; set; }
+	[Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+
+	private lib.Models.UserAuth authinfo { get; set; }
+	private lib.Models.QueryData qryDataModel = new();
+	private object result { get; set; }
+	private string msg { get; set; }
+	private string qrycmd { get; set; }
+	private bool autoqrywrite = false;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await MyExtensions.LoadMyCultureInfo(JS);
+		authinfo = await MyExtensions.GetAuthLogin<lib.Models.UserAuth>(LSH);
+		qryDataModel.SGBDService = await GetDefValSGBD();
+		StateHasChanged();
+	}
+
+	private void TxtCMDChanged(string value)
+	{
+		qryDataModel.QryCommand = value;
+	}
+
+	private async Task SGBDServiceChanged(ChangeEventArgs e)
+	{
+		var valsgbd = e.Value.ToString();
+
+		if(result != null) {
+			result = null;
+			msg = "";
+		}
+
+		await LSH.Save("SGBDService", valsgbd);
+
+		if(autoqrywrite && !string.IsNullOrEmpty(valsgbd)) {
+			await ResetAIData();
+		}
+	}
+
+	private async Task<string> GetDefValSGBD()
+	{
+		return !string.IsNullOrEmpty(await LSH.Get("SGBDService")) ? await LSH.Get("SGBDService") : "sqlite";
+	}
+
+	private async Task Clear()
+	{
+		result = null;
+		msg = "";
+		qryDataModel.QryCommand = "";
+		qryDataModel.SGBDService = await GetDefValSGBD();
+	}
+
+	private async Task HandleValidSubmit()
+	{
+		var valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
+
+		qrycmd = qryDataModel.QryCommand;
+
+		if (ContainsSomething(qrycmd, "drop") || ContainsSomething(qrycmd, "create"))
+		{
+			result = "ERROR: These commands drop and create are forbidden!";
+		}
+		else
+		{
+			var sw = new Stopwatch();
+			sw.Start();
+
+			try
+			{
+				if (ContainsSomething(valdbm, "local"))
+				{
+					if (ContainsSomething(qrycmd, "games"))
+					{
+						result = await LDBDS.QueryIt<lib.Models.Games>(qrycmd);
+					}
+					else if (ContainsSomething(qrycmd, "movies"))
+					{
+						result = await LDBDS.QueryIt<lib.Models.Movies>(qrycmd);
+					}
+					else if (ContainsSomething(qrycmd, "tvseries"))
+					{
+						result = await LDBDS.QueryIt<lib.Models.TVSeries>(qrycmd);
+					}
+					else if (ContainsSomething(qrycmd, "users"))
+					{
+						result = await LDBDS.QueryIt<lib.Models.Users>(qrycmd);
+					}
+					else
+					{
+						result = await LDBDS.QueryIt<lib.Models.Games>(qrycmd);
+					}
+				} 
+				else
+				{
+					//var cid = Regex.Match(qrycmd.ToString(), @"((WHERE)\s[a-z]+\s(=)\s([0-9]+))", RegexOptions.IgnoreCase);
+					//var myid = cid.Groups.Count > 0 ? int.Parse(cid.Groups[cid.Groups.Count - 1].Value) : -1;
+
+					if (ContainsSomething(qrycmd, "games"))
+					{
+						result = await ALLDBDS.QueryIt<lib.Models.Games>(qrycmd, qryDataModel.SGBDService);
+					}
+					else if (ContainsSomething(qrycmd, "movies"))
+					{
+						result = await ALLDBDS.QueryIt<lib.Models.Movies>(qrycmd, qryDataModel.SGBDService);
+					}
+					else if (ContainsSomething(qrycmd, "tvseries"))
+					{
+						result = await ALLDBDS.QueryIt<lib.Models.TVSeries>(qrycmd, qryDataModel.SGBDService);
+					}
+					else if (ContainsSomething(qrycmd, "users"))
+					{
+						result = await ALLDBDS.QueryIt<lib.Models.Users>(qrycmd, qryDataModel.SGBDService);
+					}
+					else
+					{
+						result = await ALLDBDS.QueryIt<lib.Models.Games>(qrycmd, qryDataModel.SGBDService);
+					}
+				}
+				
+				result = await JS.InvokeAsync<object>("JSON.stringify", result, null, 4);
+				msg = $@"{Environment.NewLine}
+				Message: The task query has been succesfully completed!
+				DBMode: {qryDataModel.SGBDService}
+				Execution Query Time: {sw.Elapsed.Milliseconds}ms".Trim();
+			}
+			catch (Exception ex)
+			{
+				result = ex.Message;
+				msg = $@"{Environment.NewLine}
+				Message: An error has occurred when running the task query!
+				DBMode: {qryDataModel.SGBDService}
+				Execution Query Time: {sw.Elapsed.Milliseconds}ms".Trim();
+				
+				await JS.InvokeVoidAsync("console.log", ex.Message);
+			}
+
+			sw.Stop();
+		}
+	}
+
+	private async Task ResetAIData() {
+		//var dbmode = MyExtensions.GetDBModeEnv();
+		qryDataModel.SGBDService = await GetDefValSGBD();
+
+		var dbmode = qryDataModel.SGBDService.ToString();
+
+		if (dbmode == "sqlite")
+		{
+			qrycmd = @"
+				UPDATE SQLITE_SEQUENCE SET seq = (SELECT MAX(GameId) FROM Games) WHERE name='Games';
+			";
+		} 
+		else if (dbmode == "sqlserver")
+		{
+			qrycmd = @"
+				DBCC CHECKIDENT('dbo.Games', RESEED, 0);
+			";
+		} 
+		else if (dbmode == "mysql")
+		{
+			qrycmd = @"
+				ALTER TABLE Games AUTO_INCREMENT = 1;
+			";
+		}
+		else
+		{
+			qrycmd = "";
+		}
+
+		qryDataModel.QryCommand = qrycmd.Trim();
+	}
+
+	private bool ContainsSomething(string val, string val2 = "", StringComparison strcomp = StringComparison.OrdinalIgnoreCase)
+	{
+		return val.Contains(val2, strcomp);
+	}
+}

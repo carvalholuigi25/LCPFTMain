@@ -1,0 +1,148 @@
+﻿@page "/users/delete/{UserId:int}"
+
+@using LCPFavThings.Data.SQL
+@using LCPFavThings.Data.SQLite
+
+@inject NavigationManager navman
+
+<h3>
+    <span class="bi bi-person-circle me-2"></span>
+    @localizer["lnkusers"]
+</h3>
+
+<p>Are you sure you want to delete this User with Id: @UserId?</p>
+
+<div class="col-md-12 mt-3">
+    <table class="table">
+        <tr>
+            <td>Id</td>
+            <td>@users.UserId</td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td>@users.Username</td>
+        </tr>
+        <tr>
+            <td>First Name</td>
+            <td>@users.FirstName</td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td>@users.LastName</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>@users.Email</td>
+        </tr>
+        <tr>
+            <td>Role</td>
+            <td>@users.RoleT</td>
+        </tr>
+    </table>
+    <div class="form-group">
+        <input type="button" value="Delete" @onclick="@Delete" class="btn btn-primary" />
+        <input type="button" value="Cancel" @onclick="@Back" class="btn btn-secondary" />
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public int UserId { get; set; }
+
+    [Inject] public IJSRuntime JS { get; set; }
+    [Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+    [Inject] public ILocalDBDataService lcdb { get; set; }
+    [Inject] public IAllDataService allcdb { get; set; }
+    [Inject] public ILSHelper LSH { get; set; }
+
+    private HubConnection hubConnection;
+    public string valdbm { get; set; }
+
+    List<LCPFavThings.Models.Users> userslist = new List<LCPFavThings.Models.Users>();
+    LCPFavThings.Models.Users users = new LCPFavThings.Models.Users();
+
+    protected override async Task OnInitializedAsync()
+    {
+        valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
+
+        await MyExtensions.LoadMyCultureInfo(JS);
+
+        try 
+        {
+            if (valdbm == "server_realtime")
+            {
+                userslist = await allcdb.ReadById<LCPFavThings.Models.Users>("users", x => x.UserId == UserId);
+
+                hubConnection = new HubConnectionBuilder()
+                    .WithUrl(navman.ToAbsoluteUri(HTTPHelper.GetMyBaseAddress() + "/broadcastHub"))
+                    .Build();
+
+                await hubConnection.StartAsync();
+            }
+            else if (valdbm == "server")
+            {
+                userslist = await allcdb.ReadById<LCPFavThings.Models.Users>("users", x => x.UserId == UserId);
+            }
+            else
+            {
+                userslist = await lcdb.ReadById<LCPFavThings.Models.Users>(x => x.UserId == UserId);
+            }
+
+            users = (LCPFavThings.Models.Users)userslist.FirstOrDefault();
+        }
+        catch (Exception e)
+        {
+            await JS.InvokeVoidAsync("alert", $"Message: {e.Message} \r\n URL: {HTTPHelper.GetMyBaseAddress()} \r\n DB Mode Type: {valdbm}");
+        }
+        
+        StateHasChanged();
+    }
+
+    protected async Task Delete()
+    {
+        if (valdbm == "server")
+        {
+            await allcdb.Delete<LCPFavThings.Models.Users>("users", UserId);
+            await allcdb.Delete<LCPFavThings.Models.UserAuth>("auth", UserId);
+        }
+        else if(valdbm == "server_realtime")
+        {
+            await allcdb.Delete<LCPFavThings.Models.Users>("users", UserId);
+            await allcdb.Delete<LCPFavThings.Models.UserAuth>("auth", UserId);
+            if (IsConnected) await SendMessage();
+        }
+        else
+        {
+            await lcdb.Delete<LCPFavThings.Models.Users>(users);
+            await lcdb.Delete<LCPFavThings.Models.UserAuth>(new LCPFavThings.Models.UserAuth()
+            {
+                UserId = users.UserId,
+                UserAuthId = users.UserId,
+                Username = users.Username,
+                Password = users.PasswordT,
+                RoleT = users.RoleT,
+                Avatar = users.Avatar,
+                TokenInfo = users.TokenInfo
+            });
+        }
+
+        navman.NavigateTo("users");
+    }
+
+    Task SendMessage() => hubConnection.SendAsync("SendMessage");
+
+    public bool IsConnected =>
+        hubConnection.State == HubConnectionState.Connected;
+
+    public void Dispose()
+    {
+        _ = hubConnection.DisposeAsync();
+    }
+
+    private void Back()
+    {
+        navman.NavigateTo("/users");
+        StateHasChanged();
+    }
+}

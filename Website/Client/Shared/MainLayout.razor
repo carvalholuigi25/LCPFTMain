@@ -1,0 +1,77 @@
+﻿@using LCPFavThingsWebsite.Shared.Models
+@using Newtonsoft.Json
+
+@inherits LayoutComponentBase
+@inject NavigationManager navman
+
+<div class="page @(GetMyPageTitle(navman.ToBaseRelativePath(navman.Uri)))">
+    @if (myainfo != null)
+    {
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+    }
+
+    <main>
+        @if (myainfo != null)
+        {
+            <div class="top-row px-4">
+                @if(myainfo.Username != null) {
+                    <a href="/api/users/@myainfo.UserId" target="_blank">
+                        <img src="images/@myainfo.Avatar" class="img-fluid imgavatar" />
+                        <span>@myainfo.Username</span>
+                    </a>
+                }
+
+                <button type="button" class="btn btn-primary ms-md-3 ms-lg-3 ms-xl-3 ms-xxl-3" @onclick="Logout">Logout</button>
+            </div>
+        }
+
+        <article class="content @(myainfo != null ? "px-4" : "nopad")">
+            @if (navman.ToBaseRelativePath(navman.Uri) != "" && navman.ToBaseRelativePath(navman.Uri) != "/home")
+            {
+                @Body
+            }
+            else
+            {
+                @if (myainfo != null)
+                {
+                    <p>Welcome!</p>
+                    <button type="button" class="btn btn-primary mt-1" @onclick="Logout">Logout</button>
+                }
+                else
+                {
+                    @Body
+                }
+            }
+        </article>
+    </main>
+</div>
+
+
+@code {
+    #nullable disable
+    [Inject] IJSRuntime js { get; set; }
+    public UserAuth myainfo { get; set; } = new UserAuth();
+
+    protected override async Task OnInitializedAsync()
+    {
+        myainfo = !string.IsNullOrEmpty(await GetMyAuthInfo()) ? JsonConvert.DeserializeObject<UserAuth>(await GetMyAuthInfo()) : null;
+    }
+
+    private async Task<string> GetMyAuthInfo() {
+        return await js.InvokeAsync<string>("localStorage.getItem", "authlog");
+    }
+
+    private string GetMyPageTitle(string pagename) {
+        return !string.IsNullOrEmpty(pagename) ? pagename.ToString().ToLower().Replace("/", "") : "home";
+    }
+
+    private async Task Logout() {
+        if(myainfo != null) {
+            await js.InvokeVoidAsync("localStorage.removeItem", "authlog");
+        }
+
+        navman.NavigateTo("/", true);
+    }
+}

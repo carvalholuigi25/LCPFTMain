@@ -1,0 +1,147 @@
+﻿@page "/movies"
+@page "/movies/{MovieId:int}"
+
+@using LCPFavThings.Data.SQL
+@using LCPFavThings.Data.SQLite
+@using LCPFavThings.Components.Data.Tables
+@using LCPFavThings.Components.Data.Cards
+@using System.Net.Http.Json
+
+@inject NavigationManager NavigationManager
+
+<h1>
+	<span class="bi bi-film me-2"></span>
+	@localizer["lnkmovies"]
+</h1>
+
+<div class="menubtnadd d-block mt-3" id="menubtnadd">
+	<a href="/movies/add" class="btn btn-primary" title="Add">
+		<i class="bi bi-plus"></i>
+		Add
+	</a>
+</div>
+
+<div class="menubtnact d-block mt-3 mb-3" id="menubtnact">
+	<button class="btn btn-primary btntoggletbl" id="btntoggletbl" title="table" @onclick="@(() => ToggleMode("table"))">
+		<i class="bi bi-table"></i>
+	</button>
+
+	<button class="btn btn-primary btntogglecard" id="btntogglecard" title="card" @onclick="@(() => ToggleMode("card"))">
+		<i class="bi bi-postcard"></i>
+	</button>
+</div>
+
+@if (movies == null)
+{
+	if (!string.IsNullOrEmpty(ErrorMsg))
+	{
+		<ErrorMsg MyErrorMsg="@ErrorMsg"></ErrorMsg>
+	}
+	else
+	{
+		<p><em>Loading...</em></p>
+	}
+}
+else
+{
+	if (string.IsNullOrEmpty(Mode) || Mode == "table")
+	{
+		<TableMovies mydata="movies" mydataid="@MovieId" />
+	}
+	else
+	{
+		<CardMovies mydata="movies" mydataid="@MovieId" />
+	}
+}
+
+@code {
+	[Parameter]
+	public int? MovieId { get; set; }
+
+	[Inject]
+	public IAllDataService AllDataService { get; set; }
+
+	[Inject]
+	public ILocalDBDataService LocalDBDataService { get; set; }
+
+	[Inject]
+	public ILSHelper LSH { get; set; }
+
+	[Inject] public IJSRuntime JS { get; set; }
+
+	[Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+
+	public string Mode { get; set; } = "table";
+
+	public string ErrorMsg { get; set; } = string.Empty;
+
+	public List<lib.Models.Movies> movies { get; set; }
+
+	private HubConnection hubConnection;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await MyExtensions.LoadMyCultureInfo(JS);
+
+		var valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
+
+		try 
+		{
+			if (valdbm == "server_realtime")
+			{
+				hubConnection = new HubConnectionBuilder()
+							.WithUrl(NavigationManager.ToAbsoluteUri(HTTPHelper.GetMyBaseAddress() + "/broadcastHub"))
+							.Build();
+
+				hubConnection.On("ReceiveMessage", async () =>
+				{
+					await LoadData(valdbm);
+					StateHasChanged();
+				});
+
+				await hubConnection.StartAsync();
+
+				await LoadData(valdbm);
+			}
+			else
+			{
+				await LoadData(valdbm);
+			}
+		}
+		catch (Exception e)
+		{
+			ErrorMsg = $"Message: {e.Message} \r\n URL: {HTTPHelper.GetMyBaseAddress()} \r\n DB Mode Type: {valdbm}";
+		}
+
+		StateHasChanged();
+	}
+
+	protected async Task LoadData(string vdbm = "server")
+	{
+		Mode = !string.IsNullOrEmpty(await LSH.Get("viewmode")) ? await LSH.Get("viewmode") : "table";
+
+		if (vdbm == "server" || vdbm == "server_realtime")
+		{
+			movies = (await AllDataService.Get<lib.Models.Movies>("movies")).ToList();
+		}
+		else
+		{
+			movies = await LocalDBDataService.Read<lib.Models.Movies>();
+		}
+	}
+
+	public bool IsConnected =>
+		hubConnection.State == HubConnectionState.Connected;
+
+	public void Dispose()
+	{
+		_ = hubConnection.DisposeAsync();
+	}
+
+	private async Task<string> ToggleMode(string modev)
+	{
+		Mode = modev;
+		await LSH.Save("viewmode", Mode);
+		return Mode;
+	}
+}

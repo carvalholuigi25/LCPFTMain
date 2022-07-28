@@ -1,0 +1,80 @@
+﻿@using LCPFavThingsWebsite.Shared.Models
+@using Microsoft.AspNetCore.SignalR.Client
+@using Newtonsoft.Json
+
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+@inject IJSRuntime JS
+
+@if (UsersList != null)
+{
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tsx in UsersList)
+                {
+                    <tr>
+                        <td>@tsx.UserId</td>
+                        <td>@tsx.Username</td>
+                        <td>@tsx.RoleT</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p class="mt-3">No data for table Users!</p>
+}
+
+@code {
+    private HubConnection? hubConnection;
+    private List<Users>? UsersList { get; set; } = new List<Users>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            hubConnection = new HubConnectionBuilder()
+                .WithUrl(NavigationManager.ToAbsoluteUri("/broadcasthub"))
+                .Build();
+
+            hubConnection.On("ReceiveMessage", async () =>
+            {
+                await LoadData();
+            });
+
+            await hubConnection.StartAsync();
+            await LoadData();
+        }
+        catch (Exception e)
+        {
+            await JS.InvokeVoidAsync("alert", e.Message);
+        }
+    }
+
+    protected async Task LoadData()
+    {
+        UsersList = await Http.GetFromJsonAsync<List<Users>>("/api/users");
+        StateHasChanged();
+    }
+
+    public bool IsConnected =>
+        hubConnection?.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+}

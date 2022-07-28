@@ -1,0 +1,63 @@
+﻿@if (mydata.Count() == 0)
+{
+	<p>No users data!</p>
+}
+else
+{
+	<div class="table-responsive">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Username</th>
+					<th>Email</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Role</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var mdata in mydata)
+				{
+					<tr>
+						<td>@mdata.UserId</td>
+						<td>@mdata.Username</td>
+						<td>@mdata.Email</td>
+						<td>@mdata.FirstName</td>
+						<td>@mdata.LastName</td>
+						<td>@mdata.RoleT</td>
+						<td>
+							<a href="/users/edit/@mdata.UserId" class="btn btn-primary" title="Edit">
+								<i class="bi bi-pencil"></i>
+								Edit
+							</a>
+							<a href="/users/delete/@mdata.UserId" class="btn btn-danger" title="Delete">
+								<i class="bi bi-trash"></i>
+								Delete
+							</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}
+
+@code {
+	[Parameter]
+	public List<lib.Models.Users> mydata { get; set; }
+
+	[Parameter]
+	public int? mydataid { get; set; }
+
+	protected override Task OnInitializedAsync()
+	{
+		if(mydataid != null)
+		{
+			mydata = mydata.Where(x => x.UserId == mydataid).ToList();
+		}
+
+		return base.OnInitializedAsync();
+	}
+}

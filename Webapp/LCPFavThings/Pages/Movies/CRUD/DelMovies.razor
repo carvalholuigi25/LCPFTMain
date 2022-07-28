@@ -1,0 +1,148 @@
+﻿@page "/movies/delete/{MovieId:int}"
+
+@using LCPFavThings.Data.SQL
+@using LCPFavThings.Data.SQLite
+
+@inject NavigationManager navman
+
+<h3>
+    <span class="bi bi-film me-2"></span>
+    @localizer["lnkmovies"]
+</h3>
+
+<p>Are you sure you want to delete this Movie with Id: @MovieId?</p>
+
+<div class="col-md-12 mt-3">
+    <table class="table">
+        <tr>
+            <td>Id</td>
+            <td>@movies.MovieId</td>
+        </tr>
+        <tr>
+            <td>Title</td>
+            <td>@movies.Title</td>
+        </tr>
+        <tr>
+            <td>Desc</td>
+            <td>@movies.DescT</td>
+        </tr>
+        <tr>
+            <td>Genre</td>
+            <td>@movies.Genre</td>
+        </tr>
+        <tr>
+            <td>Category</td>
+            <td>@movies.Category</td>
+        </tr>
+        <tr>
+            <td>Cover</td>
+            <td>@movies.Cover</td>
+        </tr>
+        <tr>
+            <td>Company</td>
+            <td>@movies.Company</td>
+        </tr>
+        <tr>
+            <td>Language</td>
+            <td>@movies.LangT</td>
+        </tr>
+        <tr>
+            <td>Rating</td>
+            <td>@movies.Rating</td>
+        </tr>
+    </table>
+    <div class="form-group">
+        <input type="button" value="Delete" @onclick="@Delete" class="btn btn-primary" />
+        <input type="button" value="Cancel" @onclick="@Back" class="btn btn-secondary" />
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public int MovieId { get; set; }
+
+    [Inject] public IJSRuntime JS { get; set; }
+    [Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+    [Inject] public ILocalDBDataService lcdb { get; set; }
+    [Inject] public IAllDataService allcdb { get; set; }
+    [Inject] public ILSHelper LSH { get; set; }
+
+    private HubConnection hubConnection;
+    public string valdbm { get; set; }
+
+    List<LCPFavThings.Models.Movies> movieslist = new List<LCPFavThings.Models.Movies>();
+    LCPFavThings.Models.Movies movies = new LCPFavThings.Models.Movies();
+
+    protected override async Task OnInitializedAsync()
+    {
+        valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
+
+        await MyExtensions.LoadMyCultureInfo(JS);
+
+        try 
+        {
+            if (valdbm == "server_realtime")
+            {
+                movieslist = await allcdb.ReadById<LCPFavThings.Models.Movies>("movies", x => x.MovieId == MovieId);
+
+                hubConnection = new HubConnectionBuilder()
+                    .WithUrl(navman.ToAbsoluteUri(HTTPHelper.GetMyBaseAddress() + "/broadcastHub"))
+                    .Build();
+
+                await hubConnection.StartAsync();
+            }
+            else if (valdbm == "server")
+            {
+                movieslist = await allcdb.ReadById<LCPFavThings.Models.Movies>("movies", x => x.MovieId == MovieId);
+            }
+            else
+            {
+                movieslist = await lcdb.ReadById<LCPFavThings.Models.Movies>(x => x.MovieId == MovieId);
+            }
+
+            movies = (LCPFavThings.Models.Movies)movieslist.FirstOrDefault();
+        }
+        catch (Exception e)
+        {
+            await JS.InvokeVoidAsync("alert", $"Message: {e.Message} \r\n URL: {HTTPHelper.GetMyBaseAddress()} \r\n DB Mode Type: {valdbm}");
+        }
+
+        StateHasChanged();
+    }
+
+    protected async Task Delete()
+    {
+        if (valdbm == "server")
+        {
+            await allcdb.Delete<LCPFavThings.Models.Movies>("movies", MovieId);
+        }
+        else if (valdbm == "server_realtime")
+        {
+            await allcdb.Delete<LCPFavThings.Models.Movies>("movies", MovieId);
+            if (IsConnected) await SendMessage();
+        }
+        else
+        {
+            await lcdb.Delete<LCPFavThings.Models.Movies>(movies);
+        }
+
+        navman.NavigateTo("movies");
+    }
+
+    Task SendMessage() => hubConnection.SendAsync("SendMessage");
+
+    public bool IsConnected =>
+        hubConnection.State == HubConnectionState.Connected;
+
+    public void Dispose()
+    {
+        _ = hubConnection.DisposeAsync();
+    }
+
+    private void Back()
+    {
+        navman.NavigateTo("/movies");
+        StateHasChanged();
+    }
+}

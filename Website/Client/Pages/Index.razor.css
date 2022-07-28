@@ -1,0 +1,17 @@
+﻿.imgmain {
+    min-height: 100vh;
+}
+
+.nopad {
+    padding: 0 !important;
+}
+
+.nomarg {
+    margin: 0 !important;
+}
+
+@media (max-width: 640.98px) {
+    .imgmain {
+        min-height: 50vh;
+    }
+}

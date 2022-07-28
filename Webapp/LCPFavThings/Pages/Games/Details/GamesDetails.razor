@@ -1,0 +1,76 @@
+﻿@page "/games/details"
+@page "/games/details/{GameId:int}"
+
+@using LCPFavThings.Data.SQL
+@using LCPFavThings.Data.SQLite
+@using LCPFavThings.Components.Data.Tables
+@using LCPFavThings.Components.Data.Cards
+@using System.Net.Http.Json
+
+@inject IJSRuntime JSR
+
+<h1>
+	<span class="bi bi-controller me-2"></span>
+	@localizer["lnkgames"]
+</h1>
+
+@if (games == null)
+{
+	if (!string.IsNullOrEmpty(ErrorMsg))
+	{
+		<ErrorMsg MyErrorMsg="@ErrorMsg"></ErrorMsg>
+	}
+	else
+	{
+		<p><em>Loading...</em></p>
+	}
+}
+else
+{
+	<CardGames mydata="games" mydataid="@GameId" />
+}
+
+@code {
+	[Parameter]
+	public int? GameId { get; set; }
+
+	[Inject]
+	public IAllDataService AllDataService { get; set; }
+
+	[Inject]
+	public ILocalDBDataService LocalDBDataService { get; set; }
+
+	[Inject]
+	public ILSHelper LSH { get; set; }
+
+	[Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+
+	public string ErrorMsg { get; set; } = string.Empty;
+
+	public List<lib.Models.Games> games { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		await MyExtensions.LoadMyCultureInfo(JSR);
+
+		var valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
+
+		try
+		{
+			if (valdbm == "server" || valdbm == "server_realtime")
+			{
+				games = (await AllDataService.Get<lib.Models.Games>("games")).ToList();
+			}
+			else
+			{
+				games = await LocalDBDataService.Read<lib.Models.Games>();
+			}
+		}
+		catch (Exception e)
+		{
+			ErrorMsg = $"Message: {e.Message} \r\n URL: {HTTPHelper.GetMyBaseAddress()} \r\n DB Mode Type: {valdbm}";
+		}
+
+		StateHasChanged();
+	}
+}

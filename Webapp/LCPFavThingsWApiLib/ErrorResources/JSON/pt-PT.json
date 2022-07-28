@@ -1,0 +1,20 @@
+{
+  "EMCategory": "Por favor escreva algo no campo Categoria",
+  "EMCompany": "Por favor, escreva algo no campo Empresa",
+  "EMCover": "Por favor escreva ou carregue algo no campo Capa",
+  "EMDateRelease": "Por favor escreva algo no campo Data Release",
+  "EMDesc": "Por favor escreva algo no campo Descrição",
+  "EMDuration": "Por favor, escreva algo no campo Duração",
+  "EMDurationVal": "Este campo só aceita números positivos!",
+  "EMGenre": "Por favor, escreva algo no campo Gênero",
+  "EMLanguage": "Por favor, escreva algo no campo Idioma",
+  "EMPassword": "Por favor, escreva algo no campo Senha",
+  "EMPublisher": "Por favor, escreva algo no campo Editor",
+  "EMQryCMD": "Por favor escreva algo no campo Commandos de Query",
+  "EMRating": "Por favor, escreva algo no campo Avaliação",
+  "EMRatingVal": "O valor deve ser menor ou igual a 10,0",
+  "EMTitle": "Por favor, escreva algo no campo Título",
+  "EMTotalSeasons": "Por favor escreva algo no campo Totais Temporadas",
+  "EMTotalSeasonsVal": "O valor deve ser menor ou igual a 50",
+  "EMUsername": "Por favor escreva algo no campo Nome do Utilizador"
+}

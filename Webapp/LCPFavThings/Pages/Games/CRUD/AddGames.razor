@@ -1,0 +1,145 @@
+﻿@page "/games/add"
+
+@using LCPFavThings.Data.SQL
+@using LCPFavThings.Data.SQLite
+
+@inject NavigationManager navman
+
+<h3>
+    <span class="bi bi-controller me-2"></span>
+    @localizer["lnkgames"]
+</h3>
+
+<form class="frmgames mt-3">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="id" class="control-label">Id</label>
+                <input type="number" min="1" class="form-control" @bind="@games.GameId" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="title" class="control-label">Title</label>
+                <input type="text" class="form-control" @bind="@games.Title" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="desc" class="control-label">Description</label>
+                <textarea class="form-control" cols="1" rows="10" @bind="@games.DescT"></textarea>
+            </div>
+            <div class="form-group mt-3">
+                <label for="genre" class="control-label">Genre</label>
+                <input type="text" class="form-control" @bind="@games.Genre" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="category" class="control-label">Category</label>
+                <input type="text" class="form-control" @bind="@games.Category" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="cover" class="control-label">Cover</label>
+                <input type="text" class="form-control" @bind="@games.Cover" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="company" class="control-label">Company</label>
+                <input type="text" class="form-control" @bind="@games.Company" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="publisher" class="control-label">Publisher</label>
+                <input type="text" class="form-control" @bind="@games.Publisher" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="language" class="control-label">Language</label>
+                <input type="text" class="form-control" @bind="@games.LangT" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="dateRelease" class="control-label">Date Release</label>
+                <input type="text" class="form-control" @bind="@games.DateRelease" />
+                @*<DatePicker Date="@Convert.ToDateTime(games.DateRelease)" TValue="DateTime?" InputMode="DateInputMode.DateTime" TimeAs24hr="true" />*@
+            </div>
+            <div class="form-group mt-3">
+                <label for="rating" class="control-label">Rating</label>
+                <input type="number" step="0.01" class="form-control" @bind="@games.Rating" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@CreateGames" value="Save" />
+                <input type="button" class="btn btn-secondary" @onclick="Back" value="Back" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@code {
+    [Inject] public IJSRuntime JS { get; set; }
+    [Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+    [Inject] public ILocalDBDataService lcdb { get; set; }
+    [Inject] public IAllDataService allcdb { get; set; }
+    [Inject] public ILSHelper LSH { get; set; }
+
+    public string valdbm { get; set; }
+    private HubConnection hubConnection;
+
+    LCPFavThings.Models.Games games = new LCPFavThings.Models.Games();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await MyExtensions.LoadMyCultureInfo(JS);
+
+        valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
+
+        try 
+        {
+            if(valdbm == "server_realtime")
+            {
+                hubConnection = new HubConnectionBuilder()
+                    .WithUrl(navman.ToAbsoluteUri(HTTPHelper.GetMyBaseAddress() + "/broadcastHub"))
+                    .Build();
+
+                await hubConnection.StartAsync();
+            }
+        }
+        catch (Exception e)
+        {
+            await JS.InvokeVoidAsync("alert", $"Message: {e.Message} \r\n URL: {HTTPHelper.GetMyBaseAddress()} \r\n DB Mode Type: {valdbm}");
+        }
+
+        StateHasChanged();
+    }
+
+    protected async Task CreateGames()
+    {
+        if(valdbm == "server_realtime")
+        {
+            await allcdb.Insert<LCPFavThings.Models.Games>("games", games);
+            if (IsConnected) await SendMessage();
+        } 
+        else if(valdbm == "server")
+        {
+            await allcdb.Insert<LCPFavThings.Models.Games>("games", games);
+        }
+        else
+        {
+            await lcdb.Create<LCPFavThings.Models.Games>(games);
+        }
+
+        navman.NavigateTo("/games", true);
+        StateHasChanged();
+    }
+
+    Task SendMessage() => hubConnection.SendAsync("SendMessage");
+
+    public bool IsConnected =>
+        hubConnection.State == HubConnectionState.Connected;
+
+    public void Dispose()
+    {
+        _ = hubConnection.DisposeAsync();
+    }
+
+    private void Back()
+    {
+        navman.NavigateTo("/games");
+        StateHasChanged();
+    }
+}

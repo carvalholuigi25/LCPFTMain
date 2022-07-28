@@ -1,0 +1,121 @@
+﻿@* source: https://www.meziantou.net/automatically-generate-a-form-from-an-object-in-blazor.htm *@
+
+@using System.ComponentModel.DataAnnotations
+@using Newtonsoft.Json
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+@inject IJSRuntime JS
+@typeparam TModel
+
+<EditForm Model="@mymodel" OnValidSubmit="Sub">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    @if(type == "create") {
+        <GenericForm Model="mymodel" EditorClass="form-control">
+            <FieldTemplate Context="field">
+                @if (!field.DisplayName.Contains("id", StringComparison.OrdinalIgnoreCase))
+                {
+                    <div class="form-group">
+                        <label for="@field.EditorId" class="mt-3">@field.DisplayName</label>
+                        @field.EditorTemplate
+                        @field.FieldValidationTemplate
+                    </div>
+                }
+            </FieldTemplate>
+        </GenericForm>
+    } else {
+        <GenericForm Model="mymodel" EditorClass="form-control">
+            <FieldTemplate Context="field">
+                <div class="form-group">
+                    <label for="@field.EditorId" class="mt-3">@field.DisplayName</label>
+                    @field.EditorTemplate
+                    @field.FieldValidationTemplate
+                </div>
+            </FieldTemplate>
+        </GenericForm>
+    }
+
+    <div class="form-group mt-3 mb-3">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="reset" class="btn btn-secondary ms-1">Reset</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public TModel? mymodel { get; set; }
+
+    [Parameter]
+    public string? apiname { get; set; } = "games";
+
+    [Parameter]
+    public string? type { get; set; } = "create";
+
+    [Parameter]
+    public int? id { get; set; } = 0;
+
+    public async Task Sub() {
+        try 
+        {
+            HttpResponseMessage? res;
+            var myid = id <= 0 ? "" : $"{id}";
+            var details = ""; 
+            var cnt = "";
+
+            if (type!.Contains("create", StringComparison.OrdinalIgnoreCase))
+            {
+                res = await Http.PostAsJsonAsync($"/api/{apiname}/{myid}", mymodel);
+            }
+            else if (type!.Contains("read", StringComparison.OrdinalIgnoreCase))
+            {
+                res = await Http.GetFromJsonAsync<HttpResponseMessage>($"/api/{apiname}/{myid}");
+            }
+            else if (type!.Contains("update", StringComparison.OrdinalIgnoreCase))
+            {
+                res = await Http.PutAsJsonAsync($"/api/{apiname}/{myid}", mymodel);
+            }
+            else if (type!.Contains("delete", StringComparison.OrdinalIgnoreCase))
+            {
+                res = await Http.DeleteAsync($"/api/{apiname}/{myid}");
+            }
+            else 
+            {
+                res = null;
+            }
+
+            if(res != null) 
+            {
+                cnt = await res.Content.ReadAsStringAsync();
+
+                if (!string.IsNullOrEmpty(cnt))
+                {
+                    details = "" 
+                    + Environment.NewLine +
+                    "Data: " + Environment.NewLine + JsonConvert.SerializeObject(mymodel, Formatting.Indented) 
+                    + Environment.NewLine +
+                    "Message: " + Environment.NewLine + JsonConvert.SerializeObject(cnt.ToString(), Formatting.Indented);
+                }
+
+                if(res.IsSuccessStatusCode) 
+                {
+                    await JS.InvokeVoidAsync("alert", $"Operation {type} (api: {apiname}) has been completed! {details}");
+                    NavigationManager.NavigateTo("/data", true);
+                } 
+                else 
+                {
+                    await JS.InvokeVoidAsync("alert", $"Operation {type} (api: {apiname}) has been failed! {details}");
+                    await JS.InvokeVoidAsync("console.log", $"Operation {type} (api: {apiname}) has been failed! {details}");
+                }
+            } 
+            else 
+            {
+                await JS.InvokeVoidAsync("alert", $"Operation {type} (api: {apiname}) is not supported!");
+            }
+        }
+        catch (Exception e) 
+        {
+            await JS.InvokeVoidAsync("console.log", "" + e.Message);
+        }
+    }
+}

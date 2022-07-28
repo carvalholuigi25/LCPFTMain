@@ -1,0 +1,76 @@
+﻿@page "/tvseries/details"
+@page "/tvseries/details/{TVSerieId:int}"
+
+@using LCPFavThings.Data.SQL
+@using LCPFavThings.Data.SQLite
+@using LCPFavThings.Components.Data.Tables
+@using LCPFavThings.Components.Data.Cards
+@using System.Net.Http.Json
+
+@inject IJSRuntime JSR
+
+<h1>
+	<span class="bi bi-tv me-2"></span>
+	@localizer["lnktvseries"]
+</h1>
+
+@if (tvseries == null)
+{
+	if (!string.IsNullOrEmpty(ErrorMsg))
+	{
+		<ErrorMsg MyErrorMsg="@ErrorMsg"></ErrorMsg>
+	}
+	else
+	{
+		<p><em>Loading...</em></p>
+	}
+}
+else
+{
+	<CardTVSeries mydata="tvseries" mydataid="@TVSerieId" />
+}
+
+@code {
+	[Parameter]
+	public int? TVSerieId { get; set; }
+
+	[Inject]
+	public IAllDataService AllDataService { get; set; }
+
+	[Inject]
+	public ILocalDBDataService LocalDBDataService { get; set; }
+
+	[Inject]
+	public ILSHelper LSH { get; set; }
+
+	[Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+
+	public string ErrorMsg { get; set; } = string.Empty;
+
+	public List<lib.Models.TVSeries> tvseries { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		await MyExtensions.LoadMyCultureInfo(JSR);
+
+		var valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
+
+		try
+		{
+			if (valdbm == "server" || valdbm == "server_realtime")
+			{
+				tvseries = (await AllDataService.Get<lib.Models.TVSeries>("tvseries")).ToList();
+			}
+			else
+			{
+				tvseries = await LocalDBDataService.Read<lib.Models.TVSeries>();
+			}
+		}
+		catch (Exception e)
+		{
+			ErrorMsg = $"Message: {e.Message} \r\n URL: {HTTPHelper.GetMyBaseAddress()} \r\n DB Mode Type: {valdbm}";
+		}
+
+		StateHasChanged();
+	}
+}

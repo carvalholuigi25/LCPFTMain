@@ -1,0 +1,131 @@
+﻿@page "/movies/add"
+
+@using LCPFavThings.Data.SQL
+@using LCPFavThings.Data.SQLite
+
+@inject NavigationManager navman
+
+<h3>
+    <span class="bi bi-film me-2"></span>
+    @localizer["lnkmovies"]
+</h3>
+
+<form class="frmmovies mt-3">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="title" class="control-label">Title</label>
+                <input type="text" class="form-control" @bind="@movies.Title" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="desc" class="control-label">Description</label>
+                <textarea class="form-control" cols="1" rows="10" @bind="@movies.DescT"></textarea>
+            </div>
+            <div class="form-group mt-3">
+                <label for="genre" class="control-label">Genre</label>
+                <input type="text" class="form-control" @bind="@movies.Genre" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="category" class="control-label">Category</label>
+                <input type="text" class="form-control" @bind="@movies.Category" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="cover" class="control-label">Cover</label>
+                <input type="text" class="form-control" @bind="@movies.Cover" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="company" class="control-label">Company</label>
+                <input type="text" class="form-control" @bind="@movies.Company" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="language" class="control-label">Language</label>
+                <input type="text" class="form-control" @bind="@movies.LangT" />
+            </div>
+            <div class="form-group mt-3">
+                <label for="rating" class="control-label">Rating</label>
+                <input type="number" step="0.01" class="form-control" @bind="@movies.Rating" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@CreateMovies" value="Save" />
+                <input type="button" class="btn btn-secondary" @onclick="Back" value="Back" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@code {
+    [Inject] public IJSRuntime JS { get; set; }
+    [Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+    [Inject] public ILocalDBDataService lcdb { get; set; }
+    [Inject] public IAllDataService allcdb { get; set; }
+    [Inject] public ILSHelper LSH { get; set; }
+
+    public string valdbm { get; set; }
+    private HubConnection hubConnection;
+
+    lib.Models.Movies movies = new lib.Models.Movies();
+
+    protected override async Task OnInitializedAsync()
+    {
+        valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
+
+        await MyExtensions.LoadMyCultureInfo(JS);
+        
+        try 
+        {
+            if (valdbm == "server_realtime")
+            {
+                hubConnection = new HubConnectionBuilder()
+                    .WithUrl(navman.ToAbsoluteUri(HTTPHelper.GetMyBaseAddress() + "/broadcastHub"))
+                    .Build();
+
+                await hubConnection.StartAsync();
+            }
+        }
+        catch (Exception e)
+        {
+            await JS.InvokeVoidAsync("alert", $"Message: {e.Message} \r\n URL: {HTTPHelper.GetMyBaseAddress()} \r\n DB Mode Type: {valdbm}");
+        }
+
+        StateHasChanged();
+    }
+
+    protected async Task CreateMovies()
+    {
+        if (valdbm == "server_realtime")
+        {
+            await allcdb.Insert<lib.Models.Movies>("movies", movies);
+            if (IsConnected) await SendMessage();
+        }
+        else if (valdbm == "server")
+        {
+            await allcdb.Insert<lib.Models.Movies>("movies", movies);
+        }
+        else
+        {
+            await lcdb.Create<lib.Models.Movies>(movies);
+        }
+
+        navman.NavigateTo("movies");
+    }
+
+    Task SendMessage() => hubConnection.SendAsync("SendMessage");
+
+    public bool IsConnected =>
+        hubConnection.State == HubConnectionState.Connected;
+
+    public void Dispose()
+    {
+        _ = hubConnection.DisposeAsync();
+    }
+
+    private void Back()
+    {
+        navman.NavigateTo("/movies");
+        StateHasChanged();
+    }
+}

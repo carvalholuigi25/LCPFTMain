@@ -1,0 +1,13 @@
+﻿cd %ANDROID_HOME%\emulator
+emulator -avd Pixel_2_API_31 -writable-system
+adb disable-verity
+adb reboot
+adb root 
+adb remount
+adb shell
+cd system/etc
+echo "127.0.0.1       localhost" > hosts
+echo "::1             ip6-localhost" >> hosts
+echo "192.168.1.67  localhost" >> hosts
+// echo "10.0.2.2  localhost" >> hosts
+adb shell reboot -p or adb reboot -p

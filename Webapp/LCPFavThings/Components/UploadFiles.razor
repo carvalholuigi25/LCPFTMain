@@ -1,0 +1,36 @@
+﻿@using BlazorInputFile
+@inject HttpClient client
+
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <BlazorInputFile.InputFile OnChange="HandleSelection" />
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+      <h5>@status</h5>
+    </div>
+</div>
+
+@code {
+    string status;
+    async Task HandleSelection(IFileListEntry[] files)
+    {
+        var file = files.FirstOrDefault();
+        if (file != null)
+        {
+            var ms = new MemoryStream();
+            await file.Data.CopyToAsync(ms);
+            status = $"Foram enviados {file.Size} bytes do arquivo {file.Name}";
+            var content = new MultipartFormDataContent
+            {
+                {
+                    new ByteArrayContent(ms.GetBuffer()),"\"upload\"",file.Name
+                }
+            };
+            await client.PostAsync($"{HTTPHelper.GetMyBaseAddress()}/api/upload", content);
+        }
+    }
+}
+

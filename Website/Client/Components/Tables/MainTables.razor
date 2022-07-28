@@ -1,0 +1,25 @@
+﻿@if (tblName == "games")
+{
+    <TableGames />
+}
+else if (tblName == "movies")
+{
+    <TableMovies />
+}
+else if (tblName == "tvseries")
+{
+    <TableTVSeries />
+}
+else if (tblName == "users")
+{
+    <TableUsers />
+}
+else
+{
+    <p>The table @tblName does not exist!</p>
+}
+
+@code {
+    [Parameter]
+    public string? tblName { get; set; }
+}

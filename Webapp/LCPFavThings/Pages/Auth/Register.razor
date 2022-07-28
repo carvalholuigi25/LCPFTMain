@@ -1,0 +1,184 @@
+﻿@page "/register"
+
+@using LCPFavThings.Data.SQL
+@using LCPFavThings.Data.SQLite
+@using LCPFavThings.Helpers
+@using Newtonsoft.Json
+@using bc = BCrypt.Net.BCrypt
+
+<h3>
+    <span class="bi bi-person-badge ms-1"></span>
+    @localizer["lnkregister"]
+</h3>
+
+<Microsoft.AspNetCore.Components.Forms.EditForm Model="@users" OnValidSubmit="DoReg">
+    <Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator />
+    <Microsoft.AspNetCore.Components.Forms.ValidationSummary />
+
+    <div class="form-group hidden mt-3">
+        <label for="userid" class="useridtitle hidden">User Id</label>
+        <InputNumber min="1" class="userid form-control hidden" id="userid" @bind-Value="users.UserId" />
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="username">Username</label>
+        <InputText type="text" class="username form-control" id="username" @bind-Value="users.Username" />
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="passwordt">Password</label>
+        <InputText type="password" class="passwordt form-control" id="passwordt" @bind-Value="users.PasswordT" />
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="email">Email</label>
+        <InputText type="email" class="email form-control" id="email" @bind-Value="users.Email" />
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="pin">Pin</label>
+        <InputText type="text" class="pin form-control" id="pin" @bind-Value="users.Pin" />
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="firstname">First Name</label>
+        <InputText type="text" class="firstname form-control" id="firstname" @bind-Value="users.FirstName" />
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="lastname">Last Name</label>
+        <InputText type="text" class="lastname form-control" id="lastname" @bind-Value="users.LastName" />
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="datebirthday">Date Birthday</label>
+        <InputDate class="datebirthday form-control" id="datebirthday" @bind-Value="users.DateBirthday" />
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="avatar">Avatar</label>
+        <InputText type="text" class="avatar form-control" id="avatar" @bind-Value="users.Avatar" />
+    </div>
+    
+    <div class="form-group mt-3">
+        <label for="cover">Cover</label>
+        <InputText type="text" class="cover form-control" id="cover" @bind-Value="users.Cover" />
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="about">About</label>
+        <InputTextArea class="about form-control" id="about" rows="5" cols="1" @bind-Value="users.About" />
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="role">Role</label>
+        <InputSelect class="role form-control" id="role" @bind-Value="users.RoleT">
+            <option value="" disabled>Select the user role</option>
+
+            @foreach (var myrole in Enum.GetValues(typeof(lib.Models.UsersRoles)))
+            {
+                <option value="@myrole">@myrole</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="form-group mt-3 d-inline-block ms-auto me-auto">
+        <button type="submit" class="btn btn-primary btnlogin" id="btnlogin">Enter</button>
+        <button type="button" class="btn btn-secondary btnresetreg ms-1" id="btnresetreg" @onclick="Clear">Clear</button>
+    </div>
+</Microsoft.AspNetCore.Components.Forms.EditForm>
+
+
+<div class="d-block mt-3 mb-3 ms-auto me-auto text-center">
+    <a href="/login" type="button" class="btn btn-primary">Back to login</a>
+</div>
+
+@code {
+    [Inject] public IJSRuntime JS { get; set; }
+    [Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+    [Inject] public ILSHelper ls { get; set; }
+    [Inject] public IAllDataService alldatasrv { get; set; }
+    [Inject] public ILocalDBDataService locdbdatasrv { get; set; }
+    [Inject] public NavigationManager navman { get; set; }
+
+    private string valdbm { get; set; } = "server";
+
+    lib.Models.Users users = new lib.Models.Users();
+    List<lib.Models.Users> userslist = new List<lib.Models.Users>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await MyExtensions.LoadMyCultureInfo(JS);
+
+        valdbm = !string.IsNullOrEmpty(await ls.Get("dbmode")) ? await ls.Get("dbmode") : "server";
+
+        try {
+            if (valdbm == "local")
+            {
+                userslist = await locdbdatasrv.Read<lib.Models.Users>();
+            }
+            else
+            {
+                userslist = await alldatasrv.Get<lib.Models.Users>("users");
+            }
+        } catch(Exception e) {
+            await JS.InvokeVoidAsync("alert", "" + e.Message);
+        }
+
+        StateHasChanged();
+    }
+
+    private async Task DoReg(EditContext e)
+    {
+        try
+        {
+            if (users != null)
+            {
+                userslist = userslist.Where(x => x.Username == users.Username).ToList();
+
+                if (userslist.Count == 0)
+                {
+                    if(valdbm == "local")
+                    {
+                        if(!string.IsNullOrEmpty(users.PasswordT)) {
+                            users.PasswordT = bc.HashPassword(users.PasswordT);
+                        }
+
+                        await locdbdatasrv.Create<lib.Models.Users>(users);
+                    }
+                    else
+                    {
+                        await alldatasrv.Insert<lib.Models.Users>("users", users);
+                    }
+
+                    await JS.InvokeVoidAsync("alert", $"Succesfully registered as {users.Username}!");
+                }
+                else
+                {
+                    await ShowError();
+                }
+
+                Clear();
+                navman.NavigateTo("/login", true);
+            }
+        }
+        catch (Exception ex)
+        {
+            Clear();
+            await JS.InvokeVoidAsync("alert", "" + ex.Message);
+        }
+    }
+
+    private async Task ShowError() {
+
+        await JS.InvokeVoidAsync("alert", $@"
+        Error: Occurred error when trying to register with this account {users.Username}.
+        Reason:
+        The account already exists.");
+    }
+
+    private void Clear()
+    {
+        users = new lib.Models.Users();
+    }
+}

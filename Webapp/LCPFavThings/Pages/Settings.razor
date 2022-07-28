@@ -1,0 +1,21 @@
+﻿@page "/settings"
+
+<h1>
+    <span class="bi bi-gear me-2"></span>
+    @localizer["lnksettings"]
+</h1>
+
+<DBModeSel />
+<SSLModeSel />
+<Translate />
+
+@code {
+    [Inject] public IJSRuntime JS { get; set; }
+    [Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await MyExtensions.LoadMyCultureInfo(JS);
+        StateHasChanged();
+    }
+}

@@ -1,0 +1,22 @@
+﻿@inject NavigationManager navman
+
+<div class="errorblk d-block w-100 ms-auto me-auto text-center">
+	<i class="bi bi-exclamation-triangle-fill" style="font-size: 4rem"></i>
+	<h1 class="mt-3">Error</h1>
+	<pre class="mt-3 p-3">@MyErrorMsg</pre>
+	<p class="mt-3">Please contact the <a href="mailto:luiscarvalho239@gmail.com">administrator</a> about this situation.</p>
+	<button class="btn btn-primary mt-3 btnreload" id="btnreload" @onclick="BackToMainPage">
+		<i class="bi bi-chevron-double-left"></i>
+		Back
+	</button>
+</div>
+
+@code {
+	[Parameter]
+	public string MyErrorMsg { get; set; }
+
+	void BackToMainPage()
+	{
+		navman.NavigateTo("/");
+	}
+}

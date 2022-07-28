@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="/static/">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LCPFavThings Website - Movies</title>
+    <link rel="stylesheet" href="framework/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="icons/bootstrapicons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="icons/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light nvtop">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">LCPFavThings Website</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#sidenavtopcol" aria-controls="sidenavtopcol" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="bi bi-list"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="sidenavtopcol">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mydatainfo">
+        <div class="row">
+            <div class="col-12 titleblk mb-3">
+                <h1>
+                    <i class="bi bi-film"></i>
+                    Movies
+                </h1>
+            </div>
+            
+            <div class="col-12 moviesblk" id="moviesblk"></div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; LCP Projects - 2022 - Created by <a href="mailto:carvalholuigi25@gmail.com" target="_self">Luigi Carvalho</a></p>
+    </div>
+
+    <script src="framework/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="js/signalr.min.js"></script>
+    <script type="module" src="js/scripts.js"></script>
+</body>
+
+</html>

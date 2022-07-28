@@ -1,0 +1,127 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="/">LCPFavThings</a>
+		<button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+			<span class="bi @(collapseNavMenu ? "bi-list" : "bi-x")"></span>
+		</button>
+	</div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+	<nav class="flex-column">
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+				<span class="bi bi-house ms-1 me-2" aria-hidden="true"></span> 
+				@localizer["lnkhome"]
+			</NavLink>
+		</div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="games">
+				<span class="bi bi-controller ms-1 me-2" aria-hidden="true"></span>
+				@localizer["lnkgames"]
+			</NavLink>
+		</div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="movies">
+				<span class="bi bi-film ms-1 me-2" aria-hidden="true"></span>
+				@localizer["lnkmovies"]
+			</NavLink>
+		</div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="tvseries">
+				<span class="bi bi-tv ms-1 me-2" aria-hidden="true"></span>
+				@localizer["lnktvseries"]
+			</NavLink>
+		</div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="upload">
+				<span class="bi bi-upload ms-1 me-2" aria-hidden="true"></span>
+				@localizer["lnkupload"]
+			</NavLink>
+		</div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="settings">
+				<span class="bi bi-gear ms-1 me-2" aria-hidden="true"></span>
+				@localizer["lnksettings"]
+			</NavLink>
+		</div>
+
+		@if(isLoggedIn)
+		{
+			<div class="nav-item px-3">
+				<NavLink class="nav-link ms-1" href="@("/users/details/" + GetCurUserId())">
+					@if(!string.IsNullOrEmpty(authinfo.Avatar)) {
+						<img src="images/@authinfo.Avatar" class="img-fluid imguseravatar" style="width: 20px; height: 20px; margin: 0; border-radius: 50%;" />
+					}
+
+					<span class="username" style="width: 100%; margin-left: 1.3rem; text-align: left;">@authinfo.Username</span>
+				</NavLink>
+				<a href="/logout">
+					<span class="bi bi-door-closed ms-1 me-2" aria-hidden="true"></span>
+					@localizer["lnklogout"]
+				</a>
+			</div>
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="chat">
+					<span class="bi bi-chat ms-1 me-2" aria-hidden="true"></span>
+					@localizer["lnkchat"]
+				</NavLink>
+			</div>
+
+			if(authinfo.RoleT == lib.Models.UsersRoles.admin) {
+				<div class="nav-item px-3">
+					<NavLink class="nav-link" href="admin/dashboard">
+						<span class="bi bi-kanban ms-1 me-2" aria-hidden="true"></span>
+						@localizer["lnkadmindash"]
+					</NavLink>
+				</div>
+				<div class="nav-item px-3">
+					<NavLink class="nav-link" href="users">
+						<span class="bi bi-person-circle ms-1 me-2" aria-hidden="true"></span>
+						@localizer["lnkusers"]
+					</NavLink>
+				</div>
+			}
+		}
+		else
+		{
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="login">
+					<span class="bi bi-door-open ms-1 me-2" aria-hidden="true"></span>
+					@localizer["lnklogin"]
+				</NavLink>
+			</div>
+		}
+	</nav>
+</div>
+
+@code {
+	[Inject] public IJSRuntime JS { get; set; }
+	[Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
+	[Inject] public ILSHelper ls { get; set; }
+
+	private lib.Models.Users authinfo { get; set; }
+	private bool isLoggedIn { get; set; }
+
+	private bool collapseNavMenu = true;
+
+	private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await MyExtensions.LoadMyCultureInfo(JS);
+		authinfo = await MyExtensions.GetAuthLogin<lib.Models.Users>(ls);
+		isLoggedIn = authinfo != null ? true : false;
+		StateHasChanged();
+	}
+
+	private void ToggleNavMenu()
+	{
+		collapseNavMenu = !collapseNavMenu;
+	}
+
+	private int? GetCurUserId()
+	{
+		return authinfo != null ? authinfo.UserId : 1;
+	}
+}

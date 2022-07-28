@@ -1,0 +1,20 @@
+{
+  "EMCategory": "Veuillez écrire quelque chose dans le champ Catégorie",
+  "EMCompany": "Veuillez écrire quelque chose dans le champ Société",
+  "EMCover": "Veuillez écrire ou télécharger quelque chose dans le champ Couverture",
+  "EMDateRelease": "Veuillez écrire quelque chose dans le champ Date de sortie",
+  "EMDesc": "Veuillez écrire quelque chose dans le champ Description",
+  "EMDuration": "Veuillez écrire quelque chose dans le champ Durée",
+  "EMDurationVal": "Ce champ n'accepte que les nombres positifs !",
+  "EMGenre": "Veuillez écrire quelque chose dans le champ Genre",
+  "EMLanguage": "Veuillez écrire quelque chose dans le champ Langue",
+  "EMPassword": "Veuillez écrire quelque chose dans le champ Mot de passe",
+  "EMPublisher": "Veuillez écrire quelque chose dans le champ Editeur",
+  "EMQryCMD": "Veuillez écrire quelque chose dans le champ Query Command",
+  "EMRating": "Veuillez écrire quelque chose dans le champ Évaluation",
+  "EMRatingVal": "La valeur doit être inférieure ou égale à 10.0",
+  "EMTitle": "Veuillez écrire quelque chose dans le champ Titre",
+  "EMTotalSeasons": "Veuillez écrire quelque chose dans le champ Nombre total de saisons",
+  "EMTotalSeasonsVal": "La valeur doit être inférieure ou égale à 50",
+  "EMUsername": "Veuillez écrire quelque chose dans le champ Nom d'utilisateur"
+}
