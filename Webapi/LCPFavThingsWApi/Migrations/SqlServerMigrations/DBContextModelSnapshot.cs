@@ -331,7 +331,7 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                         {
                             UserAuthId = 1,
                             Avatar = "guest.jpg",
-                            Password = "$2a$11$QTbXWSA3b3DsuHDkFV8Be.wPQTWpZ5P6eOfozEGve6KXpGdPeqjFm",
+                            Password = "$2a$11$3z4TCa55bRk83hf2oNiN..rqPpRRC12GMCJkP9rfWnWf71CIB4Vh6",
                             RoleT = 1,
                             UserId = 1,
                             Username = "guest"
@@ -340,7 +340,7 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                         {
                             UserAuthId = 2,
                             Avatar = "theflash.jpg",
-                            Password = "$2a$11$PXiD5qQbUAlYe7UAZEDFDudQ4HWHW3U7N63narEEKBUGSscCK3V2a",
+                            Password = "$2a$11$AJhWvOBEHf4SFxea/GL8SO2cChJvfshnVRzHLl57gWgztFvvXPQMG",
                             RoleT = 3,
                             UserId = 2,
                             Username = "admin"
@@ -424,13 +424,13 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                             About = "Guest is cool guy!",
                             Avatar = "guest.jpg",
                             Cover = "c_guest.jpg",
-                            DateAccountCreated = new DateTime(2022, 7, 28, 15, 27, 2, 383, DateTimeKind.Utc).AddTicks(5870),
+                            DateAccountCreated = new DateTime(2022, 7, 28, 17, 31, 52, 722, DateTimeKind.Utc).AddTicks(6202),
                             DateBirthday = new DateTime(1995, 5, 2, 23, 0, 0, 0, DateTimeKind.Utc),
                             Email = "guest@localhost.loc",
                             FirstName = "Guest",
                             LastName = "Convidado",
-                            PasswordT = "$2a$11$wqHUz9o5MebuE36U8.oEluvEJATmHO9iC8E1nrEwoiNjllFqR3iti",
-                            Pin = "$2a$11$jyG/Zze9o./zDbVPrqKQYuvMxo.lZLro6waPLnuRA32KERTGOQbVO",
+                            PasswordT = "$2a$11$zvRFlcEBRTSXhfqK4kAiDuwCz1Gc7YWz5tlCs1o6gVYDWUBQDsBe.",
+                            Pin = "$2a$11$SDY9OwYFo5Bd5IRdNKPeUOjoP/Hrxpnu/Df07ie9Y4H.WaP2VlwoO",
                             RoleT = 1,
                             Username = "guest"
                         },
@@ -440,13 +440,13 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                             About = "Admin is cool guy!",
                             Avatar = "theflash.jpg",
                             Cover = "theflash.jpg",
-                            DateAccountCreated = new DateTime(2022, 7, 28, 15, 27, 2, 723, DateTimeKind.Utc).AddTicks(1764),
+                            DateAccountCreated = new DateTime(2022, 7, 28, 17, 31, 53, 81, DateTimeKind.Utc).AddTicks(1457),
                             DateBirthday = new DateTime(1995, 6, 3, 23, 0, 0, 0, DateTimeKind.Utc),
                             Email = "admin@localhost.loc",
                             FirstName = "Admin",
                             LastName = "Admin",
-                            PasswordT = "$2a$11$S9iRChZN7yXAbe/WJfm23e8i0XaToxxghsRkqEYr21Mih18TCv7lC",
-                            Pin = "$2a$11$V2Ivb6ough2OvrdPFrzdduTFmXvc5XgpmAQCjtNXDMqL/uoWSGiXC",
+                            PasswordT = "$2a$11$WaXj3UouYuUt0mgnMxBPyubEcvX1/2WiLdzfxwIY34TIJwmGK1pe2",
+                            Pin = "$2a$11$mG0UDOV4iN8ZzDq62Fa1Meaoou58GuODhvomas0HP9HXXKQN5ikfe",
                             RoleT = 3,
                             Username = "admin"
                         });

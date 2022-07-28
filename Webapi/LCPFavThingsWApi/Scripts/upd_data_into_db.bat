@@ -1,6 +1,6 @@
 @echo off
 setlocal enableextensions
-set "projpth=C:\\Users\\Luis\\Documents\\Visual Studio 2022\\Projects\\LCPFTMain\\Webapp\\LCPFavThingsWApi"
+set "projpth=C:\\Users\\Luis\\Documents\\Visual Studio 2022\\Projects\\LCPFTMain\\Webapi\\LCPFavThingsWApi"
 
 cls
 cd "%projpth%"

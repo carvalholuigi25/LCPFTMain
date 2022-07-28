@@ -1,7 +1,7 @@
 {
   "connStrings": {
     "SQLServerDB": "Server=(localdb)\\mssqllocaldb;Database=LCPFavThingsDB;Trusted_Connection=True;MultipleActiveResultSets=true",
-    "SQLiteDB": "C:\\Users\\Luis\\Documents\\Visual Studio 2022\\Projects\\LCPFTMain\\Webapp\\LCPFavThingsWApi\\Data\\SQLite\\lcpfavthingsdb.db",
+    "SQLiteDB": "C:\\Users\\Luis\\Documents\\Visual Studio 2022\\Projects\\LCPFTMain\\Webapi\\LCPFavThingsWApi\\Data\\SQLite\\lcpfavthingsdb.db",
     "SQLiteDBAndroid": "//sdcard//Android//data//com.lcp.lcpfavthings//files//lcpfavthingsdb.db",
     "SQLiteDBAndroidEmu": "//data//data//com.lcp.lcpfavthings//files//lcpfavthingsdb.db",
     "MySQLDB": "server=localhost;port=3306;database=lcpfavthingsdbmysql;user=root;password=1234"

@@ -1,7 +1,7 @@
 @echo off
 setlocal enableextensions
 set "pthfiles=/data/data/com.lcp.lcpfavthings/files"
-set "pthdb=C:\Users\Luis\Documents\Visual Studio 2022\Projects\LCPFTMain\Webapp\LCPFavThingsWApi\Data\SQLite\lcpfavthingsdb.db"
+set "pthdb=C:\Users\Luis\Documents\Visual Studio 2022\Projects\LCPFTMain\Webapi\LCPFavThingsWApi\Data\SQLite\lcpfavthingsdb.db"
 
 cd "%ANDROID_HOME%\emulator"
 REM emulator -avd Pixel_2_API_31

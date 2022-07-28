@@ -3,26 +3,21 @@ using System;
 using LCPFavThingsWApi.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
+namespace LCPFavThingsWApi.Migrations.MySqlMigrations
 {
-    [DbContext(typeof(DBContext))]
-    [Migration("20220728152703_InitialSQLServer")]
-    partial class InitialSQLServer
+    [DbContext(typeof(DBMySQLContext))]
+    partial class DBMySQLContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.6")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("LCPFavThingsWApi.Models.Games", b =>
                 {
@@ -30,8 +25,6 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("GameId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("GameId"), 1L, 1);
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -119,8 +112,6 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                         .HasColumnType("int")
                         .HasColumnName("MovieId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("MovieId"), 1L, 1);
-
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -197,8 +188,6 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("TVSerieId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("TVSerieId"), 1L, 1);
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -296,8 +285,6 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                         .HasColumnType("int")
                         .HasColumnName("UserAuthId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UserAuthId"), 1L, 1);
-
                     b.Property<string>("Avatar")
                         .HasMaxLength(255)
                         .IsUnicode(false)
@@ -333,7 +320,7 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                         {
                             UserAuthId = 1,
                             Avatar = "guest.jpg",
-                            Password = "$2a$11$QTbXWSA3b3DsuHDkFV8Be.wPQTWpZ5P6eOfozEGve6KXpGdPeqjFm",
+                            Password = "$2a$11$CcLoftOUVtLeocbaJ1v9vOXibrWCnOs88qI2Sx0JNsj/3WGc6vcw6",
                             RoleT = 1,
                             UserId = 1,
                             Username = "guest"
@@ -342,7 +329,7 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                         {
                             UserAuthId = 2,
                             Avatar = "theflash.jpg",
-                            Password = "$2a$11$PXiD5qQbUAlYe7UAZEDFDudQ4HWHW3U7N63narEEKBUGSscCK3V2a",
+                            Password = "$2a$11$n8.CCaLLT4V2PYcqw31vTOqoWTB04ZgJQJoKjapmkSt0Fst.8w3VC",
                             RoleT = 3,
                             UserId = 2,
                             Username = "admin"
@@ -355,8 +342,6 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("UserId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UserId"), 1L, 1);
 
                     b.Property<string>("About")
                         .HasMaxLength(255)
@@ -401,7 +386,7 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                         .HasColumnType("varchar(1024)");
 
                     b.Property<string>("Pin")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("longtext")
                         .HasColumnName("Pin");
 
                     b.Property<int?>("RoleT")
@@ -426,13 +411,13 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                             About = "Guest is cool guy!",
                             Avatar = "guest.jpg",
                             Cover = "c_guest.jpg",
-                            DateAccountCreated = new DateTime(2022, 7, 28, 15, 27, 2, 383, DateTimeKind.Utc).AddTicks(5870),
+                            DateAccountCreated = new DateTime(2022, 7, 28, 17, 30, 42, 630, DateTimeKind.Utc).AddTicks(9073),
                             DateBirthday = new DateTime(1995, 5, 2, 23, 0, 0, 0, DateTimeKind.Utc),
                             Email = "guest@localhost.loc",
                             FirstName = "Guest",
                             LastName = "Convidado",
-                            PasswordT = "$2a$11$wqHUz9o5MebuE36U8.oEluvEJATmHO9iC8E1nrEwoiNjllFqR3iti",
-                            Pin = "$2a$11$jyG/Zze9o./zDbVPrqKQYuvMxo.lZLro6waPLnuRA32KERTGOQbVO",
+                            PasswordT = "$2a$11$fqlSo7URGIe7rwgiMLuMcOMb5wYrSZaopGBQsu7Lh1h0ET1P2S46i",
+                            Pin = "$2a$11$nLA3uFopXcRNQLfmZDUWpOOoENWFN6KBpo2NU0K4W/EFlAUioYLoC",
                             RoleT = 1,
                             Username = "guest"
                         },
@@ -442,13 +427,13 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                             About = "Admin is cool guy!",
                             Avatar = "theflash.jpg",
                             Cover = "theflash.jpg",
-                            DateAccountCreated = new DateTime(2022, 7, 28, 15, 27, 2, 723, DateTimeKind.Utc).AddTicks(1764),
+                            DateAccountCreated = new DateTime(2022, 7, 28, 17, 30, 42, 991, DateTimeKind.Utc).AddTicks(3819),
                             DateBirthday = new DateTime(1995, 6, 3, 23, 0, 0, 0, DateTimeKind.Utc),
                             Email = "admin@localhost.loc",
                             FirstName = "Admin",
                             LastName = "Admin",
-                            PasswordT = "$2a$11$S9iRChZN7yXAbe/WJfm23e8i0XaToxxghsRkqEYr21Mih18TCv7lC",
-                            Pin = "$2a$11$V2Ivb6ough2OvrdPFrzdduTFmXvc5XgpmAQCjtNXDMqL/uoWSGiXC",
+                            PasswordT = "$2a$11$6beyWUDCKEa62c9srlwWj.OgJ/4ZBQz/O9zloekB9MMSAGgBAum7C",
+                            Pin = "$2a$11$yeygDSHhjpb588mVkLx9KujikdF2nzPUsBzT.bqSuj/GNxya.ia6G",
                             RoleT = 3,
                             Username = "admin"
                         });
@@ -460,8 +445,6 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("TokenId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("TokenId"), 1L, 1);
 
                     b.Property<string>("AccessToken")
                         .HasMaxLength(1024)
@@ -498,12 +481,10 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                     b.HasKey("TokenId");
 
                     b.HasIndex("UserAuthId")
-                        .IsUnique()
-                        .HasFilter("[UserAuthId] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("UserToken", (string)null);
 

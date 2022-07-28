@@ -168,8 +168,8 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                 columns: new[] { "UserAuthId", "Avatar", "Password", "RoleT", "UserId", "Username" },
                 values: new object[,]
                 {
-                    { 1, "guest.jpg", "$2a$11$QTbXWSA3b3DsuHDkFV8Be.wPQTWpZ5P6eOfozEGve6KXpGdPeqjFm", 1, 1, "guest" },
-                    { 2, "theflash.jpg", "$2a$11$PXiD5qQbUAlYe7UAZEDFDudQ4HWHW3U7N63narEEKBUGSscCK3V2a", 3, 2, "admin" }
+                    { 1, "guest.jpg", "$2a$11$3z4TCa55bRk83hf2oNiN..rqPpRRC12GMCJkP9rfWnWf71CIB4Vh6", 1, 1, "guest" },
+                    { 2, "theflash.jpg", "$2a$11$AJhWvOBEHf4SFxea/GL8SO2cChJvfshnVRzHLl57gWgztFvvXPQMG", 3, 2, "admin" }
                 });
 
             migrationBuilder.InsertData(
@@ -177,8 +177,8 @@ namespace LCPFavThingsWApi.Migrations.SqlServerMigrations
                 columns: new[] { "UserId", "About", "Avatar", "Cover", "DateAccountCreated", "DateBirthday", "Email", "FirstName", "LastName", "PasswordT", "Pin", "RoleT", "Username" },
                 values: new object[,]
                 {
-                    { 1, "Guest is cool guy!", "guest.jpg", "c_guest.jpg", new DateTime(2022, 7, 28, 15, 27, 2, 383, DateTimeKind.Utc).AddTicks(5870), new DateTime(1995, 5, 2, 23, 0, 0, 0, DateTimeKind.Utc), "guest@localhost.loc", "Guest", "Convidado", "$2a$11$wqHUz9o5MebuE36U8.oEluvEJATmHO9iC8E1nrEwoiNjllFqR3iti", "$2a$11$jyG/Zze9o./zDbVPrqKQYuvMxo.lZLro6waPLnuRA32KERTGOQbVO", 1, "guest" },
-                    { 2, "Admin is cool guy!", "theflash.jpg", "theflash.jpg", new DateTime(2022, 7, 28, 15, 27, 2, 723, DateTimeKind.Utc).AddTicks(1764), new DateTime(1995, 6, 3, 23, 0, 0, 0, DateTimeKind.Utc), "admin@localhost.loc", "Admin", "Admin", "$2a$11$S9iRChZN7yXAbe/WJfm23e8i0XaToxxghsRkqEYr21Mih18TCv7lC", "$2a$11$V2Ivb6ough2OvrdPFrzdduTFmXvc5XgpmAQCjtNXDMqL/uoWSGiXC", 3, "admin" }
+                    { 1, "Guest is cool guy!", "guest.jpg", "c_guest.jpg", new DateTime(2022, 7, 28, 17, 31, 52, 722, DateTimeKind.Utc).AddTicks(6202), new DateTime(1995, 5, 2, 23, 0, 0, 0, DateTimeKind.Utc), "guest@localhost.loc", "Guest", "Convidado", "$2a$11$zvRFlcEBRTSXhfqK4kAiDuwCz1Gc7YWz5tlCs1o6gVYDWUBQDsBe.", "$2a$11$SDY9OwYFo5Bd5IRdNKPeUOjoP/Hrxpnu/Df07ie9Y4H.WaP2VlwoO", 1, "guest" },
+                    { 2, "Admin is cool guy!", "theflash.jpg", "theflash.jpg", new DateTime(2022, 7, 28, 17, 31, 53, 81, DateTimeKind.Utc).AddTicks(1457), new DateTime(1995, 6, 3, 23, 0, 0, 0, DateTimeKind.Utc), "admin@localhost.loc", "Admin", "Admin", "$2a$11$WaXj3UouYuUt0mgnMxBPyubEcvX1/2WiLdzfxwIY34TIJwmGK1pe2", "$2a$11$mG0UDOV4iN8ZzDq62Fa1Meaoou58GuODhvomas0HP9HXXKQN5ikfe", 3, "admin" }
                 });
 
             migrationBuilder.InsertData(

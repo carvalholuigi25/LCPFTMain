@@ -17,15 +17,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCPFavThings", "Webapp\LCPF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCPFavThingsLib", "Webapp\LCPFavThingsLib\LCPFavThingsLib.csproj", "{5CC6BDB4-7754-4A0E-8F98-5EBDF3B053C1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCPFavThingsWApi", "Webapp\LCPFavThingsWApi\LCPFavThingsWApi.csproj", "{2D64EC4A-87E9-49A3-90FA-A37AA08A12D0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCPFavThingsWApiLib", "Webapp\LCPFavThingsWApiLib\LCPFavThingsWApiLib.csproj", "{A0F139C6-3C46-485A-AD17-490C2F4E2747}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCPFavThingsWebsite.Client", "Website\Client\LCPFavThingsWebsite.Client.csproj", "{9E3EEE20-AB0D-4388-89DB-95FBC3DA880D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCPFavThingsWebsite.Server", "Website\Server\LCPFavThingsWebsite.Server.csproj", "{003B9A7E-1332-406E-A5CF-B0D2DE61155A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCPFavThingsWebsite.Shared", "Website\Shared\LCPFavThingsWebsite.Shared.csproj", "{8C44E198-F4D9-4B81-9A49-27ECB3E946AE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCPFavThingsWApi", "Webapi\LCPFavThingsWApi\LCPFavThingsWApi.csproj", "{AA0C22DE-727E-4F44-97C9-5184F5ACD69C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCPFavThingsWApiLib", "Webapi\LCPFavThingsWApiLib\LCPFavThingsWApiLib.csproj", "{D4870EAB-B213-40BD-99F7-8F54B53E4327}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,14 +43,6 @@ Global
 		{5CC6BDB4-7754-4A0E-8F98-5EBDF3B053C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CC6BDB4-7754-4A0E-8F98-5EBDF3B053C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CC6BDB4-7754-4A0E-8F98-5EBDF3B053C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D64EC4A-87E9-49A3-90FA-A37AA08A12D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D64EC4A-87E9-49A3-90FA-A37AA08A12D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D64EC4A-87E9-49A3-90FA-A37AA08A12D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D64EC4A-87E9-49A3-90FA-A37AA08A12D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A0F139C6-3C46-485A-AD17-490C2F4E2747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0F139C6-3C46-485A-AD17-490C2F4E2747}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0F139C6-3C46-485A-AD17-490C2F4E2747}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0F139C6-3C46-485A-AD17-490C2F4E2747}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9E3EEE20-AB0D-4388-89DB-95FBC3DA880D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9E3EEE20-AB0D-4388-89DB-95FBC3DA880D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E3EEE20-AB0D-4388-89DB-95FBC3DA880D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,6 +55,14 @@ Global
 		{8C44E198-F4D9-4B81-9A49-27ECB3E946AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C44E198-F4D9-4B81-9A49-27ECB3E946AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C44E198-F4D9-4B81-9A49-27ECB3E946AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA0C22DE-727E-4F44-97C9-5184F5ACD69C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA0C22DE-727E-4F44-97C9-5184F5ACD69C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA0C22DE-727E-4F44-97C9-5184F5ACD69C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA0C22DE-727E-4F44-97C9-5184F5ACD69C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4870EAB-B213-40BD-99F7-8F54B53E4327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4870EAB-B213-40BD-99F7-8F54B53E4327}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4870EAB-B213-40BD-99F7-8F54B53E4327}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4870EAB-B213-40BD-99F7-8F54B53E4327}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
