@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 LCPFavThingsWApi/Data/SQLite/lcpfavthingsdb.db-shm
 LCPFavThingsWApi/Data/SQLite/lcpfavthingsdb.db-wal
+/Webapi/LCPFavThingsWApi/Data/SQLite/lcpfavthingsdb.db-shm
+/Webapi/LCPFavThingsWApi/Data/SQLite/lcpfavthingsdb.db-wal
