@@ -19,7 +19,7 @@ else
 					<th>Date Release</th>
 					<th>Language</th>
 					<th>Rating</th>
-					<th></th>
+                    <th class="@(isUserLoggedIn ? "show": "hidden")"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -37,7 +37,7 @@ else
 						<td>@mdata.DateRelease</td>
 						<td>@mdata.LangT</td>
 						<td>@mdata.Rating</td>
-						<td>
+						<td class="@(isUserLoggedIn ? "show": "hidden")">
 							<a href="/games/edit/@mdata.GameId" class="btn btn-primary" title="Edit">
 								<i class="bi bi-pencil"></i>
 								Edit
@@ -60,6 +60,9 @@ else
 
 	[Parameter]
 	public int? mydataid { get; set; }
+
+    [Parameter]
+    public bool isUserLoggedIn { get; set; } = false;
 
 	protected override Task OnInitializedAsync()
 	{

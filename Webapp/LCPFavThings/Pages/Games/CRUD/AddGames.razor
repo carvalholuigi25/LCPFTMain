@@ -10,65 +10,72 @@
     @localizer["lnkgames"]
 </h3>
 
-<form class="frmgames mt-3">
-    <div class="row">
-        <div class="col-12">
-            <div class="form-group">
-                <label for="id" class="control-label">Id</label>
-                <input type="number" min="1" class="form-control" @bind="@games.GameId" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="title" class="control-label">Title</label>
-                <input type="text" class="form-control" @bind="@games.Title" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="desc" class="control-label">Description</label>
-                <textarea class="form-control" cols="1" rows="10" @bind="@games.DescT"></textarea>
-            </div>
-            <div class="form-group mt-3">
-                <label for="genre" class="control-label">Genre</label>
-                <input type="text" class="form-control" @bind="@games.Genre" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="category" class="control-label">Category</label>
-                <input type="text" class="form-control" @bind="@games.Category" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="cover" class="control-label">Cover</label>
-                <input type="text" class="form-control" @bind="@games.Cover" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="company" class="control-label">Company</label>
-                <input type="text" class="form-control" @bind="@games.Company" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="publisher" class="control-label">Publisher</label>
-                <input type="text" class="form-control" @bind="@games.Publisher" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="language" class="control-label">Language</label>
-                <input type="text" class="form-control" @bind="@games.LangT" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="dateRelease" class="control-label">Date Release</label>
-                <input type="text" class="form-control" @bind="@games.DateRelease" />
-                @*<DatePicker Date="@Convert.ToDateTime(games.DateRelease)" TValue="DateTime?" InputMode="DateInputMode.DateTime" TimeAs24hr="true" />*@
-            </div>
-            <div class="form-group mt-3">
-                <label for="rating" class="control-label">Rating</label>
-                <input type="number" step="0.01" class="form-control" @bind="@games.Rating" />
+@if(!IsUserLoggedIn) {
+    <div class="warnblk d-block me-auto ms-auto text-center">
+        <i class="bi bi-exclamation-triangle" style="font-size: 4rem"></i>
+        <p class="mt-3">Only registered users can add games!</p>
+    </div>
+} else {
+    <form class="frmgames mt-3">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="id" class="control-label">Id</label>
+                    <input type="number" min="1" class="form-control" @bind="@games.GameId" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="title" class="control-label">Title</label>
+                    <input type="text" class="form-control" @bind="@games.Title" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="desc" class="control-label">Description</label>
+                    <textarea class="form-control" cols="1" rows="10" @bind="@games.DescT"></textarea>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="genre" class="control-label">Genre</label>
+                    <input type="text" class="form-control" @bind="@games.Genre" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="category" class="control-label">Category</label>
+                    <input type="text" class="form-control" @bind="@games.Category" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="cover" class="control-label">Cover</label>
+                    <input type="text" class="form-control" @bind="@games.Cover" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="company" class="control-label">Company</label>
+                    <input type="text" class="form-control" @bind="@games.Company" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="publisher" class="control-label">Publisher</label>
+                    <input type="text" class="form-control" @bind="@games.Publisher" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="language" class="control-label">Language</label>
+                    <input type="text" class="form-control" @bind="@games.LangT" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="dateRelease" class="control-label">Date Release</label>
+                    <input type="text" class="form-control" @bind="@games.DateRelease" />
+                    @*<DatePicker Date="@Convert.ToDateTime(games.DateRelease)" TValue="DateTime?" InputMode="DateInputMode.DateTime" TimeAs24hr="true" />*@
+                </div>
+                <div class="form-group mt-3">
+                    <label for="rating" class="control-label">Rating</label>
+                    <input type="number" step="0.01" class="form-control" @bind="@games.Rating" />
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="form-group">
-                <input type="button" class="btn btn-primary" @onclick="@CreateGames" value="Save" />
-                <input type="button" class="btn btn-secondary" @onclick="Back" value="Back" />
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <input type="button" class="btn btn-primary" @onclick="@CreateGames" value="Save" />
+                    <input type="button" class="btn btn-secondary" @onclick="Back" value="Back" />
+                </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+}
 
 @code {
     [Inject] public IJSRuntime JS { get; set; }
@@ -78,6 +85,7 @@
     [Inject] public ILSHelper LSH { get; set; }
 
     public string valdbm { get; set; }
+    public bool IsUserLoggedIn { get; set; }
     private HubConnection hubConnection;
 
     LCPFavThings.Models.Games games = new LCPFavThings.Models.Games();
@@ -87,6 +95,7 @@
         await MyExtensions.LoadMyCultureInfo(JS);
 
         valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
+        IsUserLoggedIn = !string.IsNullOrEmpty(await LSH.Get("authinfo")) ? true : false;
 
         try 
         {

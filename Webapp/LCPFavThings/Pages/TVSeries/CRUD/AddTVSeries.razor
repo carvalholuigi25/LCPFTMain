@@ -10,60 +10,67 @@
     @localizer["lnktvseries"]
 </h3>
 
-<form class="frmtvseries mt-3">
-    <div class="row">
-        <div class="col-12">
-            <div class="form-group">
-                <label for="title" class="control-label">Title</label>
-                <input type="text" class="form-control" @bind="@tvseries.Title" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="desc" class="control-label">Description</label>
-                <textarea class="form-control" cols="1" rows="10" @bind="@tvseries.DescT"></textarea>
-            </div>
-            <div class="form-group mt-3">
-                <label for="genre" class="control-label">Genre</label>
-                <input type="text" class="form-control" @bind="@tvseries.Genre" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="category" class="control-label">Category</label>
-                <input type="text" class="form-control" @bind="@tvseries.Category" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="cover" class="control-label">Cover</label>
-                <input type="text" class="form-control" @bind="@tvseries.Cover" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="company" class="control-label">Company</label>
-                <input type="text" class="form-control" @bind="@tvseries.Company" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="language" class="control-label">Language</label>
-                <input type="text" class="form-control" @bind="@tvseries.LangT" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="duration" class="control-label">Duration</label>
-                <input type="number" step="1" class="form-control" @bind="@tvseries.Duration" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="totalSeasons" class="control-label">Total Seasons</label>
-                <input type="number" step="1" class="form-control" @bind="@tvseries.TotalSeasons" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="rating" class="control-label">Rating</label>
-                <input type="number" step="0.01" class="form-control" @bind="@tvseries.Rating" />
+@if(!IsUserLoggedIn) {
+    <div class="warnblk d-block me-auto ms-auto text-center">
+        <i class="bi bi-exclamation-triangle" style="font-size: 4rem"></i>
+        <p class="mt-3">Only registered users can add tv series!</p>
+    </div>
+} else {
+    <form class="frmtvseries mt-3">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="title" class="control-label">Title</label>
+                    <input type="text" class="form-control" @bind="@tvseries.Title" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="desc" class="control-label">Description</label>
+                    <textarea class="form-control" cols="1" rows="10" @bind="@tvseries.DescT"></textarea>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="genre" class="control-label">Genre</label>
+                    <input type="text" class="form-control" @bind="@tvseries.Genre" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="category" class="control-label">Category</label>
+                    <input type="text" class="form-control" @bind="@tvseries.Category" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="cover" class="control-label">Cover</label>
+                    <input type="text" class="form-control" @bind="@tvseries.Cover" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="company" class="control-label">Company</label>
+                    <input type="text" class="form-control" @bind="@tvseries.Company" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="language" class="control-label">Language</label>
+                    <input type="text" class="form-control" @bind="@tvseries.LangT" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="duration" class="control-label">Duration</label>
+                    <input type="number" step="1" class="form-control" @bind="@tvseries.Duration" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="totalSeasons" class="control-label">Total Seasons</label>
+                    <input type="number" step="1" class="form-control" @bind="@tvseries.TotalSeasons" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="rating" class="control-label">Rating</label>
+                    <input type="number" step="0.01" class="form-control" @bind="@tvseries.Rating" />
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="form-group">
-                <input type="button" class="btn btn-primary" @onclick="@CreateTVSeries" value="Save" />
-                <input type="button" class="btn btn-secondary" @onclick="Back" value="Back" />
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <input type="button" class="btn btn-primary" @onclick="@CreateTVSeries" value="Save" />
+                    <input type="button" class="btn btn-secondary" @onclick="Back" value="Back" />
+                </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+}
 
 @code {
     [Inject] public IJSRuntime JS { get; set; }
@@ -73,15 +80,17 @@
     [Inject] public ILSHelper LSH { get; set; }
 
     public string valdbm { get; set; }
+    public bool IsUserLoggedIn { get; set; }
     private HubConnection hubConnection;
 
     lib.Models.TVSeries tvseries = new lib.Models.TVSeries();
 
     protected override async Task OnInitializedAsync()
     {
-        valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
-
         await MyExtensions.LoadMyCultureInfo(JS);
+        
+        valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
+        IsUserLoggedIn = !string.IsNullOrEmpty(await LSH.Get("authinfo")) ? true : false;
 
         try 
         {

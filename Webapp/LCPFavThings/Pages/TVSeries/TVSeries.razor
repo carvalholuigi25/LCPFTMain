@@ -14,7 +14,7 @@
 	@localizer["lnktvseries"]
 </h1>
 
-<div class="menubtnadd d-block mt-3" id="menubtnadd">
+<div class="@(IsUserLoggedIn ? "show mt-3" : "hidden mt-0") menubtnadd" id="menubtnadd">
 	<a href="/tvseries/add" class="btn btn-primary" title="Add">
 		<i class="bi bi-plus"></i>
 		Add
@@ -46,11 +46,11 @@ else
 {
 	if (string.IsNullOrEmpty(Mode) || Mode == "table")
 	{
-		<TableTVSeries mydata="tvseries" mydataid="@TVSerieId" />
+		<TableTVSeries mydata="tvseries" mydataid="@TVSerieId" isUserLoggedIn="IsUserLoggedIn" />
 	}
 	else
 	{
-		<CardTVSeries mydata="tvseries" mydataid="@TVSerieId" />
+        <CardTVSeries mydata="tvseries" mydataid="@TVSerieId" isUserLoggedIn="IsUserLoggedIn" />
 	}
 }
 
@@ -58,24 +58,17 @@ else
 	[Parameter]
 	public int? TVSerieId { get; set; }
 
-	[Inject]
-	public IAllDataService AllDataService { get; set; }
-
-	[Inject]
-	public ILocalDBDataService LocalDBDataService { get; set; }
-
-	[Inject]
-	public ILSHelper LSH { get; set; }
-
+	[Inject] public IAllDataService AllDataService { get; set; }
+	[Inject] public ILocalDBDataService LocalDBDataService { get; set; }
+	[Inject] public ILSHelper LSH { get; set; }
 	[Inject] public IJSRuntime JS { get; set; }
 	[Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
 
 	public string Mode { get; set; } = "table";
-
 	public string ErrorMsg { get; set; } = string.Empty;
+    public bool IsUserLoggedIn { get; set; }
 
 	public List<lib.Models.TVSeries> tvseries { get; set; }
-
 	private HubConnection hubConnection;
 
     protected override async Task OnInitializedAsync()
@@ -83,6 +76,8 @@ else
         await MyExtensions.LoadMyCultureInfo(JS);
      
 		var valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
+
+        IsUserLoggedIn = !string.IsNullOrEmpty(await LSH.Get("authinfo")) ? true : false;
 
 		try
 		{

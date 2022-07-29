@@ -2,6 +2,7 @@
 
 @using LCPFavThings.Data.SQL
 @using LCPFavThings.Data.SQLite
+@using LCPFavThingsLib.Models
 
 @inject NavigationManager navman
 
@@ -10,44 +11,49 @@
     @localizer["lnkusers"]
 </h3>
 
-<form class="frmeditusers mt-3">
-    <div class="row">
-        <div class="col-12">
-            <input type="hidden" class="hidden" readonly @bind="@users.UserId" />
+@if (!IsUserLoggedIn) {
+    <div class="warnblk d-block me-auto ms-auto text-center">
+        <i class="bi bi-exclamation-triangle" style="font-size: 4rem"></i>
+        <p class="mt-3">Only admins can edit users!</p>
+    </div>
+} else {
+    <form class="frmeditusers mt-3">
+        <div class="row">
+            <div class="col-12">
+                <input type="hidden" class="hidden" readonly @bind="@users.UserId" />
+                <div class="form-group">
+                    <label for="username" class="control-label">Username</label>
+                    <input type="text" class="form-control" @bind="@users.Username" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="firstname" class="control-label">First Name</label>
+                    <input type="text" class="form-control" @bind="@users.FirstName" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="lastname" class="control-label">Last Name</label>
+                    <input type="text" class="form-control" @bind="@users.LastName" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="email" class="control-label">Email</label>
+                    <input type="email" class="form-control" @bind="@users.Email" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="role" class="control-label">Role</label>
+                    <input type="text" class="form-control" @bind="@users.RoleT" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="form-group">
-                <label for="username" class="control-label">Username</label>
-                <input type="text" class="form-control" @bind="@users.Username" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="firstname" class="control-label">First Name</label>
-                <input type="text" class="form-control" @bind="@users.FirstName" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="lastname" class="control-label">Last Name</label>
-                <input type="text" class="form-control" @bind="@users.LastName" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="email" class="control-label">Email</label>
-                <input type="email" class="form-control" @bind="@users.Email" />
-            </div>
-            <div class="form-group mt-3">
-                <label for="role" class="control-label">Role</label>
-                <input type="text" class="form-control" @bind="@users.RoleT" />
+                <input type="button" class="btn btn-primary" @onclick="@UpdateUsers" value="Update" />
+                <input type="button" class="btn btn-secondary" @onclick="@Back" value="Cancel" />
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="form-group">
-            <input type="button" class="btn btn-primary" @onclick="@UpdateUsers" value="Update" />
-            <input type="button" class="btn btn-secondary" @onclick="@Back" value="Cancel" />
-        </div>
-    </div>
-</form>
+    </form>
+}
 
 @code {
-    [Parameter]
-    public int UserId { get; set; }
-
+    [Parameter] public int UserId { get; set; }
     [Inject] public IJSRuntime JS { get; set; }
     [Inject] public IStringLocalizer<srf.Resource> localizer { get; set; }
     [Inject] public ILocalDBDataService lcdb { get; set; }
@@ -56,14 +62,17 @@
 
     private HubConnection hubConnection;
     public string valdbm { get; set; }
+    public bool IsUserLoggedIn { get; set; }
 
     LCPFavThings.Models.Users users = new LCPFavThings.Models.Users();
     List<LCPFavThings.Models.Users> userslist = new List<LCPFavThings.Models.Users>();
 
     protected override async Task OnInitializedAsync()
     {
-        valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
         await MyExtensions.LoadMyCultureInfo(JS);
+
+        valdbm = !string.IsNullOrEmpty(await LSH.Get("dbmode")) ? await LSH.Get("dbmode") : "server";
+        IsUserLoggedIn = !string.IsNullOrEmpty(await LSH.Get("authinfo")) ? true : false;
 
         try 
         {
