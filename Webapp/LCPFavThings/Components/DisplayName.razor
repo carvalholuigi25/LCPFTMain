@@ -40,6 +40,6 @@ else
     {
         var expression = (MemberExpression)For.Body;
         var value = expression.Member.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
-        return value?.Name ?? expression.Member.Name ?? "";
+        return value?.GetName() ?? expression.Member.Name ?? "";
     }
 }
