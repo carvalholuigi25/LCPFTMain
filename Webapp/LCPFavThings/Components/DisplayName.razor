@@ -1,0 +1,45 @@
+﻿@* Source: https://stackoverflow.com/a/60426123 *@
+
+@using System.Reflection
+@using System.Linq.Expressions;
+@using System.ComponentModel.DataAnnotations;
+@typeparam T
+
+@if (ChildContent == null)
+{
+    @if(IsLabel) {
+        <label class="@ClassStr">@mydata</label>
+    } else {
+        <span class="@ClassStr">@mydata</span>
+    }
+}
+else
+{
+    @if(IsLabel) {
+        <label class="@ClassStr">
+            @mydata
+            @ChildContent
+        </label>
+    } else {
+        <span class="@ClassStr">
+            @mydata
+            @ChildContent
+        </span>
+    }
+}
+
+@code {
+    [Parameter] public Expression<Func<T>> For { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public string ClassStr { get; set; } = "control-label";
+    [Parameter] public bool IsLabel { get; set; } = true;
+
+    private string mydata => GetDisplayName();
+
+    private string GetDisplayName()
+    {
+        var expression = (MemberExpression)For.Body;
+        var value = expression.Member.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+        return value?.Name ?? expression.Member.Name ?? "";
+    }
+}

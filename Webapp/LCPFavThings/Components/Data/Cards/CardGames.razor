@@ -25,16 +25,16 @@ else
 								<div class="card-body">
 									<h3 class="mt-3">@mdata.Title</h3>
 
-									<p class="mt-3">Id: @mdata.GameId</p>
-									<p class="mt-3">Description: </p>
+									<p class="mt-3"><DisplayName For="@(() => mdata.GameId)" IsLabel="false" />: @mdata.GameId</p>
+                                    <p class="mt-3"><DisplayName For="@(() => mdata.DescT)" IsLabel="false" />: </p>
 									<div class="card card-body mt-3">@mdata.DescT</div>
-									<p class="mt-3">Genre: @mdata.Genre</p>
-									<p class="mt-3">Category: @mdata.Category</p>
-									<p class="mt-3">Company: @mdata.Company</p>
-									<p class="mt-3">Publisher: @mdata.Publisher</p>
-									<p class="mt-3">Language: @mdata.LangT</p>
-									<p class="mt-3">Date Release: @mdata.DateRelease</p>
-									<p class="mt-3">Rating: </p>
+                                    <p class="mt-3"><DisplayName For="@(() => mdata.Genre)" IsLabel="false" />: @mdata.Genre</p>
+                                    <p class="mt-3"><DisplayName For="@(() => mdata.Category)" IsLabel="false" />: @mdata.Category</p>
+                                    <p class="mt-3"><DisplayName For="@(() => mdata.Company)" IsLabel="false" />: @mdata.Company</p>
+                                    <p class="mt-3"><DisplayName For="@(() => mdata.Publisher)" IsLabel="false" />: @mdata.Publisher</p>
+                                    <p class="mt-3"><DisplayName For="@(() => mdata.LangT)" IsLabel="false" />: @mdata.LangT</p>
+                                    <p class="mt-3"><DisplayName For="@(() => mdata.DateRelease)" IsLabel="false" />: @mdata.DateRelease</p>
+                                    <p class="mt-3"><DisplayName For="@(() => mdata.Rating)" IsLabel="false" />: </p>
 									
 									<div class="d-block mt-3">
 										<Rating Color="Color.Primary" SelectedValue="@ConvertDecToInt(mdata.Rating)" MaxValue="10" />
