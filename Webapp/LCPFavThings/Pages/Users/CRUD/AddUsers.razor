@@ -22,11 +22,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="form-group">
-                    <label for="username" class="control-label">Username</label>
+                    <DisplayName For="@(() => users.Username)" IsLabel="true" />
                     <input type="text" class="form-control" @bind="@users.Username" />
                 </div>
                 <div class="form-group">
-                    <label for="password" class="control-label">Password</label>
+                    <DisplayName For="@(() => users.PasswordT)" IsLabel="true" />
                     <input type="password" class="form-control" @bind="@users.PasswordT" />
                 </div>
             </div>

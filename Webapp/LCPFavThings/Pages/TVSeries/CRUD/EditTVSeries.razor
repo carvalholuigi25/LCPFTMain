@@ -21,43 +21,43 @@
             <div class="col-12">
                 <input type="hidden" class="hidden" readonly @bind="@tvseries.TVSerieId" />
                 <div class="form-group">
-                    <label for="title" class="control-label">Title</label>
+                        <DisplayName For="@(() => tvseries.Title)" IsLabel="true" />
                     <input type="text" class="form-control" @bind="@tvseries.Title" />
                 </div>
                 <div class="form-group mt-3">
-                    <label for="desc" class="control-label">Description</label>
+                    <DisplayName For="@(() => tvseries.DescT)" IsLabel="true" />
                     <textarea class="form-control" cols="1" rows="10" @bind="@tvseries.DescT"></textarea>
                 </div>
                 <div class="form-group mt-3">
-                    <label for="genre" class="control-label">Genre</label>
+                    <DisplayName For="@(() => tvseries.Genre)" IsLabel="true" />
                     <input type="text" class="form-control" @bind="@tvseries.Genre" />
                 </div>
                 <div class="form-group mt-3">
-                    <label for="category" class="control-label">Category</label>
+                    <DisplayName For="@(() => tvseries.Category)" IsLabel="true" />
                     <input type="text" class="form-control" @bind="@tvseries.Category" />
                 </div>
                 <div class="form-group mt-3">
-                    <label for="cover" class="control-label">Cover</label>
+                    <DisplayName For="@(() => tvseries.Cover)" IsLabel="true" />
                     <input type="text" class="form-control" @bind="@tvseries.Cover" />
                 </div>
                 <div class="form-group mt-3">
-                    <label for="company" class="control-label">Company</label>
+                    <DisplayName For="@(() => tvseries.Company)" IsLabel="true" />
                     <input type="text" class="form-control" @bind="@tvseries.Company" />
                 </div>
                 <div class="form-group mt-3">
-                    <label for="language" class="control-label">Language</label>
+                    <DisplayName For="@(() => tvseries.LangT)" IsLabel="true" />
                     <input type="text" class="form-control" @bind="@tvseries.LangT" />
                 </div>
                 <div class="form-group mt-3">
-                    <label for="totalSeasons" class="control-label">Total Seasons</label>
+                    <DisplayName For="@(() => tvseries.TotalSeasons)" IsLabel="true" />
                     <input type="number" step="1" class="form-control" @bind="@tvseries.TotalSeasons" />
                 </div>
                 <div class="form-group mt-3">
-                    <label for="duration" class="control-label">Duration</label>
+                    <DisplayName For="@(() => tvseries.Duration)" IsLabel="true" />
                     <input type="number" step="1" class="form-control" @bind="@tvseries.Duration" />
                 </div>
                 <div class="form-group mt-3">
-                    <label for="rating" class="control-label">Rating</label>
+                    <DisplayName For="@(() => tvseries.Rating)" IsLabel="true" />
                     <input type="number" step="0.01" class="form-control" @bind="@tvseries.Rating" />
                 </div>
             </div>

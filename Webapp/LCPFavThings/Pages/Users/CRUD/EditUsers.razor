@@ -22,23 +22,23 @@
             <div class="col-12">
                 <input type="hidden" class="hidden" readonly @bind="@users.UserId" />
                 <div class="form-group">
-                    <label for="username" class="control-label">Username</label>
+                    <DisplayName For="@(() => users.Username)" IsLabel="true" />
                     <input type="text" class="form-control" @bind="@users.Username" />
                 </div>
                 <div class="form-group mt-3">
-                    <label for="firstname" class="control-label">First Name</label>
+                    <DisplayName For="@(() => users.FirstName)" IsLabel="true" />
                     <input type="text" class="form-control" @bind="@users.FirstName" />
                 </div>
                 <div class="form-group mt-3">
-                    <label for="lastname" class="control-label">Last Name</label>
+                    <DisplayName For="@(() => users.LastName)" IsLabel="true" />
                     <input type="text" class="form-control" @bind="@users.LastName" />
                 </div>
                 <div class="form-group mt-3">
-                    <label for="email" class="control-label">Email</label>
+                    <DisplayName For="@(() => users.Email)" IsLabel="true" />
                     <input type="email" class="form-control" @bind="@users.Email" />
                 </div>
                 <div class="form-group mt-3">
-                    <label for="role" class="control-label">Role</label>
+                    <DisplayName For="@(() => users.RoleT)" IsLabel="true" />
                     <input type="text" class="form-control" @bind="@users.RoleT" />
                 </div>
             </div>
