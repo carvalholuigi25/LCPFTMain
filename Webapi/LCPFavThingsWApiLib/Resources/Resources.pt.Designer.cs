@@ -22,14 +22,14 @@ namespace LCPFavThingsLib.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources___Cópia {
+    internal class Resources_PT {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources___Cópia() {
+        internal Resources_PT() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace LCPFavThingsLib.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LCPFavThingsLib.Resources.Resources - Cópia", typeof(Resources___Cópia).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LCPFavThingsLib.Resources.Resources.pt", typeof(Resources_PT).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
