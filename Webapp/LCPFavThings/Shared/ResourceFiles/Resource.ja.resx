@@ -153,95 +153,116 @@
   <data name="lnkusers" xml:space="preserve">
     <value>ユーザー</value>
   </data>
-  <data name="mabout" xml:space="preserve">
-    <value>About</value>
+    <data name="mabout" xml:space="preserve">
+    <value> About </value>
   </data>
-  <data name="mavatar" xml:space="preserve">
-    <value>Avatar</value>
+    <data name="maccesstoken" xml:space="preserve">
+    <value>アクセストークン</value>
   </data>
-  <data name="mcategory" xml:space="preserve">
-    <value>Category</value>
+    <data name="mauthenticated" xml:space="preserve">
+    <value>認証済み</value>
   </data>
-  <data name="mcompany" xml:space="preserve">
-    <value>Company</value>
+    <data name="mavatar" xml:space="preserve">
+    <value>アバター</value>
   </data>
-  <data name="mcover" xml:space="preserve">
-    <value>Cover</value>
+    <data name="mcategory" xml:space="preserve">
+    <value>カテゴリ</value>
   </data>
-  <data name="mdateaccreated" xml:space="preserve">
-    <value>Date of Account Created</value>
+    <data name="mcompany" xml:space="preserve">
+    <value>会社</value>
   </data>
-  <data name="mdatebirthday" xml:space="preserve">
-    <value>Date Birthday</value>
+    <data name="mcover" xml:space="preserve">
+    <value>カバー</value>
   </data>
-  <data name="mdesc" xml:space="preserve">
-    <value>Description</value>
+    <data name="mcreated" xml:space="preserve">
+    <value>作成済み</value>
   </data>
-  <data name="mduration" xml:space="preserve">
-    <value>Duration</value>
+    <data name="mdateaccreated" xml:space="preserve">
+    <value>アカウントの作成日</value>
   </data>
-  <data name="memail" xml:space="preserve">
-    <value>Email</value>
+    <data name="mdatebirthday" xml:space="preserve">
+    <value>誕生日の日付</value>
   </data>
-  <data name="mfirstname" xml:space="preserve">
-    <value>First Name</value>
+    <data name="mdaterelease" xml:space="preserve">
+    <value>リリース日</value>
   </data>
-  <data name="mgamesid" xml:space="preserve">
-    <value>GameId</value>
+    <data name="mdesc" xml:space="preserve">
+    <value>説明</value>
   </data>
-  <data name="mgenre" xml:space="preserve">
-    <value>Genre</value>
+    <data name="mduration" xml:space="preserve">
+    <value>期間</value>
   </data>
-  <data name="mlanguage" xml:space="preserve">
-    <value>Language</value>
+    <data name="memail" xml:space="preserve">
+    <value>メール</value>
   </data>
-  <data name="mlastname" xml:space="preserve">
-    <value>Last Name</value>
+    <data name="mexpiration" xml:space="preserve">
+    <value>有効期限</value>
   </data>
-  <data name="mmoviesid" xml:space="preserve">
-    <value>MovieId</value>
+    <data name="mfirstname" xml:space="preserve">
+    <value>名</value>
   </data>
-  <data name="mpassword" xml:space="preserve">
-    <value>Password</value>
+    <data name="mgamesid" xml:space="preserve">
+    <value> GameId </value>
   </data>
-  <data name="mpin" xml:space="preserve">
-    <value>Pin</value>
+    <data name="mgenre" xml:space="preserve">
+    <value>ジャンル</value>
   </data>
-  <data name="mpublisher" xml:space="preserve">
-    <value>Publisher</value>
+    <data name="mlanguage" xml:space="preserve">
+    <value>言語</value>
   </data>
-  <data name="mqrycmd" xml:space="preserve">
-    <value>Query Command</value>
+    <data name="mlastname" xml:space="preserve">
+    <value>姓</value>
   </data>
-  <data name="mrating" xml:space="preserve">
-    <value>Rating</value>
+    <data name="mmessage" xml:space="preserve">
+    <value>メッセージ</value>
   </data>
-  <data name="mrole" xml:space="preserve">
-    <value>Role</value>
+    <data name="mmoviesid" xml:space="preserve">
+    <value> MovieId </value>
   </data>
-  <data name="msgbdsrv" xml:space="preserve">
-    <value>SGBD Service</value>
+    <data name="mpassword" xml:space="preserve">
+    <value>パスワード</value>
   </data>
-  <data name="mtitle" xml:space="preserve">
-    <value>Title</value>
+    <data name="mpin" xml:space="preserve">
+    <value>ピン</value>
   </data>
-  <data name="mtokeninfo" xml:space="preserve">
-    <value>Token Info</value>
+    <data name="mpublisher" xml:space="preserve">
+    <value>パブリッシャー</value>
   </data>
-  <data name="mtotalseasons" xml:space="preserve">
-    <value>Total Seasons</value>
+    <data name="mqrycmd" xml:space="preserve">
+    <value>クエリコマンド</value>
   </data>
-  <data name="mtvserieid" xml:space="preserve">
-    <value>TVSerieId</value>
+    <data name="mrating" xml:space="preserve">
+    <value>評価</value>
   </data>
-  <data name="muserauthid" xml:space="preserve">
-    <value>UserAuthId</value>
+    <data name="mrole" xml:space="preserve">
+    <value>役割</value>
   </data>
-  <data name="muserid" xml:space="preserve">
-    <value>User Id</value>
+    <data name="msgbdsrv" xml:space="preserve">
+    <value>SGBDサービス</value>
   </data>
-  <data name="musername" xml:space="preserve">
-    <value>Username</value>
+    <data name="mtitle" xml:space="preserve">
+    <value>タイトル</value>
+  </data>
+    <data name="mtokenid" xml:space="preserve">
+    <value>トークンID</value>
+  </data>
+    <data name="mtokeninfo" xml:space="preserve">
+    <value>トークン情報</value>
+  </data>
+    <data name="mtotalseasons" xml:space="preserve">
+    <value>合計シーズン</value>
+  </data>
+    <data name="mtvserieid" xml:space="preserve">
+    <value> TVSerieId </value>
+  </data>
+    <data name="muserauthid" xml:space="preserve">
+    <value> UserAuthId </value>
+  </data>
+    <data name="muserid" xml:space="preserve">
+    <value>ユーザーID</value>
+  </data>
+    <data name="musername" xml:space="preserve">
+    <value>ユーザー名</value>
   </data>
   <data name="title" xml:space="preserve">
     <value>LCP 私の好きなこと</value>

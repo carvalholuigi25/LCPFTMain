@@ -154,37 +154,52 @@
     <value>Benutzer</value>
   </data>
   <data name="mabout" xml:space="preserve">
-    <value>About</value>
+    <value>Über</value>
+  </data>
+  <data name="maccesstoken" xml:space="preserve">
+    <value>Zugriffstoken</value>
+  </data>
+  <data name="mauthenticated" xml:space="preserve">
+    <value>Authentifiziert</value>
   </data>
   <data name="mavatar" xml:space="preserve">
     <value>Avatar</value>
   </data>
   <data name="mcategory" xml:space="preserve">
-    <value>Category</value>
+    <value>Kategorie</value>
   </data>
   <data name="mcompany" xml:space="preserve">
-    <value>Company</value>
+    <value>Unternehmen</value>
   </data>
   <data name="mcover" xml:space="preserve">
-    <value>Cover</value>
+    <value>Abdeckung</value>
+  </data>
+  <data name="mcreated" xml:space="preserve">
+    <value>Erstellt</value>
   </data>
   <data name="mdateaccreated" xml:space="preserve">
-    <value>Date of Account Created</value>
+    <value>Datum der Kontoerstellung</value>
   </data>
   <data name="mdatebirthday" xml:space="preserve">
-    <value>Date Birthday</value>
+    <value>Geburtstagsdatum</value>
+  </data>
+  <data name="mdaterelease" xml:space="preserve">
+    <value>Veröffentlichungsdatum</value>
   </data>
   <data name="mdesc" xml:space="preserve">
-    <value>Description</value>
+    <value>Beschreibung</value>
   </data>
   <data name="mduration" xml:space="preserve">
-    <value>Duration</value>
+    <value>Dauer</value>
   </data>
   <data name="memail" xml:space="preserve">
-    <value>Email</value>
+    <value>E-Mail</value>
+  </data>
+  <data name="mexpiration" xml:space="preserve">
+    <value>Ablauf</value>
   </data>
   <data name="mfirstname" xml:space="preserve">
-    <value>First Name</value>
+    <value>Vorname</value>
   </data>
   <data name="mgamesid" xml:space="preserve">
     <value>GameId</value>
@@ -193,16 +208,19 @@
     <value>Genre</value>
   </data>
   <data name="mlanguage" xml:space="preserve">
-    <value>Language</value>
+    <value>Sprache</value>
   </data>
   <data name="mlastname" xml:space="preserve">
-    <value>Last Name</value>
+    <value>Nachname</value>
+  </data>
+  <data name="mmessage" xml:space="preserve">
+    <value>Nachricht</value>
   </data>
   <data name="mmoviesid" xml:space="preserve">
     <value>MovieId</value>
   </data>
   <data name="mpassword" xml:space="preserve">
-    <value>Password</value>
+    <value>Passwort</value>
   </data>
   <data name="mpin" xml:space="preserve">
     <value>Pin</value>
@@ -211,25 +229,28 @@
     <value>Publisher</value>
   </data>
   <data name="mqrycmd" xml:space="preserve">
-    <value>Query Command</value>
+    <value>Abfragebefehl</value>
   </data>
   <data name="mrating" xml:space="preserve">
-    <value>Rating</value>
+    <value>Bevalueung</value>
   </data>
   <data name="mrole" xml:space="preserve">
-    <value>Role</value>
+    <value>Rolle</value>
   </data>
   <data name="msgbdsrv" xml:space="preserve">
-    <value>SGBD Service</value>
+    <value>SGBD-Dienst</value>
   </data>
   <data name="mtitle" xml:space="preserve">
-    <value>Title</value>
+    <value>Titel</value>
+  </data>
+  <data name="mtokenid" xml:space="preserve">
+    <value>Token-ID</value>
   </data>
   <data name="mtokeninfo" xml:space="preserve">
-    <value>Token Info</value>
+    <value>Token-Info</value>
   </data>
   <data name="mtotalseasons" xml:space="preserve">
-    <value>Total Seasons</value>
+    <value>Gesamtsaisons</value>
   </data>
   <data name="mtvserieid" xml:space="preserve">
     <value>TVSerieId</value>
@@ -238,10 +259,10 @@
     <value>UserAuthId</value>
   </data>
   <data name="muserid" xml:space="preserve">
-    <value>User Id</value>
+    <value>Benutzer-ID</value>
   </data>
   <data name="musername" xml:space="preserve">
-    <value>Username</value>
+    <value>Benutzername</value>
   </data>
   <data name="title" xml:space="preserve">
     <value>LCP Meine Lieblingssachen</value>

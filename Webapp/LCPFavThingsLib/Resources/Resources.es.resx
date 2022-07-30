@@ -117,115 +117,115 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="mabout" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="maccesstoken" xml:space="preserve">
-    <value>Access Token</value>
-  </data>
-  <data name="mauthenticated" xml:space="preserve">
-    <value>Authenticated</value>
-  </data>
-  <data name="mavatar" xml:space="preserve">
-    <value>Avatar</value>
-  </data>
-  <data name="mcategory" xml:space="preserve">
-    <value>Category</value>
-  </data>
-  <data name="mcompany" xml:space="preserve">
-    <value>Company</value>
-  </data>
-  <data name="mcover" xml:space="preserve">
-    <value>Cover</value>
-  </data>
-  <data name="mcreated" xml:space="preserve">
-    <value>Created</value>
-  </data>
-  <data name="mdateaccreated" xml:space="preserve">
-    <value>Date of Account Created</value>
-  </data>
-  <data name="mdatebirthday" xml:space="preserve">
-    <value>Date Birthday</value>
-  </data>
-  <data name="mdaterelease" xml:space="preserve">
-    <value>Date Release</value>
-  </data>
-  <data name="mdesc" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="mduration" xml:space="preserve">
-    <value>Duration</value>
-  </data>
-  <data name="memail" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="mexpiration" xml:space="preserve">
-    <value>Expiration</value>
-  </data>
-  <data name="mfirstname" xml:space="preserve">
-    <value>First Name</value>
-  </data>
-  <data name="mgamesid" xml:space="preserve">
-    <value>GameId</value>
-  </data>
-  <data name="mgenre" xml:space="preserve">
-    <value>Genre</value>
-  </data>
-  <data name="mlanguage" xml:space="preserve">
-    <value>Language</value>
-  </data>
-  <data name="mlastname" xml:space="preserve">
-    <value>Last Name</value>
-  </data>
-  <data name="mmessage" xml:space="preserve">
-    <value>Message</value>
-  </data>
-  <data name="mmoviesid" xml:space="preserve">
-    <value>MovieId</value>
-  </data>
-  <data name="mpassword" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="mpin" xml:space="preserve">
-    <value>Pin</value>
-  </data>
-  <data name="mpublisher" xml:space="preserve">
-    <value>Publisher</value>
-  </data>
-  <data name="mqrycmd" xml:space="preserve">
-    <value>Query Command</value>
-  </data>
-  <data name="mrating" xml:space="preserve">
-    <value>Rating</value>
-  </data>
-  <data name="mrole" xml:space="preserve">
-    <value>Role</value>
-  </data>
-  <data name="msgbdsrv" xml:space="preserve">
-    <value>SGBD Service</value>
-  </data>
-  <data name="mtitle" xml:space="preserve">
-    <value>Title</value>
-  </data>
-  <data name="mtokenid" xml:space="preserve">
-    <value>Token Id</value>
-  </data>
-  <data name="mtokeninfo" xml:space="preserve">
-    <value>Token Info</value>
-  </data>
-  <data name="mtotalseasons" xml:space="preserve">
-    <value>Total Seasons</value>
-  </data>
-  <data name="mtvserieid" xml:space="preserve">
-    <value>TVSerieId</value>
-  </data>
-  <data name="muserauthid" xml:space="preserve">
-    <value>UserAuthId</value>
-  </data>
-  <data name="muserid" xml:space="preserve">
-    <value>User Id</value>
-  </data>
-  <data name="musername" xml:space="preserve">
-    <value>Username</value>
-  </data>
+    <data name="mabout" xml:space="preserve">
+        <value>Acerca de</value>
+    </data>
+    <data name="maccesstoken" xml:space="preserve">
+        <value>Token de acceso</value>
+    </data>
+    <data name="mauthentication" xml:space="preserve">
+        <value>Autenticado</value>
+    </data>
+    <data name="mavatar" xml:space="preserve">
+        <value>Avatar</value>
+    </data>
+    <data name="mcategory" xml:space="preserve">
+        <value>Categoría</value>
+    </data>
+    <data name="mcompany" xml:space="preserve">
+        <value>Empresa</value>
+    </data>
+    <data name="mcover" xml:space="preserve">
+        <value>Portada</value>
+    </data>
+      <data name="mcreated" xml:space="preserve">
+        <value>Creado</value>
+      </data>
+      <data name="mdateaccreated" xml:space="preserve">
+        <value>Fecha de creación de la cuenta</value>
+      </data>
+      <data name="mdatebirthday" xml:space="preserve">
+        <value>Fecha Cumpleaños</value>
+      </data>
+      <data name="mdaterelease" xml:space="preserve">
+        <value>Fecha de lanzamiento</value>
+      </data>
+      <data name="mdesc" xml:space="preserve">
+        <value>Descripción</value>
+      </data>
+      <data name="mduration" xml:space="preserve">
+        <value>Duración</value>
+      </data>
+      <data name="memail" xml:space="preserve">
+        <value>Correo electrónico</value>
+      </data>
+      <data name="mexpiration" xml:space="preserve">
+        <value>Caducidad</value>
+      </data>
+      <data name="mfirstname" xml:space="preserve">
+        <value>Primer nombre</value>
+      </data>
+      <data name="mgamesid" xml:space="preserve">
+        <value>Id del juego</value>
+      </data>
+      <data name="mgenre" xml:space="preserve">
+        <value>Género</value>
+      </data>
+      <data name="mlanguage" xml:space="preserve">
+        <value>Idioma</value>
+      </data>
+      <data name="mlastname" xml:space="preserve">
+        <value>Apellido</value>
+      </data>
+      <data name="mmessage" xml:space="preserve">
+        <value>Mensaje</value>
+      </data>
+      <data name="mmovieid" xml:space="preserve">
+        <value>Id de película</value>
+      </data>
+      <data name="mpassword" xml:space="preserve">
+        <value>Contraseña</value>
+      </data>
+      <data name="mpin" xml:space="preserve">
+        <value>Pin</value>
+      </data>
+      <data name="mpublisher" xml:space="preserve">
+        <value>Editor</value>
+      </data>
+      <data name="mqrycmd" xml:space="preserve">
+        <value>Comando de consulta</value>
+      </data>
+      <data name="mrating" xml:space="preserve">
+        <value>Calificación</value>
+      </data>
+      <data name="mrole" xml:space="preserve">
+        <value>Rol</value>
+      </data>
+      <data name="msgbdsrv" xml:space="preserve">
+        <value>Servicio SGBD</value>
+      </data>
+      <data name="mtitle" xml:space="preserve">
+        <value>Título</value>
+      </data>
+      <data name="mtokenid" xml:space="preserve">
+        <value>Identificación del token</value>
+      </data>
+      <data name="mtokeninfo" xml:space="preserve">
+        <value>Información del token</value>
+      </data>
+      <data name="mtotalseasons" xml:space="preserve">
+        <value>Temporadas totales</value>
+      </data>
+      <data name="mtvserieid" xml:space="preserve">
+        <value>ID de serie de TV</value>
+      </data>
+      <data name="muserauthid" xml:space="preserve">
+        <value>Id de autenticación de usuario</value>
+      </data>
+      <data name="muserid" xml:space="preserve">
+        <value>Identificación de usuario</value>
+      </data>
+      <data name="musername" xml:space="preserve">
+        <value>name de usuario</value>
+      </data>
 </root>
