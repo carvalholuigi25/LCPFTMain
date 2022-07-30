@@ -4,58 +4,59 @@ using SQLite;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using erres = LCPFavThingsLib.ErrorResources.ErrorResources;
+using myres = LCPFavThingsLib.Resources.Resources;
 
 namespace LCPFavThings.Models
 {
     public partial class Users
     {
-        #nullable enable
+#nullable enable
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         [PrimaryKey, AutoIncrement]
-        [Display(Name = "UserId")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.muserid))]
         public int? UserId { get; set; }
 
-        [Display(Name = "Username")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.musername))]
         [Required(ErrorMessageResourceName = "EMUsername", ErrorMessageResourceType = typeof(erres))]
         public string? Username { get; set; }
 
-        [Display(Name = "Password")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mpassword))]
         [Required(ErrorMessageResourceName = "EMPassword", ErrorMessageResourceType = typeof(erres))]
         public string? PasswordT { get; set; }
 
-        [Display(Name = "Email")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.memail))]
         public string? Email { get; set; }
 
-        [Display(Name = "Pin")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mpin))]
         public string? Pin { get; set; }
 
-        [Display(Name = "First Name")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mfirstname))]
         public string? FirstName { get; set; }
 
-        [Display(Name = "Last Name")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mlastname))]
         public string? LastName { get; set; }
 
-        [Display(Name = "Date Birthday")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mdatebirthday))]
         public DateTime? DateBirthday { get; set; }
 
-        [Display(Name = "Avatar")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mavatar))]
         public string? Avatar { get; set; }
 
-        [Display(Name = "Cover")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mcover))]
         public string? Cover { get; set; } = "guest.jpg";
 
-        [Display(Name = "About")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mabout))]
         public string? About { get; set; }
 
-        [Display(Name = "Date of Account Created")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mdateaccreated))]
         public DateTime? DateAccountCreated { get; set; } = DateTime.UtcNow;
 
-        [Display(Name = "Role")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mrole))]
         public UsersRoles? RoleT { get; set; } = UsersRoles.guest;
 
-        [Display(Name = "Token Info")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mtokeninfo))]
         public UserToken? TokenInfo { get; set; }
     }
 
@@ -65,30 +66,30 @@ namespace LCPFavThings.Models
         [Key]
         [PrimaryKey, AutoIncrement]
         [SwaggerIgnore]
-        [Display(Name = "UserAuthId")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.muserauthid))]
         public int? UserAuthId { get; set; }
 
-        [Display(Name = "Username")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.musername))]
         [Required(ErrorMessageResourceName = "EMUsername", ErrorMessageResourceType = typeof(erres))]
         public string? Username { get; set; }
 
-        [Display(Name = "Password")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mpassword))]
         [Required(ErrorMessageResourceName = "EMPassword", ErrorMessageResourceType = typeof(erres))]
         public string? Password { get; set; }
 
-        [Display(Name = "Role")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mrole))]
         [SwaggerIgnore]
         public UsersRoles? RoleT { get; set; } = UsersRoles.user;
 
-        [Display(Name = "Avatar")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mavatar))]
         [SwaggerIgnore]
         public string? Avatar { get; set; }
 
-        [Display(Name = "UserId")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.muserid))]
         [SwaggerIgnore]
         public int? UserId { get; set; } = 1;
 
-        [Display(Name = "Token Info")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mtokeninfo))]
         [SwaggerIgnore]
         [NotMapped]
         public UserToken? TokenInfo { get; set; }
@@ -96,9 +97,9 @@ namespace LCPFavThings.Models
 
     public enum UsersRoles
     {
-        banned,
-        guest,
-        user,
-        admin
+        banned = 0,
+        guest = 1,
+        user = 2,
+        admin = 3
     }
 }

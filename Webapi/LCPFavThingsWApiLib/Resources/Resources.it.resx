@@ -117,44 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lnkadmindash" xml:space="preserve">
-    <value>Painel de Administração</value>
-  </data>
-  <data name="lnkchat" xml:space="preserve">
-    <value>Conversar</value>
-  </data>
-  <data name="lnkgames" xml:space="preserve">
-    <value>Jogos</value>
-  </data>
-  <data name="lnkhome" xml:space="preserve">
-    <value>Casa</value>
-  </data>
-  <data name="lnklogin" xml:space="preserve">
-    <value>Iniciar Sessão</value>
-  </data>
-  <data name="lnklogout" xml:space="preserve">
-    <value>Sair</value>
-  </data>
-  <data name="lnkmovies" xml:space="preserve">
-    <value>Filmes</value>
-  </data>
-  <data name="lnkregister" xml:space="preserve">
-    <value>Criar nova conta</value>
-  </data>
-  <data name="lnksettings" xml:space="preserve">
-    <value>Definições</value>
-  </data>
-  <data name="lnktvseries" xml:space="preserve">
-    <value>Séries de TV</value>
-  </data>
-  <data name="lnkupload" xml:space="preserve">
-    <value>Envio de Ficheiros</value>
-  </data>
-  <data name="lnkusers" xml:space="preserve">
-    <value>Utilizadores</value>
-  </data>
   <data name="mabout" xml:space="preserve">
     <value>About</value>
+  </data>
+  <data name="maccesstoken" xml:space="preserve">
+    <value>Access Token</value>
+  </data>
+  <data name="mauthenticated" xml:space="preserve">
+    <value>Authenticated</value>
   </data>
   <data name="mavatar" xml:space="preserve">
     <value>Avatar</value>
@@ -168,11 +138,17 @@
   <data name="mcover" xml:space="preserve">
     <value>Cover</value>
   </data>
+  <data name="mcreated" xml:space="preserve">
+    <value>Created</value>
+  </data>
   <data name="mdateaccreated" xml:space="preserve">
     <value>Date of Account Created</value>
   </data>
   <data name="mdatebirthday" xml:space="preserve">
     <value>Date Birthday</value>
+  </data>
+  <data name="mdaterelease" xml:space="preserve">
+    <value>Date Release</value>
   </data>
   <data name="mdesc" xml:space="preserve">
     <value>Description</value>
@@ -182,6 +158,9 @@
   </data>
   <data name="memail" xml:space="preserve">
     <value>Email</value>
+  </data>
+  <data name="mexpiration" xml:space="preserve">
+    <value>Expiration</value>
   </data>
   <data name="mfirstname" xml:space="preserve">
     <value>First Name</value>
@@ -197,6 +176,9 @@
   </data>
   <data name="mlastname" xml:space="preserve">
     <value>Last Name</value>
+  </data>
+  <data name="mmessage" xml:space="preserve">
+    <value>Message</value>
   </data>
   <data name="mmoviesid" xml:space="preserve">
     <value>MovieId</value>
@@ -225,6 +207,9 @@
   <data name="mtitle" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="mtokenid" xml:space="preserve">
+    <value>Token Id</value>
+  </data>
   <data name="mtokeninfo" xml:space="preserve">
     <value>Token Info</value>
   </data>
@@ -242,11 +227,5 @@
   </data>
   <data name="musername" xml:space="preserve">
     <value>Username</value>
-  </data>
-  <data name="title" xml:space="preserve">
-    <value>LCP Minhas Coisas Favoritas</value>
-  </data>
-  <data name="welcome" xml:space="preserve">
-    <value>Bem-vindo ao seu novo aplicativo.</value>
   </data>
 </root>

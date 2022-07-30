@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LCPFavThings.Shared.ResourceFiles {
+namespace LCPFavThingsLib.Resources {
     using System;
     
     
@@ -22,24 +22,24 @@ namespace LCPFavThings.Shared.ResourceFiles {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resource {
+    internal class Resources___Cópia {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resource() {
+        internal Resources___Cópia() {
         }
         
         /// <summary>
         ///   Retorna a instância de ResourceManager armazenada em cache usada por essa classe.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LCPFavThings.Shared.ResourceFiles.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LCPFavThingsLib.Resources.Resources - Cópia", typeof(Resources___Cópia).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         ///   pesquisas de recursos que usam essa classe de recurso de tipo de alta segurança.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,117 +61,9 @@ namespace LCPFavThings.Shared.ResourceFiles {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Admin Dashboard.
-        /// </summary>
-        public static string lnkadmindash {
-            get {
-                return ResourceManager.GetString("lnkadmindash", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Chat.
-        /// </summary>
-        public static string lnkchat {
-            get {
-                return ResourceManager.GetString("lnkchat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Games.
-        /// </summary>
-        public static string lnkgames {
-            get {
-                return ResourceManager.GetString("lnkgames", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Home.
-        /// </summary>
-        public static string lnkhome {
-            get {
-                return ResourceManager.GetString("lnkhome", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Login.
-        /// </summary>
-        public static string lnklogin {
-            get {
-                return ResourceManager.GetString("lnklogin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Logout.
-        /// </summary>
-        public static string lnklogout {
-            get {
-                return ResourceManager.GetString("lnklogout", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Movies.
-        /// </summary>
-        public static string lnkmovies {
-            get {
-                return ResourceManager.GetString("lnkmovies", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Create new account.
-        /// </summary>
-        public static string lnkregister {
-            get {
-                return ResourceManager.GetString("lnkregister", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Settings.
-        /// </summary>
-        public static string lnksettings {
-            get {
-                return ResourceManager.GetString("lnksettings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a TV Series.
-        /// </summary>
-        public static string lnktvseries {
-            get {
-                return ResourceManager.GetString("lnktvseries", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Upload.
-        /// </summary>
-        public static string lnkupload {
-            get {
-                return ResourceManager.GetString("lnkupload", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Users.
-        /// </summary>
-        public static string lnkusers {
-            get {
-                return ResourceManager.GetString("lnkusers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a About.
         /// </summary>
-        public static string mabout {
+        internal static string mabout {
             get {
                 return ResourceManager.GetString("mabout", resourceCulture);
             }
@@ -180,7 +72,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Avatar.
         /// </summary>
-        public static string mavatar {
+        internal static string mavatar {
             get {
                 return ResourceManager.GetString("mavatar", resourceCulture);
             }
@@ -189,7 +81,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Category.
         /// </summary>
-        public static string mcategory {
+        internal static string mcategory {
             get {
                 return ResourceManager.GetString("mcategory", resourceCulture);
             }
@@ -198,7 +90,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Company.
         /// </summary>
-        public static string mcompany {
+        internal static string mcompany {
             get {
                 return ResourceManager.GetString("mcompany", resourceCulture);
             }
@@ -207,7 +99,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Cover.
         /// </summary>
-        public static string mcover {
+        internal static string mcover {
             get {
                 return ResourceManager.GetString("mcover", resourceCulture);
             }
@@ -216,7 +108,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Date of Account Created.
         /// </summary>
-        public static string mdateaccreated {
+        internal static string mdateaccreated {
             get {
                 return ResourceManager.GetString("mdateaccreated", resourceCulture);
             }
@@ -225,7 +117,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Date Birthday.
         /// </summary>
-        public static string mdatebirthday {
+        internal static string mdatebirthday {
             get {
                 return ResourceManager.GetString("mdatebirthday", resourceCulture);
             }
@@ -234,7 +126,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Description.
         /// </summary>
-        public static string mdesc {
+        internal static string mdesc {
             get {
                 return ResourceManager.GetString("mdesc", resourceCulture);
             }
@@ -243,7 +135,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Duration.
         /// </summary>
-        public static string mduration {
+        internal static string mduration {
             get {
                 return ResourceManager.GetString("mduration", resourceCulture);
             }
@@ -252,7 +144,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Email.
         /// </summary>
-        public static string memail {
+        internal static string memail {
             get {
                 return ResourceManager.GetString("memail", resourceCulture);
             }
@@ -261,7 +153,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a First Name.
         /// </summary>
-        public static string mfirstname {
+        internal static string mfirstname {
             get {
                 return ResourceManager.GetString("mfirstname", resourceCulture);
             }
@@ -270,7 +162,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a GameId.
         /// </summary>
-        public static string mgamesid {
+        internal static string mgamesid {
             get {
                 return ResourceManager.GetString("mgamesid", resourceCulture);
             }
@@ -279,7 +171,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Genre.
         /// </summary>
-        public static string mgenre {
+        internal static string mgenre {
             get {
                 return ResourceManager.GetString("mgenre", resourceCulture);
             }
@@ -288,7 +180,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Language.
         /// </summary>
-        public static string mlanguage {
+        internal static string mlanguage {
             get {
                 return ResourceManager.GetString("mlanguage", resourceCulture);
             }
@@ -297,7 +189,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Last Name.
         /// </summary>
-        public static string mlastname {
+        internal static string mlastname {
             get {
                 return ResourceManager.GetString("mlastname", resourceCulture);
             }
@@ -306,7 +198,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a MovieId.
         /// </summary>
-        public static string mmoviesid {
+        internal static string mmoviesid {
             get {
                 return ResourceManager.GetString("mmoviesid", resourceCulture);
             }
@@ -315,7 +207,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Password.
         /// </summary>
-        public static string mpassword {
+        internal static string mpassword {
             get {
                 return ResourceManager.GetString("mpassword", resourceCulture);
             }
@@ -324,7 +216,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Pin.
         /// </summary>
-        public static string mpin {
+        internal static string mpin {
             get {
                 return ResourceManager.GetString("mpin", resourceCulture);
             }
@@ -333,7 +225,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Publisher.
         /// </summary>
-        public static string mpublisher {
+        internal static string mpublisher {
             get {
                 return ResourceManager.GetString("mpublisher", resourceCulture);
             }
@@ -342,7 +234,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Query Command.
         /// </summary>
-        public static string mqrycmd {
+        internal static string mqrycmd {
             get {
                 return ResourceManager.GetString("mqrycmd", resourceCulture);
             }
@@ -351,7 +243,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Rating.
         /// </summary>
-        public static string mrating {
+        internal static string mrating {
             get {
                 return ResourceManager.GetString("mrating", resourceCulture);
             }
@@ -360,7 +252,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Role.
         /// </summary>
-        public static string mrole {
+        internal static string mrole {
             get {
                 return ResourceManager.GetString("mrole", resourceCulture);
             }
@@ -369,7 +261,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a SGBD Service.
         /// </summary>
-        public static string msgbdsrv {
+        internal static string msgbdsrv {
             get {
                 return ResourceManager.GetString("msgbdsrv", resourceCulture);
             }
@@ -378,7 +270,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Title.
         /// </summary>
-        public static string mtitle {
+        internal static string mtitle {
             get {
                 return ResourceManager.GetString("mtitle", resourceCulture);
             }
@@ -387,7 +279,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Token Info.
         /// </summary>
-        public static string mtokeninfo {
+        internal static string mtokeninfo {
             get {
                 return ResourceManager.GetString("mtokeninfo", resourceCulture);
             }
@@ -396,7 +288,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Total Seasons.
         /// </summary>
-        public static string mtotalseasons {
+        internal static string mtotalseasons {
             get {
                 return ResourceManager.GetString("mtotalseasons", resourceCulture);
             }
@@ -405,7 +297,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a TVSerieId.
         /// </summary>
-        public static string mtvserieid {
+        internal static string mtvserieid {
             get {
                 return ResourceManager.GetString("mtvserieid", resourceCulture);
             }
@@ -414,7 +306,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a UserAuthId.
         /// </summary>
-        public static string muserauthid {
+        internal static string muserauthid {
             get {
                 return ResourceManager.GetString("muserauthid", resourceCulture);
             }
@@ -423,7 +315,7 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a User Id.
         /// </summary>
-        public static string muserid {
+        internal static string muserid {
             get {
                 return ResourceManager.GetString("muserid", resourceCulture);
             }
@@ -432,27 +324,9 @@ namespace LCPFavThings.Shared.ResourceFiles {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Username.
         /// </summary>
-        public static string musername {
+        internal static string musername {
             get {
                 return ResourceManager.GetString("musername", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a LCP My Favorite Things.
-        /// </summary>
-        public static string title {
-            get {
-                return ResourceManager.GetString("title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Welcome to your new app..
-        /// </summary>
-        public static string welcome {
-            get {
-                return ResourceManager.GetString("welcome", resourceCulture);
             }
         }
     }

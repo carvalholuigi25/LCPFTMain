@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static LCPFavThingsLib.Enums.MyEnums;
 using erres = LCPFavThingsLib.ErrorResources.ErrorResources;
+using myres = LCPFavThingsLib.Resources.Resources;
 
 namespace LCPFavThingsLib.Models
 {
@@ -8,11 +9,11 @@ namespace LCPFavThingsLib.Models
     {
 #nullable enable
 
-        [Display(Name = "Query Command")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.mqrycmd))]
         [Required(ErrorMessageResourceName = "EMQryCMD", ErrorMessageResourceType = typeof(erres))]
         public string? QryCommand { get; set; }
 
-        [Display(Name = "SGBD Service")]
+        [Display(ResourceType = typeof(myres), Name = nameof(myres.msgbdsrv))]
         public string? SGBDService { get; set; } = SGBDServiceEnum.sqlite.ToString();
     }
 }
