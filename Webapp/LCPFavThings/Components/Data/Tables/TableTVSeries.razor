@@ -8,17 +8,17 @@ else
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th>Id</th>
-					<th>Title</th>
-					<th>Desc</th>
-					<th>Cover</th>
-					<th>Category</th>
-					<th>Company</th>
-					<th>Duration</th>
-					<th>Genre</th>
-					<th>Language</th>
-					<th>Total Seasons</th>
-					<th>Rating</th>
+                    <th><DisplayName For="@(() => mydata[0].TVSerieId)" IsLabel="false" /></th>
+                    <th><DisplayName For="@(() => mydata[0].Title)" IsLabel="false" /></th>
+                    <th><DisplayName For="@(() => mydata[0].DescT)" IsLabel="false" /></th>
+                    <th><DisplayName For="@(() => mydata[0].Cover)" IsLabel="false" /></th>
+                    <th><DisplayName For="@(() => mydata[0].Category)" IsLabel="false" /></th>
+                    <th><DisplayName For="@(() => mydata[0].Company)" IsLabel="false" /></th>
+                    <th><DisplayName For="@(() => mydata[0].Duration)" IsLabel="false" /></th>
+                    <th><DisplayName For="@(() => mydata[0].Genre)" IsLabel="false" /></th>
+                    <th><DisplayName For="@(() => mydata[0].LangT)" IsLabel="false" /></th>
+                    <th><DisplayName For="@(() => mydata[0].TotalSeasons)" IsLabel="false" /></th>
+                    <th><DisplayName For="@(() => mydata[0].Rating)" IsLabel="false" /></th>
                     <th class="@(isUserLoggedIn ? "show": "hidden")"></th>
 				</tr>
 			</thead>

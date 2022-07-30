@@ -8,12 +8,12 @@ else
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th>Id</th>
-					<th>Username</th>
-					<th>Email</th>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Role</th>
+                    <th><DisplayName For="@(() => mydata[0].UserId)" IsLabel="false" /></th>
+                    <th><DisplayName For="@(() => mydata[0].Username)" IsLabel="false" /></th>
+                    <th><DisplayName For="@(() => mydata[0].Email)" IsLabel="false" /></th>
+                    <th><DisplayName For="@(() => mydata[0].FirstName)" IsLabel="false" /></th>
+                    <th><DisplayName For="@(() => mydata[0].LastName)" IsLabel="false" /></th>
+                    <th><DisplayName For="@(() => mydata[0].RoleT)" IsLabel="false" /></th>
                     <th class="@(isUserLoggedIn ? "show": "hidden")"></th>
 				</tr>
 			</thead>

@@ -24,14 +24,15 @@ else
 								<div class="card-body">
 									<h3 class="mt-3">@mdata.FirstName @mdata.LastName</h3>
 
-									<p class="mt-3">Id: @mdata.UserId</p>
-									<p class="mt-3">Username: @mdata.Username</p>
-									<p class="mt-3">Email: @mdata.Email</p>
-									<p class="mt-3">First Name: @mdata.FirstName</p>
-									<p class="mt-3">Last Name: @mdata.LastName</p>
-									<p class="mt-3">Role: @mdata.RoleT</p>
+                                    <p class="mt-3"><DisplayName For="@(() => mdata.UserId)" IsLabel="false" />: @mdata.UserId</p>
+                                    <p class="mt-3"><DisplayName For="@(() => mdata.Username)" IsLabel="false" />: @mdata.Username</p>
+                                    <p class="mt-3"><DisplayName For="@(() => mdata.Email)" IsLabel="false" />: @mdata.Email</p>
+                                    <p class="mt-3"><DisplayName For="@(() => mdata.FirstName)" IsLabel="false" />: @mdata.FirstName</p>
+                                    <p class="mt-3"><DisplayName For="@(() => mdata.LastName)" IsLabel="false" />: @mdata.LastName</p>
+                                    <p class="mt-3"><DisplayName For="@(() => mdata.RoleT)" IsLabel="false" />: @mdata.RoleT</p>
+                                    <p class="mt-3"><DisplayName For="@(() => mdata.DateBirthday)" IsLabel="false" />: @mdata.DateBirthday</p>
 
-									<p class="mt-3">About: </p>
+									<p class="mt-3"><DisplayName For="@(() => mdata.About)" IsLabel="false" />: </p>
 									<div class="card card-body mt-3">@mdata.About</div>
 
 									<button class="btn btn-primary mt-3 ms-auto me-auto d-block" @onclick="Back">Back</button>
