@@ -26,17 +26,17 @@
                     <fieldset disabled="@isUserSubmitedForm">
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input type="text" class="form-control username" id="username" placeholder="Write your username here" @bind-value="userauth.Username" />
+                            <input type="text" class="form-control username" id="username" placeholder="Write your username here" @bind-value="userauth.Username" autocomplete="username" />
                         </div>
 
                         <div class="form-group mt-3">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control password" id="password" placeholder="Write your password here" @bind-value="userauth.Password" />
+                            <input type="password" class="form-control password" id="password" placeholder="Write your password here" @bind-value="userauth.Password" autocomplete="password" />
                         </div>
 
                         <div class="form-group mt-3 ms-auto me-auto text-center">
                             <input type="submit" class="btn btn-primary" value="Login" />
-                            <input type="reset" class="btn btn-secondary" value="Reset" />
+                            <input type="button" class="btn btn-secondary" value="Reset" @onclick="Reset" />
                         </div>
                     </fieldset>
                     
@@ -75,12 +75,34 @@
         return (await GetUsersList()).PasswordT;
     }
 
+    private void Reset() {
+        userauth.Username = "";
+        userauth.Password = "";
+        //userauth = new UserAuth();
+    }
+
     private async Task Submit() {
         try {
             isUserSubmitedForm = true;
             userslist = await GetUsersList();
 
-            if (userauth != null && userslist != null)
+            if (string.IsNullOrEmpty(userauth.Username))
+            {
+                isUserSubmitedForm = false;
+                userauth = new UserAuth();
+                await js.InvokeVoidAsync("alert", "Please write username field in login form!");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(userauth.Password))
+            {
+                isUserSubmitedForm = false;
+                userauth = new UserAuth();
+                await js.InvokeVoidAsync("alert", "Please write password field in login form!");
+                return;
+            }
+
+            if (userslist != null)
             {
                 UserAuth myobj = new UserAuth()
                 {
@@ -93,9 +115,7 @@
                     TokenInfo = userslist.TokenInfo
                 };
 
-                var isUserExists = bc.Verify(userauth.Password, await GetCurPasswordDB());
-
-                if (isUserExists)
+                if (bc.Verify(userauth.Password, await GetCurPasswordDB()))
                 {
                     await js.InvokeVoidAsync("localStorage.setItem", "authlog", JsonConvert.SerializeObject(myobj));
 
